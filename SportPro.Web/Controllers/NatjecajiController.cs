@@ -15,12 +15,12 @@ public class NatjecajiController : Controller
     {
         this.natjecajiRepository = natjecajiRepository;
     }
-    
+
     [HttpGet]
     public async Task<IActionResult> Index()
     {
         var natjecaji = await natjecajiRepository.GetAllAsync();
-        return View(natjecaji);     
+        return View(natjecaji);
     }
 
     [HttpGet]
@@ -32,17 +32,23 @@ public class NatjecajiController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(AddNatjecajRequest addNatjecajRequest)
     {
-      var natjecaj = new Natjecaji
-      {
-          Naziv = addNatjecajRequest.Naziv,
-          Opis = addNatjecajRequest.Opis,
-          ProcijenjenaVrijednost = addNatjecajRequest.ProcijenjenaVrijednost,
-          TrajanjeOd = addNatjecajRequest.TrajanjeOd,
-          TrajanjeDo = addNatjecajRequest.TrajanjeDo,
-          DatumObjave = addNatjecajRequest.DatumObjave,
-          Aktivan = addNatjecajRequest.Aktivan,
-          Dobitnik = addNatjecajRequest.Dobitnik
-      };
+        ValidateNatjecaj(addNatjecajRequest);
+
+        if (!ModelState.IsValid)
+        {
+            return View();
+        }
+        var natjecaj = new Natjecaji
+        {
+            Naziv = addNatjecajRequest.Naziv,
+            Opis = addNatjecajRequest.Opis,
+            ProcijenjenaVrijednost = addNatjecajRequest.ProcijenjenaVrijednost,
+            TrajanjeOd = addNatjecajRequest.TrajanjeOd,
+            TrajanjeDo = addNatjecajRequest.TrajanjeDo,
+            DatumObjave = addNatjecajRequest.DatumObjave,
+            Aktivan = addNatjecajRequest.Aktivan,
+            Dobitnik = addNatjecajRequest.Dobitnik
+        };
 
         await natjecajiRepository.AddAsync(natjecaj);
         return RedirectToAction("Index");
@@ -75,6 +81,8 @@ public class NatjecajiController : Controller
             Aktivan = natjecaj.Aktivan,
             Dobitnik = natjecaj.Dobitnik
         };
+
+
 
         return View(editNatjecajRequest);
     }
@@ -142,6 +150,18 @@ public class NatjecajiController : Controller
         }
 
         return NotFound();
-        
+
+    }
+
+    private void ValidateNatjecaj(AddNatjecajRequest addNatjecajRequest)
+    {
+        if (addNatjecajRequest.TrajanjeOd >= addNatjecajRequest.TrajanjeDo)
+        {
+            ModelState.AddModelError("TrajanjeOd", "TrajanjeOd has to be before TrajanjeDo!");
+        }
+        if (addNatjecajRequest.DatumObjave >= addNatjecajRequest.TrajanjeOd)
+        {
+            ModelState.AddModelError("DatumObjave", "DatumObjave has to be before TrajanjeOd!");
+        }
     }
 }

@@ -13,27 +13,27 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Naziv" class="control-label"></label>
-                <input asp-for="Naziv" class="form-control" />
+                <input asp-for="Naziv" class="form-control" required maxlength="200"/>
                 <span asp-validation-for="Naziv" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Opis" class="control-label"></label>
-                <input asp-for="Opis" class="form-control" />
+                <input asp-for="Opis" class="form-control" required />
                 <span asp-validation-for="Opis" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ProcijenjenaVrijednost" class="control-label"></label>
-                <input asp-for="ProcijenjenaVrijednost" class="form-control" />
+                <input asp-for="ProcijenjenaVrijednost" class="form-control" required />
                 <span asp-validation-for="ProcijenjenaVrijednost" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TrajanjeOd" class="control-label"></label>
-                <input asp-for="TrajanjeOd" class="form-control" />
+                <input asp-for="TrajanjeOd" class="form-control" required />
                 <span asp-validation-for="TrajanjeOd" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TrajanjeDo" class="control-label"></label>
-                <input asp-for="TrajanjeDo" class="form-control" />
+                <input asp-for="TrajanjeDo" class="form-control" required />
                 <span asp-validation-for="TrajanjeDo" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -48,7 +48,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Dobitnik" class="control-label"></label>
-                <input asp-for="Dobitnik" class="form-control" />
+                <input asp-for="Dobitnik" class="form-control" maxlength="50" />
                 <span asp-validation-for="Dobitnik" class="text-danger"></span>
             </div>
             <div class="form-group">
