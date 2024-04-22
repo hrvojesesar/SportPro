@@ -8,5 +8,5 @@ public interface INatjecajiRepository
     Task<Natjecaji> AddAsync(Natjecaji natjecaj);
     Task<Natjecaji?> GetAsync(int? id);
     Task<Natjecaji?> UpdateAsync(Natjecaji natjecaj);
-    Task<Natjecaji?> DeleteAsync(int? id);
+    Task<Natjecaji?> DeleteAsync(int id);
 }

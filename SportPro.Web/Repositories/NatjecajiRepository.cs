@@ -38,17 +38,17 @@ public class NatjecajiRepository : INatjecajiRepository
         return natjecaj;
     }
 
-    public async Task<Natjecaji?> DeleteAsync(int? id)
+    public async Task<Natjecaji?> DeleteAsync(int id)
     {
         var natjecaj = await applicationDbContext.Natjecaji.FirstOrDefaultAsync(x => x.IDNatjecaj == id);
         if (natjecaj == null)
         {
             return null;
         }
-
         applicationDbContext.Natjecaji.Remove(natjecaj);
         await applicationDbContext.SaveChangesAsync();
         return natjecaj;
     }
+   
 
 }

@@ -131,34 +131,22 @@ public class NatjecajiController : Controller
             return NotFound();
         }
 
-        var editNatjecajRequest = new EditNatjecajRequest
-        {
-            IDNatjecaj = natjecaj.IDNatjecaj,
-            Naziv = natjecaj.Naziv,
-            Opis = natjecaj.Opis,
-            ProcijenjenaVrijednost = natjecaj.ProcijenjenaVrijednost,
-            TrajanjeOd = natjecaj.TrajanjeOd,
-            TrajanjeDo = natjecaj.TrajanjeDo,
-            DatumObjave = natjecaj.DatumObjave,
-            Aktivan = natjecaj.Aktivan,
-            Dobitnik = natjecaj.Dobitnik
-        };
-
-        return View(editNatjecajRequest);
+        return View(natjecaj);
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Delete(EditNatjecajRequest editNatjecajRequest)
+    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(int id)
     {
-        await natjecajiRepository.DeleteAsync(editNatjecajRequest.IDNatjecaj);
-        if (editNatjecajRequest != null)
+        var natjecaj = await natjecajiRepository.DeleteAsync(id);
+
+        if (natjecaj == null)
         {
-            return RedirectToAction("Index");
+            return NotFound();
         }
 
-        return NotFound();
-
+        return RedirectToAction("Index");
     }
+  
 
     private void ValidateNatjecajForAdd(AddNatjecajRequest addNatjecajRequest)
     {
