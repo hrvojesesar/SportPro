@@ -32,7 +32,7 @@ public class NatjecajiController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(AddNatjecajRequest addNatjecajRequest)
     {
-        ValidateNatjecaj(addNatjecajRequest);
+        ValidateNatjecajForAdd(addNatjecajRequest);
 
         if (!ModelState.IsValid)
         {
@@ -103,6 +103,13 @@ public class NatjecajiController : Controller
             Dobitnik = editNatjecajRequest.Dobitnik
         };
 
+        ValidateNatjecajForEdit(natjecaj);
+
+        if (!ModelState.IsValid)
+        {
+            return View();
+        }
+
         await natjecajiRepository.UpdateAsync(natjecaj);
         return RedirectToAction("Index");
 
@@ -153,13 +160,25 @@ public class NatjecajiController : Controller
 
     }
 
-    private void ValidateNatjecaj(AddNatjecajRequest addNatjecajRequest)
+    private void ValidateNatjecajForAdd(AddNatjecajRequest addNatjecajRequest)
     {
         if (addNatjecajRequest.TrajanjeOd >= addNatjecajRequest.TrajanjeDo)
         {
             ModelState.AddModelError("TrajanjeOd", "TrajanjeOd has to be before TrajanjeDo!");
         }
         if (addNatjecajRequest.DatumObjave >= addNatjecajRequest.TrajanjeOd)
+        {
+            ModelState.AddModelError("DatumObjave", "DatumObjave has to be before TrajanjeOd!");
+        }
+    }
+
+    private void ValidateNatjecajForEdit(Natjecaji natjecaj)
+    {
+        if (natjecaj.TrajanjeOd >= natjecaj.TrajanjeDo)
+        {
+            ModelState.AddModelError("TrajanjeOd", "TrajanjeOd has to be before TrajanjeDo!");
+        }
+        if (natjecaj.DatumObjave >= natjecaj.TrajanjeOd)
         {
             ModelState.AddModelError("DatumObjave", "DatumObjave has to be before TrajanjeOd!");
         }
