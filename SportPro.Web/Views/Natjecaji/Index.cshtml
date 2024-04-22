@@ -1,0 +1,86 @@
+﻿@model IEnumerable<SportPro.Web.Models.Domains.Natjecaji>
+
+@{
+    ViewData["Title"] = "Index";
+
+}
+
+<h1>Natječaji</h1>
+
+<p>
+    <a asp-controller="Natjecaji" asp-action="Add">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Naziv)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Opis)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ProcijenjenaVrijednost)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrajanjeOd)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TrajanjeDo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DatumObjave)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Aktivan)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Dobitnik)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Naziv)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Opis)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProcijenjenaVrijednost) KM
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrajanjeOd)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TrajanjeDo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.DatumObjave)
+                </td>
+                <td>
+                    @if (item.Aktivan)
+                    {
+                        <text>Da</text>
+                    }
+                    else
+                    {
+                        <text>Ne</text>
+                    }
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Dobitnik)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.IDNatjecaj">Edit</a> |
+                    <a asp-action="Details" asp-route-id="@item.IDNatjecaj">Details</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IDNatjecaj">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
