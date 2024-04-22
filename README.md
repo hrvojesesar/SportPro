@@ -1,1 +1,1 @@
-Backoffice aplikacija trgovine sportske opreme "SporPro" za upravljanje ljudima i resursima
+Backoffice aplikacija trgovine sportske opreme "SportPro" za upravljanje ljudima i resursima
