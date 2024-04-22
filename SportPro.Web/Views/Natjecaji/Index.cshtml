@@ -8,7 +8,7 @@
 <h1>Natječaji</h1>
 
 <p>
-    <a asp-controller="Natjecaji" asp-action="Add">Create New</a>
+    <a asp-controller="Natjecaji" asp-action="Add">Dodaj novi natječaj</a>
 </p>
 <table class="table">
     <thead>
@@ -20,16 +20,16 @@
                 @Html.DisplayNameFor(model => model.Opis)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ProcijenjenaVrijednost)
+                Procijenjena vrijednost
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TrajanjeOd)
+                Trajanje od
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TrajanjeDo)
+                Trajanje do
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.DatumObjave)
+                Datum objavljivanja
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Aktivan)
@@ -76,9 +76,8 @@
                     @Html.DisplayFor(modelItem => item.Dobitnik)
                 </td>
                 <td>
-                    <a asp-action="Edit" asp-route-id="@item.IDNatjecaj">Edit</a> |
-                    <a asp-action="Details" asp-route-id="@item.IDNatjecaj">Details</a> |
-                    <a asp-action="Delete" asp-route-id="@item.IDNatjecaj">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.IDNatjecaj">Uredi</a> |
+                    <a asp-action="Delete" asp-route-id="@item.IDNatjecaj">Izbriši</a>
                 </td>
             </tr>
         }
