@@ -11,9 +11,11 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Natjecaji> Natjecaji { get; set; }
+    public DbSet<PonudePoslova> PonudePoslova { get; set; }
 
-public DbSet<SportPro.Web.Models.ViewModels.AddNatjecajRequest> AddNatjecajRequest { get; set; } = default!;
+public DbSet<SportPro.Web.Models.ViewModels.AddPonudaPoslovaRequest> AddPonudaPoslovaRequest { get; set; } = default!;
 
-public DbSet<SportPro.Web.Models.ViewModels.EditNatjecajRequest> EditNatjecajRequest { get; set; } = default!;
+public DbSet<SportPro.Web.Models.ViewModels.EditPonudaPoslovaRequest> EditPonudaPoslovaRequest { get; set; } = default!;
+
 
 }
