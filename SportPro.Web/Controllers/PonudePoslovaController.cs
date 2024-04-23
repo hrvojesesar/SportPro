@@ -30,6 +30,7 @@ public class PonudePoslovaController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(AddPonudaPoslovaRequest addPonudaPoslovaRequest)
     {
+        ValidatePonudaPoslovaForAdd(addPonudaPoslovaRequest);
 
         if (!ModelState.IsValid)
         {
@@ -86,10 +87,6 @@ public class PonudePoslovaController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(EditPonudaPoslovaRequest editPonudaPoslovaRequest)
     {
-        if (!ModelState.IsValid)
-        {
-            return View();
-        }
 
         var ponudaPoslova = new PonudePoslova
         {
@@ -104,6 +101,13 @@ public class PonudePoslovaController : Controller
             KrajRadova = editPonudaPoslovaRequest.KrajRadova,
             Lokacija = editPonudaPoslovaRequest.Lokacija
         };
+
+        ValidatePonudaPoslovaForEdit(ponudaPoslova);
+
+        if (!ModelState.IsValid)
+        {
+            return View();
+        }
 
         await ponudePoslovaRepository.UpdateAsync(ponudaPoslova);
         return RedirectToAction("Index");
@@ -133,5 +137,20 @@ public class PonudePoslovaController : Controller
         return RedirectToAction("Index");
     }
 
-   
+    private void ValidatePonudaPoslovaForAdd(AddPonudaPoslovaRequest addPonudaPoslovaRequest)
+    {
+        if (addPonudaPoslovaRequest.PocetakRadova >= addPonudaPoslovaRequest.KrajRadova)
+        {
+            ModelState.AddModelError("PocetakRadova", "PocetakRadova has to be before KrajRadova!");
+        }
+    }
+
+    private void ValidatePonudaPoslovaForEdit(PonudePoslova ponudaPoslova)
+    {
+        if (ponudaPoslova.PocetakRadova >= ponudaPoslova.KrajRadova)
+        {
+            ModelState.AddModelError("PocetakRadova", "PocetakRadova has to be before KrajRadova!");
+        }
+    }
+
 }

@@ -1,0 +1,56 @@
+﻿@model SportPro.Web.Models.ViewModels.AddRasporedRequest
+
+@{
+    ViewData["Title"] = "Add";
+}
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Zaposlenik" class="control-label"></label>
+                <input asp-for="Zaposlenik" class="form-control" />
+                <span asp-validation-for="Zaposlenik" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Posao" class="control-label"></label>
+                <input asp-for="Posao" class="form-control" />
+                <span asp-validation-for="Posao" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Napomena" class="control-label"></label>
+                <input asp-for="Napomena" class="form-control" />
+                <span asp-validation-for="Napomena" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PocetakRada" class="control-label"></label>
+                <input asp-for="PocetakRada" class="form-control" />
+                <span asp-validation-for="PocetakRada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KrajRada" class="control-label"></label>
+                <input asp-for="KrajRada" class="form-control" />
+                <span asp-validation-for="KrajRada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="BrojSati" class="control-label"></label>
+                <input asp-for="BrojSati" class="form-control" />
+                <span asp-validation-for="BrojSati" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

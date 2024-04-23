@@ -13,6 +13,10 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
 
 builder.Services.AddScoped<INatjecajiRepository, NatjecajiRepository>();
 builder.Services.AddScoped<IPonudePoslovaRepository, PonudePoslovaRepository>();
+builder.Services.AddScoped<IRasporedRepository, RasporedRepository>();
+builder.Services.AddScoped<IPosloviRepository, PosloviRepository>();
+builder.Services.AddScoped<IZaposleniciRepository, ZaposleniciRepository>();
+
 
 var app = builder.Build();
 
