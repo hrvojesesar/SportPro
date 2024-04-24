@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using SportPro.Web.Data;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
 
 namespace SportPro.Web.Controllers;
-
 public class NatjecajiController : Controller
 {
     private readonly INatjecajiRepository natjecajiRepository;
@@ -36,7 +33,7 @@ public class NatjecajiController : Controller
 
         if (!ModelState.IsValid)
         {
-            return View();
+            return BadRequest(ModelState);
         }
         var natjecaj = new Natjecaji
         {
@@ -51,7 +48,8 @@ public class NatjecajiController : Controller
         };
 
         await natjecajiRepository.AddAsync(natjecaj);
-        return RedirectToAction("Index");
+        // return RedirectToAction("Index");
+        return RedirectToAction("Index", new { natjecaj.IDNatjecaj });
     }
 
     [HttpGet]
@@ -82,8 +80,6 @@ public class NatjecajiController : Controller
             Dobitnik = natjecaj.Dobitnik
         };
 
-
-
         return View(editNatjecajRequest);
     }
 
@@ -107,7 +103,7 @@ public class NatjecajiController : Controller
 
         if (!ModelState.IsValid)
         {
-            return View();
+            return BadRequest(ModelState);
         }
 
         await natjecajiRepository.UpdateAsync(natjecaj);
@@ -134,10 +130,10 @@ public class NatjecajiController : Controller
         return View(natjecaj);
     }
 
-    [HttpPost, ActionName("Delete")]
-    public async Task<IActionResult> DeleteConfirmed(int id)
+    [HttpPost]
+    public async Task<IActionResult> Delete(EditNatjecajRequest editNatjecajRequest)
     {
-        var natjecaj = await natjecajiRepository.DeleteAsync(id);
+        var natjecaj = await natjecajiRepository.DeleteAsync(editNatjecajRequest.IDNatjecaj);
 
         if (natjecaj == null)
         {
@@ -146,17 +142,24 @@ public class NatjecajiController : Controller
 
         return RedirectToAction("Index");
     }
-  
 
     private void ValidateNatjecajForAdd(AddNatjecajRequest addNatjecajRequest)
     {
         if (addNatjecajRequest.TrajanjeOd >= addNatjecajRequest.TrajanjeDo)
         {
-            ModelState.AddModelError("TrajanjeOd", "TrajanjeOd has to be before TrajanjeDo!");
+            ModelState.AddModelError("TrajanjeOd", "Datum početka mora biti prije datuma završetka!");
         }
-        if (addNatjecajRequest.DatumObjave >= addNatjecajRequest.TrajanjeOd)
+        if (addNatjecajRequest.DatumObjave != null && addNatjecajRequest.DatumObjave >= addNatjecajRequest.TrajanjeOd)
         {
-            ModelState.AddModelError("DatumObjave", "DatumObjave has to be before TrajanjeOd!");
+            ModelState.AddModelError("DatumObjave", "Datum objave natječaja mora biti prije datuma početka!");
+        }
+        if (addNatjecajRequest.Naziv != null && addNatjecajRequest.Naziv.Length > 200)
+        {
+            ModelState.AddModelError("Naziv", "Naziv ne može biti duži od 200 znakova!");
+        }
+        if (addNatjecajRequest.Dobitnik != null && addNatjecajRequest.Dobitnik.Length > 50)
+        {
+            ModelState.AddModelError("Dobitnik", "Dobitnik ne može biti duži od 50 znakova!");
         }
     }
 
@@ -164,11 +167,19 @@ public class NatjecajiController : Controller
     {
         if (natjecaj.TrajanjeOd >= natjecaj.TrajanjeDo)
         {
-            ModelState.AddModelError("TrajanjeOd", "TrajanjeOd has to be before TrajanjeDo!");
+            ModelState.AddModelError("TrajanjeOd", "Datum početka mora biti prije datuma završetka!");
         }
-        if (natjecaj.DatumObjave >= natjecaj.TrajanjeOd)
+        if (natjecaj.DatumObjave != null && natjecaj.DatumObjave >= natjecaj.TrajanjeOd)
         {
-            ModelState.AddModelError("DatumObjave", "DatumObjave has to be before TrajanjeOd!");
+            ModelState.AddModelError("DatumObjave", "Datum objave natječaja mora biti prije datuma početka!");
+        }
+        if (natjecaj.Naziv != null && natjecaj.Naziv.Length > 200)
+        {
+            ModelState.AddModelError("Naziv", "Naziv ne može biti duži od 200 znakova!");
+        }
+        if (natjecaj.Dobitnik != null && natjecaj.Dobitnik.Length > 50)
+        {
+            ModelState.AddModelError("Dobitnik", "Dobitnik ne može biti duži od 50 znakova!");
         }
     }
 }

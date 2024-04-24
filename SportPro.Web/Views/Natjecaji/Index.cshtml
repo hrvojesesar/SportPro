@@ -4,7 +4,6 @@
     ViewData["Title"] = "Natječaji";
 
 }
-
 <p>
     <a asp-controller="Natjecaji" asp-action="Add">Dodaj novi natječaj</a>
 </p>
@@ -14,15 +13,14 @@
 }
 else
 {
-
     <table class="table">
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Naziv)
+                    Naziv
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Opis)
+                    Opis
                 </th>
                 <th>
                     Procijenjena vrijednost
@@ -37,10 +35,10 @@ else
                     Datum objavljivanja
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Aktivan)
+                    Aktivan
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Dobitnik)
+                    Dobitnik
                 </th>
                 <th></th>
             </tr>

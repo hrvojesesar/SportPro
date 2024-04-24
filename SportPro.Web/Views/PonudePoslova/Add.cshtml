@@ -1,70 +1,67 @@
 ﻿@model SportPro.Web.Models.ViewModels.AddPonudaPoslovaRequest
 
 @{
-    ViewData["Title"] = "Add";
+    ViewData["Title"] = "Dodavanje nove ponude";
 }
-
-<h1>Add</h1>
-
 <hr />
 <div class="row">
     <div class="col-md-4">
         <form asp-action="Add">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
-                <label asp-for="Naziv" class="control-label"></label>
-                <input asp-for="Naziv" class="form-control" required maxlength="200" />
+                <label asp-for="Naziv" class="control-label">Naziv</label>
+                <input asp-for="Naziv" class="form-control" required />
                 <span asp-validation-for="Naziv" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="OpisPosla" class="control-label"></label>
+                <label asp-for="OpisPosla" class="control-label">Opis posla</label>
                 <input asp-for="OpisPosla" class="form-control" required />
                 <span asp-validation-for="OpisPosla" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BrojOsoba" class="control-label"></label>
+                <label asp-for="BrojOsoba" class="control-label">Broj osoba</label>
                 <input asp-for="BrojOsoba" class="form-control" required />
                 <span asp-validation-for="BrojOsoba" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="BrojSati" class="control-label"></label>
+                <label asp-for="BrojSati" class="control-label">Broj sati</label>
                 <input asp-for="BrojSati" class="form-control" required />
                 <span asp-validation-for="BrojSati" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CijenaSata" class="control-label"></label>
+                <label asp-for="CijenaSata" class="control-label">Cijena sata</label>
                 <input asp-for="CijenaSata" class="form-control" required />
                 <span asp-validation-for="CijenaSata" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PotrebnaOprema" class="control-label"></label>
-                <input asp-for="PotrebnaOprema" class="form-control" maxlength="2''" />
+                <label asp-for="PotrebnaOprema" class="control-label">Potrebna oprema</label>
+                <input asp-for="PotrebnaOprema" class="form-control" />
                 <span asp-validation-for="PotrebnaOprema" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="PocetakRadova" class="control-label"></label>
+                <label asp-for="PocetakRadova" class="control-label">Početak radova</label>
                 <input asp-for="PocetakRadova" class="form-control" required />
                 <span asp-validation-for="PocetakRadova" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="KrajRadova" class="control-label"></label>
-                <input asp-for="KrajRadova" class="form-control" required />
+                <label asp-for="KrajRadova" class="control-label">Kraj radova</label>
+                <input asp-for="KrajRadova" class="form-control" required/>
                 <span asp-validation-for="KrajRadova" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Lokacija" class="control-label"></label>
-                <input asp-for="Lokacija" class="form-control" required malength="100" />
+                <label asp-for="Lokacija" class="control-label">Lokacija</label>
+                <input asp-for="Lokacija" class="form-control" required />
                 <span asp-validation-for="Lokacija" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Add" class="btn btn-primary" />
+                <input type="submit" value="Dodaj" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Vrati se na popis</a>
 </div>
 
 @section Scripts {

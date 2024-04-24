@@ -40,7 +40,7 @@ public class PonudePoslovaRepository : IPonudePoslovaRepository
 
     public async Task<PonudePoslova?> DeleteAsync(int id)
     {
-        var ponudaPoslova = await _context.PonudePoslova.FindAsync(id);
+        var ponudaPoslova = await _context.PonudePoslova.FirstOrDefaultAsync(x => x.IDPonudaPoslova == id);
         if (ponudaPoslova == null)
         {
             return null;

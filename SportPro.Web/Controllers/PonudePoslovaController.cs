@@ -131,17 +131,40 @@ public class PonudePoslovaController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(EditPonudaPoslovaRequest editPonudaPoslovaRequest)
     {
-        await ponudePoslovaRepository.DeleteAsync(id);
+        var ponudaPoslova = await ponudePoslovaRepository.DeleteAsync(editPonudaPoslovaRequest.IDPonudaPoslova);
+
+        if (ponudaPoslova == null)
+        {
+            return NotFound();
+        }
+
         return RedirectToAction("Index");
+        
     }
 
     private void ValidatePonudaPoslovaForAdd(AddPonudaPoslovaRequest addPonudaPoslovaRequest)
     {
         if (addPonudaPoslovaRequest.PocetakRadova >= addPonudaPoslovaRequest.KrajRadova)
         {
-            ModelState.AddModelError("PocetakRadova", "PocetakRadova has to be before KrajRadova!");
+            ModelState.AddModelError("PocetakRadova", "Datum početka mora biti prije datuma kraja radova!");
+        }
+        if (addPonudaPoslovaRequest.BrojOsoba <= 0)
+        {
+            ModelState.AddModelError("BrojOsoba", "Broj osoba mora biti veći od 0!");
+        }
+        if (addPonudaPoslovaRequest.Naziv.Length > 200)
+        {
+            ModelState.AddModelError("Naziv", "Naziv ne može biti duži od 200 znakova!");
+        }
+        if (addPonudaPoslovaRequest.Lokacija.Length > 100)
+        {
+            ModelState.AddModelError("Lokacija", "Lokacija ne može biti duža od 100 znakova!");
+        }
+        if (addPonudaPoslovaRequest.PotrebnaOprema != null && addPonudaPoslovaRequest.PotrebnaOprema.Length > 200)
+        {
+            ModelState.AddModelError("PotrebnaOprema", "Potrebna oprema ne može biti duža od 200 znakova!");
         }
     }
 
@@ -149,8 +172,23 @@ public class PonudePoslovaController : Controller
     {
         if (ponudaPoslova.PocetakRadova >= ponudaPoslova.KrajRadova)
         {
-            ModelState.AddModelError("PocetakRadova", "PocetakRadova has to be before KrajRadova!");
+            ModelState.AddModelError("PocetakRadova", "Datum početka mora biti prije datuma kraja radova!");
+        }
+        if (ponudaPoslova.BrojOsoba != null && ponudaPoslova.BrojOsoba <= 0)
+        {
+            ModelState.AddModelError("BrojOsoba", "Broj osoba mora biti veći od 0!");
+        }
+        if (ponudaPoslova.Naziv != null && ponudaPoslova.Naziv.Length > 200)
+        {
+            ModelState.AddModelError("Naziv", "Naziv ne može biti duži od 200 znakova!");
+        }
+        if (ponudaPoslova.Lokacija != null && ponudaPoslova.Lokacija.Length > 100)
+        {
+            ModelState.AddModelError("Lokacija", "Lokacija ne može biti duža od 100 znakova!");
+        }
+        if (ponudaPoslova.PotrebnaOprema != null && ponudaPoslova.PotrebnaOprema.Length > 200)
+        {
+            ModelState.AddModelError("PotrebnaOprema", "Potrebna oprema ne može biti duža od 200 znakova!");
         }
     }
-
 }

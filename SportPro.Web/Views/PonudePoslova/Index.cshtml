@@ -1,17 +1,14 @@
 ﻿@model IEnumerable<SportPro.Web.Models.Domains.PonudePoslova>
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Ponuđeni poslovi";
 }
-
-<h1>Index</h1>
-
 <p>
-    <a asp-controller="PonudePoslova" asp-action="Add">Create New</a>
+    <a asp-controller="PonudePoslova" asp-action="Add">Dodaj novu ponudu</a>
 </p>
 @if (Model.Count() == 0)
 {
-    <h2 align="center">Nema podataka o ponudama poslova!</h2>
+    <h2 align="center">Nema podataka o ponuđenim poslovima!</h2>
 }
 else
 {
@@ -19,31 +16,31 @@ else
         <thead>
             <tr>
                 <th>
-                    @Html.DisplayNameFor(model => model.Naziv)
+                   Naziv
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.OpisPosla)
+                    Opis posla
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.BrojOsoba)
+                    Broj osoba
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.BrojSati)
+                    Broj sati
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.CijenaSata)
+                    Cijena sata
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PotrebnaOprema)
+                    Potrebna oprema
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.PocetakRadova)
+                    Početak radova
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.KrajRadova)
+                    Kraj radova
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.Lokacija)
+                    Lokacija
                 </th>
                 <th></th>
             </tr>
@@ -65,7 +62,7 @@ else
                         @Html.DisplayFor(modelItem => item.BrojSati)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.CijenaSata)
+                        @Html.DisplayFor(modelItem => item.CijenaSata) KM
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.PotrebnaOprema)
@@ -80,8 +77,8 @@ else
                         @Html.DisplayFor(modelItem => item.Lokacija)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.IDPonudaPoslova">Edit</a> |
-                        <a asp-action="Delete" asp-route-id="@item.IDPonudaPoslova">Delete</a>
+                        <a asp-action="Edit" asp-route-id="@item.IDPonudaPoslova">Uredi</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IDPonudaPoslova">Izbriši</a>
                     </td>
                 </tr>
             }
