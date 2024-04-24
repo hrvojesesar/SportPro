@@ -50,7 +50,7 @@ public class PonudePoslovaController : Controller
         };
 
         await ponudePoslovaRepository.AddAsync(ponudaPoslova);
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", new { ponudaPoslova.IDPonudaPoslova });
     }
 
     [HttpGet]
@@ -110,7 +110,7 @@ public class PonudePoslovaController : Controller
         }
 
         await ponudePoslovaRepository.UpdateAsync(ponudaPoslova);
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", new { id = editPonudaPoslovaRequest.IDPonudaPoslova });
     }
 
     [HttpGet]
@@ -140,7 +140,7 @@ public class PonudePoslovaController : Controller
             return NotFound();
         }
 
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", new { id = editPonudaPoslovaRequest.IDPonudaPoslova });
         
     }
 

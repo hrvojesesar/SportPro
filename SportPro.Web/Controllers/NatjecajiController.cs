@@ -107,7 +107,7 @@ public class NatjecajiController : Controller
         }
 
         await natjecajiRepository.UpdateAsync(natjecaj);
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", new { id = editNatjecajRequest.IDNatjecaj });
 
 
     }
@@ -140,7 +140,7 @@ public class NatjecajiController : Controller
             return NotFound();
         }
 
-        return RedirectToAction("Index");
+        return RedirectToAction("Index", new { id = editNatjecajRequest.IDNatjecaj });
     }
 
     private void ValidateNatjecajForAdd(AddNatjecajRequest addNatjecajRequest)
