@@ -106,7 +106,7 @@ public class PonudePoslovaController : Controller
 
         if (!ModelState.IsValid)
         {
-            return View();
+            return BadRequest(ModelState);
         }
 
         await ponudePoslovaRepository.UpdateAsync(ponudaPoslova);
