@@ -21,7 +21,7 @@ public class NatjecajiRepository : INatjecajiRepository
 
     public async Task<Natjecaji> AddAsync(Natjecaji natjecaj)
     {
-        applicationDbContext.Natjecaji.Add(natjecaj);
+        await applicationDbContext.Natjecaji.AddAsync(natjecaj);
         await applicationDbContext.SaveChangesAsync();
         return natjecaj;
     }

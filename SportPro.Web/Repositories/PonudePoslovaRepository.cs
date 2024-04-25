@@ -21,7 +21,7 @@ public class PonudePoslovaRepository : IPonudePoslovaRepository
 
     public async Task<PonudePoslova> AddAsync(PonudePoslova ponudaPoslova)
     {
-        _context.PonudePoslova.Add(ponudaPoslova);
+        await _context.PonudePoslova.AddAsync(ponudaPoslova);
         await _context.SaveChangesAsync();
         return ponudaPoslova;
     }
