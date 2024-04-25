@@ -1,0 +1,93 @@
+﻿@model IEnumerable<SportPro.Web.Models.Domains.Poslovnice>
+
+@{
+    ViewData["Title"] = "Poslovnice";
+}
+
+<p>
+    <a asp-controller="Poslovnice" asp-action="Add">Dodaj novu poslovnicu</a>
+</p>
+@if (Model.Count() == 0)
+{
+    <h2 align="center">Nema podataka o poslovnicama!</h2>
+}
+else
+{
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Naziv
+            </th>
+            <th>
+                Adresa
+            </th>
+            <th>
+                Grad
+            </th>
+            <th>
+                Država
+            </th>
+            <th>
+                Telefon
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Početak radnog vremena
+            </th>
+            <th>
+                Kraj radnog vremena
+            </th>
+            <th>
+                Datum otvaranja
+            </th>
+            <th>
+                Status
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adresa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grad)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Drzava)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Telefon)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Email)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RadnoVrijemeOd)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RadnoVrijemeDo)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DatumOtvaranja)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Status)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IDPoslovnica">Uredi</a> |
+                <a asp-action="Delete" asp-route-id="@item.IDPoslovnica">Izbriši</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
+}
