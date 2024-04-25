@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportPro.Web.Data;
 
@@ -11,9 +12,11 @@ using SportPro.Web.Data;
 namespace SportPro.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240424211550_Poslovnice_Changes")]
+    partial class Poslovnice_Changes
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasIndex("ZaposleniciIDZaposlenik");
 
-                    b.ToTable("PozicijeZaposlenici", (string)null);
+                    b.ToTable("PozicijeZaposlenici");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Natjecaji", b =>
@@ -73,7 +76,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDNatjecaj");
 
-                    b.ToTable("Natjecaji", (string)null);
+                    b.ToTable("Natjecaji");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.PonudePoslova", b =>
@@ -116,7 +119,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDPonudaPoslova");
 
-                    b.ToTable("PonudePoslova", (string)null);
+                    b.ToTable("PonudePoslova");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Poslovnice", b =>
@@ -166,7 +169,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDPoslovnica");
 
-                    b.ToTable("Poslovnice", (string)null);
+                    b.ToTable("Poslovnice");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Pozicije", b =>
@@ -186,7 +189,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDPozicija");
 
-                    b.ToTable("Pozicije", (string)null);
+                    b.ToTable("Pozicije");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Zaposlenici", b =>
@@ -256,7 +259,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasIndex("PoslovnicaIDPoslovnica");
 
-                    b.ToTable("Zaposlenici", (string)null);
+                    b.ToTable("Zaposlenici");
                 });
 
             modelBuilder.Entity("PozicijeZaposlenici", b =>
