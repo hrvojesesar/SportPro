@@ -1,0 +1,38 @@
+﻿@model IEnumerable<SportPro.Web.Models.Domains.Pozicije>
+
+@{
+    ViewData["Title"] = "Pozicije";
+}
+
+<p>
+    <a asp-controller="Pozicije" asp-action="Add">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Naziv
+            </th>
+            <th>
+                Opis
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Naziv)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opis)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IDPozicija">Uredi</a> |
+                <a asp-action="Delete" asp-route-id="@item.IDPozicija">Izbriši</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
