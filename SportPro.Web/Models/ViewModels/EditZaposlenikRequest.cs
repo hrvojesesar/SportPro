@@ -20,6 +20,7 @@ public class EditZaposlenikRequest
     public string JMBG { get; set; }
     public string BrojBankovnogRacuna { get; set; }
     public string Kvalifikacija { get; set; }
+    public string Status { get; set; }
     public DateTime? DatumZavrsetkaRadnogOdnosa { get; set; }
     public int? PoslovnicaID { get; set; }
     public IEnumerable<Poslovnice>? Poslovnices { get; set; }

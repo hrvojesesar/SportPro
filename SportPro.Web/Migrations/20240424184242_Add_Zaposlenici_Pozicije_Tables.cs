@@ -43,7 +43,8 @@ public partial class Add_Zaposlenici_Pozicije_Tables : Migration
                 Certifikati = table.Column<string>(type: "nvarchar(max)", nullable: true),
                 JMBG = table.Column<string>(type: "nvarchar(20)", nullable: false),
                 BrojBankovnogRacuna = table.Column<string>(type: "nvarchar(20)", nullable: false),
-                Kvalifikacija = table.Column<string>(type: "nvarchar(4)", nullable: false),
+                Kvalifikacija = table.Column<string>(type: "nvarchar(50)", nullable: false),
+                Status = table.Column<string>(type: "nvarchar(10)", nullable: false),
                 DatumZavrsetkaRadnogOdnosa = table.Column<DateTime>(type: "datetime2", nullable: true)
             },
             constraints: table =>

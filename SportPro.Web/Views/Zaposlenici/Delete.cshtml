@@ -1,7 +1,7 @@
 ﻿@model SportPro.Web.Models.Domains.Zaposlenici
 
 @{
-    ViewData["Title"] = "Delete";
+    ViewData["Title"] = "Brisanje zpaoslenika";
 
     string GetPoslovnicaName(int? id, IEnumerable<SportPro.Web.Models.Domains.Poslovnice> poslovnice)
     {
@@ -14,93 +14,97 @@
     }
 }
 
-<h1>Delete</h1>
 
-<h3>Are you sure you want to delete this?</h3>
+<h3>Jeste sigurni da želite izbrisati zaposlenika?</h3>
 <div>
-    <h4>Zaposlenici</h4>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Ime)
+            Ime
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Ime)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Prezime)
+            Prezime
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Prezime)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Spol)
+            Spol
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Spol)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Adresa)
+            Adresa
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Adresa)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Grad)
+            Grad
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Grad)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Drzava)
+            Država
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Drzava)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Telefon)
+            Telefon
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Telefon)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Email)
+            Email
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Email)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DatumZaposlenja)
+            Datum zaposlenja
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DatumZaposlenja)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Certifikati)
+            Certifikati
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Certifikati)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.JMBG)
+            JMBG
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.JMBG)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.BrojBankovnogRacuna)
+            Broj bankovnog računa
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.BrojBankovnogRacuna)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Kvalifikacija)
+            Kvalifikacija
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Kvalifikacija)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.DatumZavrsetkaRadnogOdnosa)
+            Status
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class="col-sm-2">
+            Datum završetka radnog odnosa
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.DatumZavrsetkaRadnogOdnosa)
@@ -118,7 +122,7 @@
 
     <form asp-action="Delete">
         <input type="hidden" asp-for="IDZaposlenik" />
-        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <input type="submit" value="Izbriši" class="btn btn-danger" /> |
         <a asp-action="Index">Back to List</a>
     </form>
 </div>
