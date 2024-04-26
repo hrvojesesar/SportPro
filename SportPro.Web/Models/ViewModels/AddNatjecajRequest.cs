@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace SportPro.Web.Models.ViewModels;
-
 public class AddNatjecajRequest
 {
     [Key]

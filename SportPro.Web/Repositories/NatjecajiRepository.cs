@@ -4,7 +4,6 @@ using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 
 namespace SportPro.Web.Repositories;
-
 public class NatjecajiRepository : INatjecajiRepository
 {
     private readonly ApplicationDbContext applicationDbContext;
@@ -49,6 +48,4 @@ public class NatjecajiRepository : INatjecajiRepository
         await applicationDbContext.SaveChangesAsync();
         return natjecaj;
     }
-   
-
 }

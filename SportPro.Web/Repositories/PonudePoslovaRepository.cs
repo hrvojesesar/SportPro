@@ -4,7 +4,6 @@ using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 
 namespace SportPro.Web.Repositories;
-
 public class PonudePoslovaRepository : IPonudePoslovaRepository
 {
     private readonly ApplicationDbContext _context;

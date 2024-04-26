@@ -2,7 +2,6 @@
 using System.ComponentModel.DataAnnotations;
 
 namespace SportPro.Web.Models.ViewModels;
-
 public class EditZaposlenikRequest
 {
     [Key]

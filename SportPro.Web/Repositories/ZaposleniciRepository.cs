@@ -4,7 +4,6 @@ using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 
 namespace SportPro.Web.Repositories;
-
 public class ZaposleniciRepository : IZaposleniciRepository
 {
     private readonly ApplicationDbContext applicationDbContext;
@@ -49,5 +48,4 @@ public class ZaposleniciRepository : IZaposleniciRepository
         await applicationDbContext.SaveChangesAsync();
         return zaposlenik;
     }
-
 }
