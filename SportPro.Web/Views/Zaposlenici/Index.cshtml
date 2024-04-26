@@ -12,8 +12,6 @@
         }
         return "";
     }
-
-   
 }
 
 <p>
@@ -76,6 +74,9 @@ else
                 <th>
                     Poslovnica
                 </th>
+                <th>
+                    Pozicije
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -130,11 +131,18 @@ else
                     </td>
                     <td>
                         @{
-                            var poslovnicaName  = GetPoslovnicaName(item.PoslovnicaID, ViewData["Poslovnice"] as IEnumerable<SportPro.Web.Models.Domains.Poslovnice>);
+                            var poslovnicaName = GetPoslovnicaName(item.PoslovnicaID, ViewData["Poslovnice"] as IEnumerable<SportPro.Web.Models.Domains.Poslovnice>);
                             @poslovnicaName
                         }
                     </td>
                     <td>
+                        @foreach (var pozicija in item.Pozicije)
+                        {
+                            <span>@pozicija.Naziv</span>
+                        }
+                     
+                    <td>
+                 
                         <a asp-action="Edit" asp-route-id="@item.IDZaposlenik">Uredi</a> |
                         <a asp-action="Delete" asp-route-id="@item.IDZaposlenik">Izbriši</a>
                     </td>

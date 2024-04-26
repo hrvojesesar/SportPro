@@ -15,13 +15,15 @@ public class ZaposleniciController : Controller
 {
     private readonly IZaposleniciRepository zaposleniciRepository;
     private readonly IPoslovniceRepository poslovniceRepository;
+    private readonly IPozicijeRepository pozicijeRepository;
     private readonly ApplicationDbContext _context;
 
-    public ZaposleniciController(IZaposleniciRepository zaposleniciRepository, IPoslovniceRepository poslovniceRepository, ApplicationDbContext applicationDbContext)
+    public ZaposleniciController(IZaposleniciRepository zaposleniciRepository, IPoslovniceRepository poslovniceRepository, ApplicationDbContext applicationDbContext, IPozicijeRepository pozicijeRepository)
     {
         this.zaposleniciRepository = zaposleniciRepository;
         this.poslovniceRepository = poslovniceRepository;
         _context = applicationDbContext;
+        this.pozicijeRepository = pozicijeRepository;
     }
 
     [HttpGet]
@@ -32,6 +34,7 @@ public class ZaposleniciController : Controller
 
         ViewData["Poslovnice"] = poslovnice; // Pass the Poslovnice collection to the view
 
+
         return View(zaposlenici);
     }
 
@@ -39,10 +42,15 @@ public class ZaposleniciController : Controller
     [HttpGet]
     public async Task<IActionResult> Add()
     {
+        var pozicije = await pozicijeRepository.GetAllAsync();
         var model = new AddZaposlenikRequest
         {
-            Poslovnices = _context.Poslovnice.ToList()
-
+            Poslovnices = _context.Poslovnice.ToList(),
+            Pozicije = pozicije.Select(p => new SelectListItem
+            {
+                Text = p.Naziv,
+                Value = p.IDPozicija.ToString()
+            })
         };
         return View(model);
     }
@@ -50,12 +58,12 @@ public class ZaposleniciController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(AddZaposlenikRequest addZaposlenikRequest)
     {
-        ValidateZaposlenikForAdd(addZaposlenikRequest);
+        //ValidateZaposlenikForAdd(addZaposlenikRequest);
 
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
+        //if (!ModelState.IsValid)
+        //{
+        //    return BadRequest(ModelState);
+        //}
 
         var zaposlenik = new Zaposlenici
         {
@@ -75,12 +83,26 @@ public class ZaposleniciController : Controller
             Status = addZaposlenikRequest.Status,
             DatumZavrsetkaRadnogOdnosa = addZaposlenikRequest.DatumZavrsetkaRadnogOdnosa,
             PoslovnicaID = addZaposlenikRequest.PoslovnicaID
+
         };
 
+        var selectedPozicije = new List<Pozicije>();
+        foreach (var pozicijaId in addZaposlenikRequest.SelectedPozicije)
+        {
+            var selectedPozicijaId = int.Parse(pozicijaId);
+            var existing = await pozicijeRepository.GetAsync(selectedPozicijaId);
+
+            if (existing != null)
+            {
+                selectedPozicije.Add(existing);
+            }
+        }
+
+        zaposlenik.Pozicije = selectedPozicije;
 
 
         await zaposleniciRepository.AddAsync(zaposlenik);
-        return RedirectToAction("Index", new { id = zaposlenik.IDZaposlenik });
+        return RedirectToAction("Index");
     }
 
     [HttpGet]
@@ -92,6 +114,7 @@ public class ZaposleniciController : Controller
         }
 
         var zaposlenik = await zaposleniciRepository.GetAsync(id);
+        var pozicije = await pozicijeRepository.GetAllAsync();
 
         if (zaposlenik == null)
         {
@@ -117,7 +140,13 @@ public class ZaposleniciController : Controller
             Status = zaposlenik.Status,
             DatumZavrsetkaRadnogOdnosa = zaposlenik.DatumZavrsetkaRadnogOdnosa,
             PoslovnicaID = zaposlenik.PoslovnicaID,
-            Poslovnices = _context.Poslovnice.ToList()
+            Poslovnices = _context.Poslovnice.ToList(),
+            Pozicije = pozicije.Select(p => new SelectListItem
+            {
+                Value = p.IDPozicija.ToString(),
+                Text = p.Naziv
+            }),
+            SelectedPozicije = zaposlenik.Pozicije.Select(p => p.IDPozicija.ToString()).ToArray()
         };
 
         return View(model);
@@ -147,6 +176,19 @@ public class ZaposleniciController : Controller
             DatumZavrsetkaRadnogOdnosa = editZaposlenikRequest.DatumZavrsetkaRadnogOdnosa,
             PoslovnicaID = editZaposlenikRequest.PoslovnicaID
         };
+
+        var selectedPozicije = new List<Pozicije>();
+        foreach (var pozicijaId in editZaposlenikRequest.SelectedPozicije)
+        {
+            var existing = await pozicijeRepository.GetAsync(int.Parse(pozicijaId));
+
+            if (existing != null)
+            {
+                selectedPozicije.Add(existing);
+            }
+        }
+
+        zaposlenik.Pozicije = selectedPozicije;
 
         ValidateZaposlenikForEdit(zaposlenik);
 

@@ -15,7 +15,7 @@ public class ZaposleniciRepository : IZaposleniciRepository
 
     public async Task<IEnumerable<Zaposlenici>> GetAllAsync()
     {
-        return await applicationDbContext.Zaposlenici.ToListAsync();
+        return await applicationDbContext.Zaposlenici.Include(x => x.Pozicije).ToListAsync();
     }
 
     public async Task<Zaposlenici> AddAsync(Zaposlenici zaposlenik)
@@ -27,14 +27,38 @@ public class ZaposleniciRepository : IZaposleniciRepository
 
     public Task<Zaposlenici>? GetAsync(int? id)
     {
-        return applicationDbContext.Zaposlenici.FirstOrDefaultAsync(z => z.IDZaposlenik == id);
+        return applicationDbContext.Zaposlenici.Include(x => x.Pozicije).FirstOrDefaultAsync(z => z.IDZaposlenik == id);
     }
 
     public async Task<Zaposlenici>? UpdateAsync(Zaposlenici zaposlenik)
     {
-        applicationDbContext.Zaposlenici.Update(zaposlenik);
+        var existingZaposlenik = await applicationDbContext.Zaposlenici.Include(x => x.Pozicije).FirstOrDefaultAsync(z => z.IDZaposlenik == zaposlenik.IDZaposlenik);
+
+        if (existingZaposlenik == null)
+        {
+            return null;
+        }
+
+        existingZaposlenik.Ime = zaposlenik.Ime;
+        existingZaposlenik.Prezime = zaposlenik.Prezime;
+        existingZaposlenik.Spol = zaposlenik.Spol;
+        existingZaposlenik.Adresa = zaposlenik.Adresa;
+        existingZaposlenik.Grad = zaposlenik.Grad;
+        existingZaposlenik.Drzava = zaposlenik.Drzava;
+        existingZaposlenik.Telefon = zaposlenik.Telefon;
+        existingZaposlenik.Email = zaposlenik.Email;
+        existingZaposlenik.DatumZaposlenja = zaposlenik.DatumZaposlenja;
+        existingZaposlenik.Certifikati = zaposlenik.Certifikati;
+        existingZaposlenik.JMBG = zaposlenik.JMBG;
+        existingZaposlenik.BrojBankovnogRacuna = zaposlenik.BrojBankovnogRacuna;
+        existingZaposlenik.Kvalifikacija = zaposlenik.Kvalifikacija;
+        existingZaposlenik.Status = zaposlenik.Status;
+        existingZaposlenik.DatumZavrsetkaRadnogOdnosa = zaposlenik.DatumZavrsetkaRadnogOdnosa;
+        existingZaposlenik.PoslovnicaID = zaposlenik.PoslovnicaID;
+        existingZaposlenik.Pozicije = zaposlenik.Pozicije;
+
         await applicationDbContext.SaveChangesAsync();
-        return zaposlenik;
+        return existingZaposlenik;
     }
 
     public async Task<Zaposlenici>? DeleteAsync(int? id)

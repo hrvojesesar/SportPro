@@ -49,4 +49,7 @@ public class AddZaposlenikRequest
     public DateTime? DatumZavrsetkaRadnogOdnosa { get; set; }
     public int? PoslovnicaID { get; set; }
     public IEnumerable<Poslovnice>? Poslovnices { get; set; }
+    public IEnumerable<SelectListItem>? Pozicije { get; set; }
+    public string[] SelectedPozicije { get; set; } = Array.Empty<string>();
+
 }

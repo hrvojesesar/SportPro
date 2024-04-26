@@ -1,4 +1,5 @@
-﻿using SportPro.Web.Models.Domains;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using SportPro.Web.Models.Domains;
 using System.ComponentModel.DataAnnotations;
 
 namespace SportPro.Web.Models.ViewModels;
@@ -23,4 +24,6 @@ public class EditZaposlenikRequest
     public DateTime? DatumZavrsetkaRadnogOdnosa { get; set; }
     public int? PoslovnicaID { get; set; }
     public IEnumerable<Poslovnice>? Poslovnices { get; set; }
+    public IEnumerable<SelectListItem>? Pozicije { get; set; }
+    public string[]? SelectedPozicije { get; set; } = Array.Empty<string>();
 }

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System.ComponentModel.DataAnnotations;
 
 namespace SportPro.Web.Models.Domains;
 public class Zaposlenici
@@ -23,4 +24,5 @@ public class Zaposlenici
     public int? PoslovnicaID { get; set; }
     public ICollection<Pozicije> Pozicije { get; set; }
     public Poslovnice Poslovnica { get; set; }
+
 }
