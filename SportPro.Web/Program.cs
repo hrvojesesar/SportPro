@@ -16,6 +16,7 @@ builder.Services.AddScoped<IPonudePoslovaRepository, PonudePoslovaRepository>();
 builder.Services.AddScoped<IPozicijeRepository, PozicijeRepository>();
 builder.Services.AddScoped<IPoslovniceRepository, PoslovniceRepository>();
 builder.Services.AddScoped<IZaposleniciRepository, ZaposleniciRepository>();
+builder.Services.AddScoped<IPravilniciRepository, PravilniciRepository>();
 
 
 var app = builder.Build();

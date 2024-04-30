@@ -15,5 +15,10 @@ public class ApplicationDbContext : DbContext
     public DbSet<Zaposlenici> Zaposlenici { get; set; }
     public DbSet<Pozicije> Pozicije { get; set; }
     public DbSet<Poslovnice> Poslovnice { get; set; }
+    public DbSet<Pravilnici> Pravilnici { get; set; }
+
+public DbSet<SportPro.Web.Models.ViewModels.AddPravilnikRequest> AddPravilnikRequest { get; set; } = default!;
+
+public DbSet<SportPro.Web.Models.ViewModels.EditPravilnikRequest> EditPravilnikRequest { get; set; } = default!;
 
 }
