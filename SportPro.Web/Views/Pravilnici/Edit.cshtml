@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Opis" class="control-label">Opis</label>
-                <input asp-for="Opis" class="form-control" />
+                <textarea asp-for="Opis" class="form-control" id="opis" required></textarea>
                 <span asp-validation-for="Opis" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -46,4 +46,8 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+
+    <script>
+        var editor = new FroalaEditor('#opis');
+    </script>
 }
