@@ -17,6 +17,9 @@ builder.Services.AddScoped<IPozicijeRepository, PozicijeRepository>();
 builder.Services.AddScoped<IPoslovniceRepository, PoslovniceRepository>();
 builder.Services.AddScoped<IZaposleniciRepository, ZaposleniciRepository>();
 builder.Services.AddScoped<IPravilniciRepository, PravilniciRepository>();
+builder.Services.AddScoped<IBojeRepository, BojeRepository>();
+builder.Services.AddScoped<IBrendoviRepository, BrendoviRepository>();
+builder.Services.AddScoped<IVelicineRepository, VelicineRepository>();
 
 
 var app = builder.Build();

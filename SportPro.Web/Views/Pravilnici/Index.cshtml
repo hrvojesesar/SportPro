@@ -40,7 +40,7 @@ else
                         @Html.DisplayFor(modelItem => item.Naziv)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Opis)
+                        @Html.Raw(item.Opis)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DatumObjavljivanja)

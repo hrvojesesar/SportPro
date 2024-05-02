@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportPro.Web.Data;
 
@@ -11,9 +12,11 @@ using SportPro.Web.Data;
 namespace SportPro.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240502141805_Added_Brendovi")]
+    partial class Added_Brendovi
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -271,23 +274,6 @@ namespace SportPro.Web.Migrations
                     b.HasKey("IDPravilnik");
 
                     b.ToTable("Pravilnici");
-                });
-
-            modelBuilder.Entity("SportPro.Web.Models.Domains.Velicine", b =>
-                {
-                    b.Property<int>("IDVelicina")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDVelicina"));
-
-                    b.Property<string>("Velicina")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IDVelicina");
-
-                    b.ToTable("Velicine");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Zaposlenici", b =>

@@ -1,0 +1,61 @@
+﻿@model SportPro.Web.Models.Domains.Brendovi
+
+@{
+    ViewData["Title"] = "Brisanje brenda";
+}
+
+
+<h3>Jeste sigurni da želite izbrisati brend?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Naziv brenda
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NazivBrenda)
+        </dd>
+        <dt class = "col-sm-2">
+            Vrsta
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Vrsta)
+        </dd>
+        <dt class = "col-sm-2">
+            Osnivač
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Osnivac)
+        </dd>
+        <dt class = "col-sm-2">
+            Godina osnivanja
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.GodinaOsnivanja)
+        </dd>
+        <dt class = "col-sm-2">
+            Sjedište
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Sjediste)
+        </dd>
+        <dt class = "col-sm-2">
+            Predsjednik
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Predsjednik)
+        </dd>
+        <dt class = "col-sm-2">
+            Status
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IDBrend" />
+        <input type="submit" value="Izbriši" class="btn btn-danger" /> |
+        <a asp-action="Index">Vrati se na popis</a>
+    </form>
+</div>

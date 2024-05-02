@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportPro.Web.Data;
 
@@ -11,9 +12,11 @@ using SportPro.Web.Data;
 namespace SportPro.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240430194735_Added_Boje_Table")]
+    partial class Added_Boje_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -52,46 +55,6 @@ namespace SportPro.Web.Migrations
                     b.HasKey("IDBoja");
 
                     b.ToTable("Boje");
-                });
-
-            modelBuilder.Entity("SportPro.Web.Models.Domains.Brendovi", b =>
-                {
-                    b.Property<int>("IDBrend")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDBrend"));
-
-                    b.Property<int>("GodinaOsnivanja")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NazivBrenda")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Osnivac")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Predsjednik")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Sjediste")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Vrsta")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IDBrend");
-
-                    b.ToTable("Brendovi");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Natjecaji", b =>
@@ -271,23 +234,6 @@ namespace SportPro.Web.Migrations
                     b.HasKey("IDPravilnik");
 
                     b.ToTable("Pravilnici");
-                });
-
-            modelBuilder.Entity("SportPro.Web.Models.Domains.Velicine", b =>
-                {
-                    b.Property<int>("IDVelicina")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDVelicina"));
-
-                    b.Property<string>("Velicina")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IDVelicina");
-
-                    b.ToTable("Velicine");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Zaposlenici", b =>
