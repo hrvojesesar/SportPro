@@ -11,6 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace SportPro.Web.Controllers;
 
+[Route("[controller]/[action]")]
 public class ZaposleniciController : Controller
 {
     private readonly IZaposleniciRepository zaposleniciRepository;

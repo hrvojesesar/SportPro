@@ -5,6 +5,7 @@ using SportPro.Web.Models.ViewModels;
 
 namespace SportPro.Web.Controllers;
 
+[Route("[controller]/[action]")]
 public class BrendoviController : Controller
 {
     private readonly IBrendoviRepository brendoviRepository;

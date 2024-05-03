@@ -4,6 +4,7 @@ using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
 
 namespace SportPro.Web.Controllers;
+[Route("[controller]/[action]")]
 public class NatjecajiController : Controller
 {
     private readonly INatjecajiRepository natjecajiRepository;
