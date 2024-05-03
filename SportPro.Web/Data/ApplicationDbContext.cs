@@ -19,10 +19,12 @@ public class ApplicationDbContext : DbContext
     public DbSet<Boje> Boje { get; set; }
     public DbSet<Brendovi> Brendovi { get; set; }
     public DbSet<Velicine> Velicine { get; set; }
+    public DbSet<VrstePlacanja> VrstePlacanja { get; set; }
+    public DbSet<Dobavljaci> Dobavljaci { get; set; }
 
-public DbSet<SportPro.Web.Models.ViewModels.AddVelicinaRequest> AddVelicinaRequest { get; set; } = default!;
+public DbSet<SportPro.Web.Models.ViewModels.AddDobavljacRequest> AddDobavljacRequest { get; set; } = default!;
 
-public DbSet<SportPro.Web.Models.ViewModels.EditVelicinaRequest> EditVelicinaRequest { get; set; } = default!;
+public DbSet<SportPro.Web.Models.ViewModels.EditDobavljacRequest> EditDobavljacRequest { get; set; } = default!;
 
 
 }

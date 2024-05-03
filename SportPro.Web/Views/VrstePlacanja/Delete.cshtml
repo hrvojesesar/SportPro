@@ -1,0 +1,45 @@
+﻿@model SportPro.Web.Models.Domains.VrstePlacanja
+
+@{
+    ViewData["Title"] = "Brisanje vrste plaćanja";
+}
+
+
+
+<h3>Jeste sigurni da želite izbrisati vrstu plaćanja?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Naziv
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+        <dt class="col-sm-2">
+            Opis
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Opis)
+        </dd>
+        <dt class="col-sm-2">
+            Aktivno
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Aktivno)
+            {
+                <text>Da</text>
+            }
+            else
+            {
+                <text>Ne</text>
+            }
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IDVrstaPlacanja" />
+        <input type="submit" value="Izbriši" class="btn btn-danger" /> |
+        <a asp-action="Index">Vrati se na popis</a>
+    </form>
+</div>

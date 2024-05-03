@@ -1,0 +1,60 @@
+﻿@model IEnumerable<SportPro.Web.Models.Domains.VrstePlacanja>
+
+@{
+    ViewData["Title"] = "Vrste plaćanja";
+}
+
+
+<p>
+    <a asp-controller="VrstePlacanja" asp-action="Add">Dodaj novu vrstu</a>
+</p>
+@if (Model.Count() == 0)
+{
+    <h2 align="center">Nema podataka o vrstama plaćanja!</h2>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Naziv
+                </th>
+                <th>
+                    Opis
+                </th>
+                <th>
+                    Aktivno
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Naziv)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Opis)
+                    </td>
+                    <td>
+                        @if (item.Aktivno)
+                        {
+                            <text>Da</text>
+                        }
+                        else
+                        {
+                            <text>Ne</text>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IDVrstaPlacanja">Uredi</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IDVrstaPlacanja">Izbriši</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

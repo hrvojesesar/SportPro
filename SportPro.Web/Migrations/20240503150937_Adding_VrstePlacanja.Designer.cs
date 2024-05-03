@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportPro.Web.Data;
 
@@ -11,9 +12,11 @@ using SportPro.Web.Data;
 namespace SportPro.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240503150937_Adding_VrstePlacanja")]
+    partial class Adding_VrstePlacanja
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,51 +95,6 @@ namespace SportPro.Web.Migrations
                     b.HasKey("IDBrend");
 
                     b.ToTable("Brendovi");
-                });
-
-            modelBuilder.Entity("SportPro.Web.Models.Domains.Dobavljaci", b =>
-                {
-                    b.Property<int>("IDDobavljac")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDDobavljac"));
-
-                    b.Property<string>("Adresa")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Drzava")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Grad")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("KrajSuradnje")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Naziv")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime?>("PocetakSuradnje")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("SuradnjaAktivna")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Telefon")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("IDDobavljac");
-
-                    b.ToTable("Dobavljaci");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Natjecaji", b =>

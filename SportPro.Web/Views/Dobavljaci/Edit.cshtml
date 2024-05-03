@@ -1,0 +1,76 @@
+﻿@model SportPro.Web.Models.ViewModels.EditDobavljacRequest
+
+@{
+    ViewData["Title"] = "Uređivanje dobavljača";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IDDobavljac" />
+            <div class="form-group">
+                <label asp-for="Naziv" class="control-label">Naziv</label>
+                <input asp-for="Naziv" class="form-control" />
+                <span asp-validation-for="Naziv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Adresa" class="control-label">Adresa</label>
+                <input asp-for="Adresa" class="form-control" />
+                <span asp-validation-for="Adresa" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Grad" class="control-label">Grad</label>
+                <input asp-for="Grad" class="form-control" />
+                <span asp-validation-for="Grad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Drzava" class="control-label">Država</label>
+                <input asp-for="Drzava" class="form-control" />
+                <span asp-validation-for="Drzava" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Telefon" class="control-label">Telefon</label>
+                <input asp-for="Telefon" class="form-control" />
+                <span asp-validation-for="Telefon" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label">Email</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PocetakSuradnje" class="control-label">Datum početka suradnje</label>
+                <input asp-for="PocetakSuradnje" class="form-control" />
+                <span asp-validation-for="PocetakSuradnje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="KrajSuradnje" class="control-label">Datum kraja suradnje</label>
+                <input asp-for="KrajSuradnje" class="form-control" />
+                <span asp-validation-for="KrajSuradnje" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="SuradnjaAktivna" class="control-label">Aktivna suradnja</label>
+                <div>
+                    <label><input type="radio" asp-for="SuradnjaAktivna" value="Da" /> Da</label>
+                    <label><input type="radio" asp-for="SuradnjaAktivna" value="Ne" /> Ne</label>
+                </div>
+                <span asp-validation-for="SuradnjaAktivna" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Spremi" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
