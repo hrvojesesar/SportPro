@@ -56,21 +56,21 @@ public partial class Add_Zaposlenici_Pozicije_Tables : Migration
             name: "PozicijeZaposlenici",
             columns: table => new
             {
-                PozicijeID = table.Column<int>(type: "int", nullable: false),
-                ZaposleniciID = table.Column<int>(type: "int", nullable: false)
+                PozicijeIDPozicija = table.Column<int>(type: "int", nullable: false),
+                ZaposleniciIDZaposlenik = table.Column<int>(type: "int", nullable: false)
             },
             constraints: table =>
             {
-                table.PrimaryKey("PK_PozicijeZaposlenici", x => new { x.PozicijeID, x.ZaposleniciID });
+                table.PrimaryKey("PK_PozicijeZaposlenici", x => new { x.PozicijeIDPozicija, x.ZaposleniciIDZaposlenik });
                 table.ForeignKey(
                     name: "FK_PozicijeZaposlenici_Pozicije",
-                    column: x => x.PozicijeID,
+                    column: x => x.PozicijeIDPozicija,
                     principalTable: "Pozicije",
                     principalColumn: "IDPozicija",
                     onDelete: ReferentialAction.Cascade);
                 table.ForeignKey(
                     name: "FK_PozicijeZaposlenici_Zaposlenici",
-                    column: x => x.ZaposleniciID,
+                    column: x => x.ZaposleniciIDZaposlenik,
                     principalTable: "Zaposlenici",
                     principalColumn: "IDZaposlenik",
                     onDelete: ReferentialAction.Cascade);
@@ -79,7 +79,7 @@ public partial class Add_Zaposlenici_Pozicije_Tables : Migration
         migrationBuilder.CreateIndex(
             name: "IX_PozicijeZaposlenici",
             table: "PozicijeZaposlenici",
-            column: "ZaposleniciID");
+            column: "ZaposleniciIDZaposlenik");
     }
 
     /// <inheritdoc />
