@@ -1,0 +1,80 @@
+﻿@model SportPro.Web.Models.Domains.Promocije
+
+@{
+    ViewData["Title"] = "Brisanje promocije";
+
+    string GetTipPromocijeName(int? id, IEnumerable<SportPro.Web.Models.Domains.TipoviPromocija> tipoviPromocija)
+    {
+        var tipPromocije = tipoviPromocija.FirstOrDefault(p => p.IDTipPromocije == id);
+        if (tipPromocije != null)
+        {
+            return tipPromocije.Naziv;
+        }
+        return "";
+    }
+}
+
+<h3>Jeste sigurni da želite izbrisati promociju?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Naziv
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+        <dt class="col-sm-2">
+            Tip promocije
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var tipPromocije = GetTipPromocijeName(Model.TipoviPromocijaIDTipPromocije, ViewData["TipoviPromocija"] as IEnumerable<SportPro.Web.Models.Domains.TipoviPromocija>);
+                @tipPromocije
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Opis
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Opis)
+        </dd>
+        <dt class="col-sm-2">
+            Datum početka
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DatumPocetka)
+        </dd>
+        <dt class="col-sm-2">
+            Datum završetka
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DatumZavrsetka)
+        </dd>
+        <dt class="col-sm-2">
+            Aktivna
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Aktivna)
+            {
+                <text>Da</text>
+            }
+            else
+            {
+                <text>Ne</text>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Dodatni uvjeti
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DodatniUvjeti)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IDPromocije" />
+        <input type="submit" value="Izbriši" class="btn btn-danger" /> |
+        <a asp-action="Index">Vrati se na popis</a>
+    </form>
+</div>

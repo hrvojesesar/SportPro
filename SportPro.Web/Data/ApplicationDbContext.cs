@@ -21,10 +21,7 @@ public class ApplicationDbContext : DbContext
     public DbSet<Velicine> Velicine { get; set; }
     public DbSet<VrstePlacanja> VrstePlacanja { get; set; }
     public DbSet<Dobavljaci> Dobavljaci { get; set; }
-
-public DbSet<SportPro.Web.Models.ViewModels.AddDobavljacRequest> AddDobavljacRequest { get; set; } = default!;
-
-public DbSet<SportPro.Web.Models.ViewModels.EditDobavljacRequest> EditDobavljacRequest { get; set; } = default!;
-
+    public DbSet<TipoviPromocija> TipoviPromocija { get; set; }
+    public DbSet<Promocije> Promocije { get; set; }
 
 }

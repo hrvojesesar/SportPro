@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportPro.Web.Data;
 
@@ -11,9 +12,11 @@ using SportPro.Web.Data;
 namespace SportPro.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240506084005_Adding_Promocije")]
+    partial class Adding_Promocije
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -345,12 +348,12 @@ namespace SportPro.Web.Migrations
                     b.Property<string>("Opis")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("TipPromocijeID")
+                    b.Property<int>("TipoviPromocijaIDTipPromocije")
                         .HasColumnType("int");
 
                     b.HasKey("IDPromocije");
 
-                    b.HasIndex("TipPromocijeID");
+                    b.HasIndex("TipoviPromocijaIDTipPromocije");
 
                     b.ToTable("Promocije");
                 });
@@ -508,7 +511,7 @@ namespace SportPro.Web.Migrations
                 {
                     b.HasOne("SportPro.Web.Models.Domains.TipoviPromocija", "TipoviPromocija")
                         .WithMany("Promocije")
-                        .HasForeignKey("TipPromocijeID")
+                        .HasForeignKey("TipoviPromocijaIDTipPromocije")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

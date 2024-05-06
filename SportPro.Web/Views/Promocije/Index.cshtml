@@ -1,0 +1,96 @@
+﻿@model IEnumerable<SportPro.Web.Models.Domains.Promocije>
+
+@{
+    ViewData["Title"] = "Promocije";
+
+    string GetTipPromocijeName(int? id, IEnumerable<SportPro.Web.Models.Domains.TipoviPromocija> tipoviPromocija)
+    {
+        var tipPromocije = tipoviPromocija.FirstOrDefault(p => p.IDTipPromocije == id);
+        if (tipPromocije != null)
+        {
+            return tipPromocije.Naziv;
+        }
+        return "";
+    }
+}
+
+<p>
+    <a asp-controller="Promocije" asp-action="Add">Dodaj novu promociju</a>
+</p>
+@if (Model.Count() == 0)
+{
+    <h2 align="center">Nema podataka o promocijama!</h2>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Naziv
+                </th>
+                <th>
+                    Tip promocije
+                </th>
+                <th>
+                    Opis
+                </th>
+                <th>
+                    Datum početka
+                </th>
+                <th>
+                    Datum završetka
+                </th>
+                <th>
+                    Aktivna
+                </th>
+                <th>
+                    Dodatni uvjeti
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Naziv)
+                    </td>
+                    <td>
+                        @{
+                            var tipPromocije = GetTipPromocijeName(item.TipoviPromocijaIDTipPromocije, ViewData["TipoviPromocija"] as IEnumerable<SportPro.Web.Models.Domains.TipoviPromocija>);
+                            @tipPromocije
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Opis)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumPocetka)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumZavrsetka)
+                    </td>
+                    <td>
+                        @if (item.Aktivna)
+                        {
+                            <text>Da</text>
+                        }
+                        else
+                        {
+                            <text>Ne</text>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DodatniUvjeti)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IDPromocije">Uredi</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IDPromocije">Izbriši</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

@@ -1,0 +1,72 @@
+﻿@model SportPro.Web.Models.ViewModels.EditPromocijaRequest
+
+@{
+    ViewData["Title"] = "Uređivanje promocije";
+}
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IDPromocije" />
+            <div class="form-group">
+                <label asp-for="Naziv" class="control-label">Naziv</label>
+                <input asp-for="Naziv" class="form-control" />
+                <span asp-validation-for="Naziv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Opis" class="control-label">Opis</label>
+                <input asp-for="Opis" class="form-control" />
+                <span asp-validation-for="Opis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DatumPocetka" class="control-label">Datum početka</label>
+                <input asp-for="DatumPocetka" class="form-control" />
+                <span asp-validation-for="DatumPocetka" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DatumZavrsetka" class="control-label">Datum završetka</label>
+                <input asp-for="DatumZavrsetka" class="form-control" />
+                <span asp-validation-for="DatumZavrsetka" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Aktivna" /> @Html.DisplayNameFor(model => model.Aktivna)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="DodatniUvjeti" class="control-label">Dodatni uvjeti</label>
+                <input asp-for="DodatniUvjeti" class="form-control" />
+                <span asp-validation-for="DodatniUvjeti" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TipoviPromocijaIDTipPromocije" class="control-label">Tip promocije</label>
+                <select id="TipoviPromocijaIDTipPromocije" name="TipoviPromocijaIDTipPromocije" class="form-control">
+                    @foreach (var item in Model.TipoviPromocijas)
+                    {
+                        if (item.IDTipPromocije == Model.TipoviPromocijaIDTipPromocije)
+                        {
+                            <option value="@item.IDTipPromocije" selected>@item.Naziv</option>
+                        }
+                        else
+                        {
+                            <option value="@item.IDTipPromocije">@item.Naziv</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
