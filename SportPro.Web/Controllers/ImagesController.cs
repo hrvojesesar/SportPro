@@ -28,22 +28,4 @@ public class ImagesController : Controller
 
         return new JsonResult(new { link = images });
     }
-
-
-    //[HttpGet]
-    //public async Task<IActionResult> GetImagesAsync(int id)
-    //{
-    //    var images = await imagesRepository.GetImagesAsync(id);
-    //    return Ok(images);
-    //}
-
-    //[HttpDelete]
-    //public async Task<IActionResult> DeleteImagesAsync(IEnumerable<string> imageUrls)
-    //{
-    //    var images = await imagesRepository.DeleteImagesAsync(imageUrls);
-    //    //return Ok(images);
-    //    return RedirectToAction("Index", "Promocije");
-    //}
-
-
 }
