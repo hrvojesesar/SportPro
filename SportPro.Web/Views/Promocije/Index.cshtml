@@ -49,7 +49,7 @@ else
                 </th>
                 <th>
                     Slika
-                </th>  
+                </th>
                 <th></th>
             </tr>
         </thead>
@@ -89,8 +89,15 @@ else
                         @Html.DisplayFor(modelItem => item.DodatniUvjeti)
                     </td>
                     <td>
-                        <img src="@item.Slika" alt="Slika" style="max-width: 200px; max-height: 200px;" />
-                    </td>  
+                        @if (!string.IsNullOrEmpty(item.Slika))
+                        {
+                            <img src="@item.Slika" alt="Slika" style="max-width: 200px; max-height: 200px;" />
+                        }
+                        else
+                        {
+                            <text>Slika za tu promociju ne postoji!</text>
+                        }
+                    </td>
                     <td>
                         <a asp-action="Edit" asp-route-id="@item.IDPromocije">Uredi</a>
                     </td>
