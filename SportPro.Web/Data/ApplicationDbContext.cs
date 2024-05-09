@@ -24,4 +24,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<TipoviPromocija> TipoviPromocija { get; set; }
     public DbSet<Promocije> Promocije { get; set; }
 
+
+
 }

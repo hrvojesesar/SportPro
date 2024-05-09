@@ -12,6 +12,7 @@ public class Promocije
     public DateTime DatumZavrsetka { get; set; }
     public bool Aktivna { get; set; }
     public string? DodatniUvjeti { get; set; }
+    public string? Slika { get; set; }
     public int TipoviPromocijaIDTipPromocije { get; set; }
     public TipoviPromocija TipoviPromocija { get; set; }
 }

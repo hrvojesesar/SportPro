@@ -3,6 +3,8 @@ using SportPro.Web.Data;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
+using SportPro.Web.Repositories;
+using System.Net;
 
 namespace SportPro.Web.Controllers;
 
@@ -12,12 +14,14 @@ public class PromocijeController : Controller
     private readonly IPromocijeRepository promocijeRepository;
     private readonly ITipoviPromocijaRepository tipoviPromocijaRepository;
     private readonly ApplicationDbContext applicationDbContext;
+    private readonly IImagesRepository imagesRepository;
 
-    public PromocijeController(IPromocijeRepository promocijeRepository, ITipoviPromocijaRepository tipoviPromocijaRepository, ApplicationDbContext applicationDbContext)
+    public PromocijeController(IPromocijeRepository promocijeRepository, ITipoviPromocijaRepository tipoviPromocijaRepository, ApplicationDbContext applicationDbContext, IImagesRepository imagesRepository)
     {
         this.promocijeRepository = promocijeRepository;
         this.tipoviPromocijaRepository = tipoviPromocijaRepository;
         this.applicationDbContext = applicationDbContext;
+        this.imagesRepository = imagesRepository;
     }
 
     [HttpGet]
@@ -27,7 +31,11 @@ public class PromocijeController : Controller
 
         var tipoviPromocija = await tipoviPromocijaRepository.GetAllAsync();
 
+       
+
+
         ViewData["TipoviPromocija"] = tipoviPromocija;
+   
 
         return View(promocije);
     }
@@ -43,7 +51,7 @@ public class PromocijeController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Add(AddPromocijaRequest addPromocijaRequest)
+    public async Task<IActionResult> Add(AddPromocijaRequest addPromocijaRequest, IEnumerable<IFormFile> slike)
     {
         ValidatePromocijaForAdd(addPromocijaRequest);
 
@@ -51,6 +59,7 @@ public class PromocijeController : Controller
         {
             return BadRequest(ModelState);
         }
+
 
         var promocija = new Promocije
         {
@@ -60,6 +69,7 @@ public class PromocijeController : Controller
             DatumZavrsetka = addPromocijaRequest.DatumZavrsetka,
             Aktivna = addPromocijaRequest.Aktivna,
             DodatniUvjeti = addPromocijaRequest.DodatniUvjeti,
+            Slika = addPromocijaRequest.Slika,
             TipoviPromocijaIDTipPromocije = addPromocijaRequest.TipoviPromocijaIDTipPromocije
         };
 
@@ -91,6 +101,7 @@ public class PromocijeController : Controller
             DatumZavrsetka = promocija.DatumZavrsetka,
             Aktivna = promocija.Aktivna,
             DodatniUvjeti = promocija.DodatniUvjeti,
+            Slika = promocija.Slika,
             TipoviPromocijaIDTipPromocije = promocija.TipoviPromocijaIDTipPromocije,
             TipoviPromocijas = applicationDbContext.TipoviPromocija.ToList()
         };
@@ -110,6 +121,7 @@ public class PromocijeController : Controller
             DatumZavrsetka = editPromocijaRequest.DatumZavrsetka,
             Aktivna = editPromocijaRequest.Aktivna,
             DodatniUvjeti = editPromocijaRequest.DodatniUvjeti,
+            Slika = editPromocijaRequest.Slika,
             TipoviPromocijaIDTipPromocije = editPromocijaRequest.TipoviPromocijaIDTipPromocije
         };
 

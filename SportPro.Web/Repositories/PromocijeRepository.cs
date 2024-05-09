@@ -45,6 +45,7 @@ public class PromocijeRepository : IPromocijeRepository
         existingPromocija.DatumZavrsetka = promocije.DatumZavrsetka;
         existingPromocija.Aktivna = promocije.Aktivna;
         existingPromocija.DodatniUvjeti = promocije.DodatniUvjeti;
+        existingPromocija.Slika = promocije.Slika;
         existingPromocija.TipoviPromocijaIDTipPromocije = promocije.TipoviPromocijaIDTipPromocije;
 
 

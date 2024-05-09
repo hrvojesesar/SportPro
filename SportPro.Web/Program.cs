@@ -1,7 +1,9 @@
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Azure;
 using SportPro.Web.Data;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Repositories;
+using System.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -25,6 +27,10 @@ builder.Services.AddScoped<IVrstePlacanjaRepository, VrstePlacanjaRepository>();
 builder.Services.AddScoped<IDobavljaciRepository, DobavljaciRepository>();
 builder.Services.AddScoped<ITipoviPromocijaRepository, TipoviPromocijaRepository>();
 builder.Services.AddScoped<IPromocijeRepository, PromocijeRepository>();
+builder.Services.AddScoped<IImagesRepository, ImagesRepository>();
+
+
+
 
 builder.Services.AddSwaggerGen(c =>
 {
@@ -33,6 +39,8 @@ builder.Services.AddSwaggerGen(c =>
 
 
 var app = builder.Build();
+
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

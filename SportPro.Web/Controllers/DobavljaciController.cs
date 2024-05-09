@@ -162,9 +162,4 @@ public class DobavljaciController : Controller
     //        ModelState.AddModelError("PocetakSuradnje", "Datum početka suradnje ne može biti veći od datuma završetka suradnje!");
     //    }
     //}
-
-
-
-
-
 }

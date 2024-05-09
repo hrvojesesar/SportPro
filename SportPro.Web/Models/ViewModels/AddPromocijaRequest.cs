@@ -17,6 +17,7 @@ public class AddPromocijaRequest
     public DateTime DatumZavrsetka { get; set; }
     public bool Aktivna { get; set; }
     public string? DodatniUvjeti { get; set; }
+    public string? Slika { get; set; }
     [Required]
     public int TipoviPromocijaIDTipPromocije { get; set; }
     public IEnumerable<TipoviPromocija>? TipoviPromocijas { get; set; }
