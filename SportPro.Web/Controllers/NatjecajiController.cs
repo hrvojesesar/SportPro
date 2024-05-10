@@ -49,7 +49,6 @@ public class NatjecajiController : Controller
         };
 
         await natjecajiRepository.AddAsync(natjecaj);
-        // return RedirectToAction("Index");
         return RedirectToAction("Index", new { natjecaj.IDNatjecaj });
     }
 

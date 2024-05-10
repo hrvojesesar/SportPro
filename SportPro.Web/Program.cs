@@ -15,7 +15,6 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 builder.Services.AddScoped<INatjecajiRepository, NatjecajiRepository>();
-builder.Services.AddScoped<IPonudePoslovaRepository, PonudePoslovaRepository>();
 builder.Services.AddScoped<IPozicijeRepository, PozicijeRepository>();
 builder.Services.AddScoped<IPoslovniceRepository, PoslovniceRepository>();
 builder.Services.AddScoped<IZaposleniciRepository, ZaposleniciRepository>();

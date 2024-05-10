@@ -53,7 +53,7 @@ public partial class Adding_Promocije : Migration
         migrationBuilder.CreateIndex(
             name: "IX_Promocije_TipoviPromocija",
             table: "Promocije",
-            column: "TipPromocijeID");
+            column: "TipoviPromocijaIDTipPromocije");
     }
 
     /// <inheritdoc />

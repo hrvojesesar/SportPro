@@ -11,7 +11,6 @@ public class ApplicationDbContext : DbContext
     }
 
     public DbSet<Natjecaji> Natjecaji { get; set; }
-    public DbSet<PonudePoslova> PonudePoslova { get; set; }
     public DbSet<Zaposlenici> Zaposlenici { get; set; }
     public DbSet<Pozicije> Pozicije { get; set; }
     public DbSet<Poslovnice> Poslovnice { get; set; }

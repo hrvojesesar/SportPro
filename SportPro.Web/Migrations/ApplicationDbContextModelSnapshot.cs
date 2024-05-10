@@ -221,6 +221,55 @@ namespace SportPro.Web.Migrations
                     b.ToTable("PonudePoslova");
                 });
 
+            modelBuilder.Entity("SportPro.Web.Models.Domains.Poslovi", b =>
+                {
+                    b.Property<int>("IDPosla")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IDPosla"));
+
+                    b.Property<int>("BrojOsoba")
+                        .HasColumnType("int");
+
+                    b.Property<double>("BrojSati")
+                        .HasColumnType("float");
+
+                    b.Property<double>("CijenaSata")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("KrajRadova")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Lokacija")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Naziv")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("OpisPosla")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("PocetakRadova")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("PotrebnaOprema")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<double>("Profit")
+                        .HasColumnType("float");
+
+                    b.Property<double>("Trosak")
+                        .HasColumnType("float");
+
+                    b.HasKey("IDPosla");
+
+                    b.ToTable("Poslovi");
+                });
+
             modelBuilder.Entity("SportPro.Web.Models.Domains.Poslovnice", b =>
                 {
                     b.Property<int>("IDPoslovnica")
