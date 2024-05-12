@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using SportPro.Web.Data;
 
@@ -11,9 +12,11 @@ using SportPro.Web.Data;
 namespace SportPro.Web.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240512145605_Add_Kategorije_Table")]
+    partial class Add_Kategorije_Table
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -34,7 +37,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasIndex("ZaposleniciIDZaposlenik");
 
-                    b.ToTable("PozicijeZaposlenici", (string)null);
+                    b.ToTable("PozicijeZaposlenici");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Boje", b =>
@@ -51,7 +54,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDBoja");
 
-                    b.ToTable("Boje", (string)null);
+                    b.ToTable("Boje");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Brendovi", b =>
@@ -91,7 +94,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDBrend");
 
-                    b.ToTable("Brendovi", (string)null);
+                    b.ToTable("Brendovi");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Dobavljaci", b =>
@@ -136,7 +139,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDDobavljac");
 
-                    b.ToTable("Dobavljaci", (string)null);
+                    b.ToTable("Dobavljaci");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Kategorije", b =>
@@ -156,7 +159,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDKategorija");
 
-                    b.ToTable("Kategorije", (string)null);
+                    b.ToTable("Kategorije");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Natjecaji", b =>
@@ -195,7 +198,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDNatjecaj");
 
-                    b.ToTable("Natjecaji", (string)null);
+                    b.ToTable("Natjecaji");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Poslovnice", b =>
@@ -245,7 +248,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDPoslovnica");
 
-                    b.ToTable("Poslovnice", (string)null);
+                    b.ToTable("Poslovnice");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Pozicije", b =>
@@ -265,7 +268,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDPozicija");
 
-                    b.ToTable("Pozicije", (string)null);
+                    b.ToTable("Pozicije");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Pravilnici", b =>
@@ -292,7 +295,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDPravilnik");
 
-                    b.ToTable("Pravilnici", (string)null);
+                    b.ToTable("Pravilnici");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Promocije", b =>
@@ -332,7 +335,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasIndex("TipoviPromocijaIDTipPromocije");
 
-                    b.ToTable("Promocije", (string)null);
+                    b.ToTable("Promocije");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.TipoviPromocija", b =>
@@ -352,7 +355,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDTipPromocije");
 
-                    b.ToTable("TipoviPromocija", (string)null);
+                    b.ToTable("TipoviPromocija");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Velicine", b =>
@@ -369,7 +372,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDVelicina");
 
-                    b.ToTable("Velicine", (string)null);
+                    b.ToTable("Velicine");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.VrstePlacanja", b =>
@@ -392,7 +395,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasKey("IDVrstaPlacanja");
 
-                    b.ToTable("VrstePlacanja", (string)null);
+                    b.ToTable("VrstePlacanja");
                 });
 
             modelBuilder.Entity("SportPro.Web.Models.Domains.Zaposlenici", b =>
@@ -466,7 +469,7 @@ namespace SportPro.Web.Migrations
 
                     b.HasIndex("PoslovnicaID");
 
-                    b.ToTable("Zaposlenici", (string)null);
+                    b.ToTable("Zaposlenici");
                 });
 
             modelBuilder.Entity("PozicijeZaposlenici", b =>
