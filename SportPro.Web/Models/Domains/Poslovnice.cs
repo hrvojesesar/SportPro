@@ -16,4 +16,5 @@ public class Poslovnice
     public DateTime? DatumOtvaranja { get; set; }
     public string Status { get; set; }
     public ICollection<Zaposlenici> Zaposlenici { get; set; }
+    public ICollection<Artikli> Artikli { get; set; }
 }

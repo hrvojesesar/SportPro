@@ -146,6 +146,12 @@ public class DobavljaciController : Controller
         return RedirectToAction("Index", new { id = editDobavljacRequest.IDDobavljac });
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetActiveDobavljaci()
+    {
+        var dobavljaci = await dobavljaciRepository.GetActiveDobavljaci();
+        return Ok(dobavljaci);
+    }
 
     //private void ValidateDobavljacForAdd(AddDobavljacRequest addDobavljacRequest)
     //{

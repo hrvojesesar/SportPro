@@ -24,5 +24,4 @@ public class Zaposlenici
     public int? PoslovnicaID { get; set; }
     public ICollection<Pozicije> Pozicije { get; set; }
     public Poslovnice Poslovnica { get; set; }
-
 }

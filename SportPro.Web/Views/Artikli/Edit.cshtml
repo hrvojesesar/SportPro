@@ -1,0 +1,170 @@
+﻿@model SportPro.Web.Models.ViewModels.EditArtiklRequest
+
+@{
+    ViewData["Title"] = "Uređivanje artikla";
+}
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IDArtikal" />
+            <div class="form-group">
+                <label asp-for="Naziv" class="control-label">Naziv</label>
+                <input asp-for="Naziv" class="form-control" />
+                <span asp-validation-for="Naziv" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Opis" class="control-label">Opis</label>
+                <textarea asp-for="Opis" class="form-control" id="opis"></textarea>
+                <span asp-validation-for="Opis" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Cijena" class="control-label">Cijena</label>
+                <input asp-for="Cijena" class="form-control" />
+                <span asp-validation-for="Cijena" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Snizen" /> @Html.DisplayNameFor(model => model.Snizen)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="SnizenaCijena" class="control-label">Snižena cijena</label>
+                <input asp-for="SnizenaCijena" class="form-control" />
+                <span asp-validation-for="SnizenaCijena" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NabavnaKolicina" class="control-label">Nabavna količina</label>
+                <input asp-for="NabavnaKolicina" class="form-control" />
+                <span asp-validation-for="NabavnaKolicina" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TrenutnaKolicina" class="control-label">Trenutna količina</label>
+                <input asp-for="TrenutnaKolicina" class="form-control" />
+                <span asp-validation-for="TrenutnaKolicina" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="NaStanju" /> @Html.DisplayNameFor(model => model.NaStanju)
+                </label>
+            </div>
+            <div class="form-group">
+                <label asp-for="DatumNabave" class="control-label">Datum nabave</label>
+                <input asp-for="DatumNabave" class="form-control" />
+                <span asp-validation-for="DatumNabave" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="NabavnaCijena" class="control-label">Nabavna cijena (po komadu)</label>
+                <input asp-for="NabavnaCijena" class="form-control" />
+                <span asp-validation-for="NabavnaCijena" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CijenaDostave" class="control-label">Cijena dostave</label>
+                <input asp-for="CijenaDostave" class="form-control" />
+                <span asp-validation-for="CijenaDostave" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DobavljacIDDobavljac" class="control-label">Dobavljač</label>
+                <select id="DobavljacIDDobavljac" name="DobavljacIDDobavljac" class="form-control">
+                    <option></option>
+                    @foreach (var item in Model.Dobavljacis)
+                    {
+                        if (item.IDDobavljac == Model.DobavljacIDDobavljac)
+                        {
+                            <option value="@item.IDDobavljac" selected>@item.Naziv</option>
+                        }
+                        else
+                        {
+                            <option value="@item.IDDobavljac">@item.Naziv</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="BrendIDBrend" class="control-label">Brend</label>
+                <select id="BrendIDBrend" name="BrendIDBrend" class="form-control">
+                    <option></option>
+                    @foreach (var item in Model.Brendovis)
+                    {
+                        if (item.IDBrend == Model.BrendIDBrend)
+                        {
+                            <option value="@item.IDBrend" selected>@item.NazivBrenda</option>
+                        }
+                        else
+                        {
+                            <option value="@item.NazivBrenda">@item.NazivBrenda</option>
+                        }
+                    }
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Kategorija</label>
+                @foreach (var kategorija in Model.Kategorije)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="@($"kategorija_{kategorija.Value}")" name="SelectedKategorije" value="@kategorija.Value" @(Model.SelectedKategorije.Contains(kategorija.Value) ? "checked" : "")>
+                        <label class="form-check-label" for="@($"kategorija_{kategorija.Value}")">@kategorija.Text</label>
+                    </div>
+                }
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Boje</label>
+                @foreach (var boja in Model.Boje)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="@($"boja_{boja.Value}")" name="SelectedBoje" value="@boja.Value" @(Model.SelectedBoje.Contains(boja.Value) ? "checked" : "")>
+                        <label class="form-check-label" for="@($"boja_{boja.Value}")">@boja.Text</label>
+                    </div>
+                }
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Veličine</label>
+                @foreach (var velicina in Model.Velicine)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="@($"velicina_{velicina.Value}")" name="SelectedVelicine" value="@velicina.Value" @(Model.SelectedVelicine.Contains(velicina.Value) ? "checked" : "")>
+                        <label class="form-check-label" for="@($"velicina_{velicina.Value}")">@velicina.Text</label>
+                    </div>
+                }
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Poslovnice</label>
+                @foreach (var poslovnica in Model.Poslovnice)
+                {
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="@($"poslovnica_{poslovnica.Value}")" name="SelectedPoslovnice" value="@poslovnica.Value" @(Model.SelectedPoslovnice.Contains(poslovnica.Value) ? "checked" : "")>
+                        <label class="form-check-label" for="@($"poslovnica_{poslovnica.Value}")">@poslovnica.Text</label>
+                    </div>
+                }
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Spremi" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+
+
+<div>
+    <a asp-action="Index">Vrati se na popis</a>
+</div>
+
+
+
+
+
+
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        var editor = new FroalaEditor('#opis');
+    </script>
+}

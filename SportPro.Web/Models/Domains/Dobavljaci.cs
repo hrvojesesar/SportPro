@@ -15,4 +15,5 @@ public class Dobavljaci
     public DateTime? PocetakSuradnje { get; set; }
     public DateTime? KrajSuradnje { get; set; }
     public string? SuradnjaAktivna { get; set; }
+    public ICollection<Artikli> Artikli { get; set; }
 }

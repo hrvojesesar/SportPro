@@ -50,4 +50,9 @@ public class DobavljaciRepository : IDobavljaciRepository
         await applicationDbContext.SaveChangesAsync();
         return dobavljac;
     }
+
+    public async Task<IEnumerable<Dobavljaci>> GetActiveDobavljaci()
+    {
+        return await applicationDbContext.Dobavljaci.Where(d => d.SuradnjaAktivna == "Da").ToListAsync();
+    }
 }

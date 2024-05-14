@@ -13,4 +13,5 @@ public class Brendovi
     public string Sjediste { get; set; }
     public string Predsjednik { get; set; }
     public string Status { get; set; }
+    public ICollection<Artikli> Artikli { get; set; }
 }

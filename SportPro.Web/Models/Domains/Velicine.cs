@@ -7,4 +7,5 @@ public class Velicine
     [Key]
     public int IDVelicina { get; set; }
     public string Velicina { get; set; }
+    public ICollection<Artikli> Artikli { get; set; }
 }

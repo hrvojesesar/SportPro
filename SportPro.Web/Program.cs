@@ -28,6 +28,7 @@ builder.Services.AddScoped<ITipoviPromocijaRepository, TipoviPromocijaRepository
 builder.Services.AddScoped<IPromocijeRepository, PromocijeRepository>();
 builder.Services.AddScoped<IImagesRepository, ImagesRepository>();
 builder.Services.AddScoped<IKategorijeRepository, KategorijeRepository>();
+builder.Services.AddScoped<IArtikliRepository, ArtikliRepository>();
 
 
 

@@ -23,8 +23,6 @@ public class ApplicationDbContext : DbContext
     public DbSet<TipoviPromocija> TipoviPromocija { get; set; }
     public DbSet<Promocije> Promocije { get; set; }
     public DbSet<Kategorije> Kategorije { get; set; }
-
-
-
+    public DbSet<Artikli> Artikli { get; set; }
 
 }

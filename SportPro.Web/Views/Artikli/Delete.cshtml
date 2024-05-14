@@ -1,0 +1,182 @@
+﻿@model SportPro.Web.Models.Domains.Artikli
+
+@{
+    ViewData["Title"] = "Brisanje artikla";
+
+    string GetDobavljacName(int? id, IEnumerable<SportPro.Web.Models.Domains.Dobavljaci> dobavljaci)
+    {
+        var dobavljac = dobavljaci.FirstOrDefault(d => d.IDDobavljac == id);
+        if (dobavljac != null)
+        {
+            return dobavljac.Naziv;
+        }
+        return "";
+    }
+
+    string GetBrendName(int? id, IEnumerable<SportPro.Web.Models.Domains.Brendovi> brendovi)
+    {
+        var brend = brendovi.FirstOrDefault(b => b.IDBrend == id);
+        if (brend != null)
+        {
+            return brend.NazivBrenda;
+        }
+        return "";
+    }
+}
+
+<h3>Jeste sigurni da želite izbrisati artikl?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Naziv
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Naziv)
+        </dd>
+        <dt class="col-sm-2">
+            Opis
+        </dt>
+        <dd class="col-sm-10">
+            <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@Model.IDArtikal">Prikaži opis</a>
+            <div class="modal fade" id="opisModal_@Model.IDArtikal" tabindex="-1" aria-labelledby="opisModalLabel_@Model.IDArtikal" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="opisModalLabel_@Model.IDArtikal">Opis artikla</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @Html.Raw(Model.Opis)
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </dd>
+        <dt class="col-sm-2">
+            Cijena
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Cijena) KM
+        </dd>
+        <dt class="col-sm-2">
+            Snižen
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Snizen)
+            {
+                <text>Da</text>
+            }
+            else
+            {
+                <text>Ne</text>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Snižena cijena
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.SnizenaCijena) KM
+        </dd>
+        <dt class="col-sm-2">
+            Nabavna količina
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NabavnaKolicina)
+        </dd>
+        <dt class="col-sm-2">
+            Trenutna količina
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TrenutnaKolicina)
+        </dd>
+        <dt class="col-sm-2">
+            Na stanju
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.NaStanju)
+            {
+                <text>Da</text>
+            }
+            else
+            {
+                <text>Ne</text>
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Datum nabave
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DatumNabave)
+        </dd>
+        <dt class="col-sm-2">
+            Nabavna cijena (po komadu)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NabavnaCijena) KM
+        </dd>
+        <dt class="col-sm-2">
+            Cijena dostave
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.CijenaDostave) KM
+        </dd>
+        <dt class="col-sm-2">
+            Ukupni trošak
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.UkupniTrosak) KM
+        </dd>
+        <dt class="col-sm-2">
+            Dobavljač
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var dobavljac = GetDobavljacName(Model.DobavljacIDDobavljac, ViewData["Dobavljaci"] as IEnumerable<SportPro.Web.Models.Domains.Dobavljaci>);
+                @dobavljac
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Brend
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var brend = GetBrendName(Model.BrendIDBrend, ViewData["Brendovi"] as IEnumerable<SportPro.Web.Models.Domains.Brendovi>);
+                @brend
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Kategorija
+        </dt>
+        <dd class="col-sm-10">
+            @string.Join(", ", Model.Kategorije.Select(k => k.Naziv))
+        </dd>
+        <dt class="col-sm-2">
+            Boje
+        </dt>
+        <dd class="col-sm-10">
+            @string.Join(", ", Model.Boje.Select(b => b.NazivBoje))
+        </dd>
+        <dt class="col-sm-2">
+            Veličine
+        </dt>
+        <dd class="col-sm-10">
+            @string.Join(", ", Model.Velicine.Select(v => v.Velicina))
+        </dd>
+        <dt class="col-sm-2">
+            Poslovnice
+        </dt>
+        <dd class="col-sm-10">
+            @string.Join(", ", Model.Poslovnice.Select(p => p.Naziv))
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IDArtikal" />
+        <input type="submit" value="Izbriši" class="btn btn-danger" /> |
+        <a asp-action="Index">Vrati se na popis</a>
+    </form>
+</div>

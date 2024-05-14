@@ -9,4 +9,5 @@ public interface IDobavljaciRepository
     Task<Dobavljaci>? GetAsync(int? id);
     Task<Dobavljaci>? UpdateAsync(Dobavljaci dobavljac);
     Task<Dobavljaci>? DeleteAsync(int? id);
+    Task<IEnumerable<Dobavljaci>> GetActiveDobavljaci();
 }
