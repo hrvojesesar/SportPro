@@ -69,7 +69,6 @@
             <div class="form-group">
                 <label asp-for="DobavljacIDDobavljac" class="control-label">Dobavljač</label>
                 <select id="DobavljacIDDobavljac" name="DobavljacIDDobavljac" class="form-control">
-                    <option></option>
                     @foreach (var item in Model.Dobavljacis)
                     {
                         if (item.IDDobavljac == Model.DobavljacIDDobavljac)
@@ -86,7 +85,6 @@
             <div class="form-group">
                 <label asp-for="BrendIDBrend" class="control-label">Brend</label>
                 <select id="BrendIDBrend" name="BrendIDBrend" class="form-control">
-                    <option></option>
                     @foreach (var item in Model.Brendovis)
                     {
                         if (item.IDBrend == Model.BrendIDBrend)
