@@ -35,7 +35,8 @@ public class ArtikliController : Controller
     public async Task<IActionResult> Index()
     {
         var brend = await brendoviRepository.GetAllAsync();
-        var dobavljaci = await dobavljaciRepository.GetAllAsync();
+        // var dobavljaci = await dobavljaciRepository.GetAllAsync();
+        var dobavljaci = await dobavljaciRepository.GetActiveDobavljaci();
 
         ViewData["Brendovi"] = brend;
         ViewData["Dobavljaci"] = dobavljaci;
@@ -55,7 +56,8 @@ public class ArtikliController : Controller
 
         var model = new AddArtiklRequest
         {
-            Dobavljacis = applicationDbContext.Dobavljaci.ToList(),
+            // Dobavljacis = applicationDbContext.Dobavljaci.ToList(),
+            Dobavljacis = applicationDbContext.Dobavljaci.Where(d => d.SuradnjaAktivna == "Da").ToList(),
             Brendovis = applicationDbContext.Brendovi.ToList(),
             Kategorije = kategorije.Select(k => new SelectListItem
             {
@@ -204,7 +206,8 @@ public class ArtikliController : Controller
             UkupniTrosak = artikl.UkupniTrosak,
             DobavljacIDDobavljac = artikl.DobavljacIDDobavljac,
             BrendIDBrend = artikl.BrendIDBrend,
-            Dobavljacis = applicationDbContext.Dobavljaci.ToList(),
+            // Dobavljacis = applicationDbContext.Dobavljaci.ToList(),
+            Dobavljacis = applicationDbContext.Dobavljaci.Where(d => d.SuradnjaAktivna == "Da").ToList(),
             Brendovis = applicationDbContext.Brendovi.ToList(),
             Kategorije = kategorije.Select(k => new SelectListItem
             {
@@ -335,7 +338,8 @@ public class ArtikliController : Controller
             return NotFound();
         }
 
-        var dobavljaci = await dobavljaciRepository.GetAllAsync();
+        // var dobavljaci = await dobavljaciRepository.GetAllAsync();
+        var dobavljaci = await dobavljaciRepository.GetActiveDobavljaci();
         var brendovi = await brendoviRepository.GetAllAsync();
 
         ViewData["Dobavljaci"] = dobavljaci;
