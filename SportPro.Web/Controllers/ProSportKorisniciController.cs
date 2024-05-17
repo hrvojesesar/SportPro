@@ -41,6 +41,18 @@ public class ProSportKorisniciController : Controller
             return BadRequest(ModelState);
         }
 
+        //haširanje lozinke
+        var sha256 = SHA256.Create();
+        var bytes = Encoding.UTF8.GetBytes(addProSportKorisnikRequest.Lozinka);
+        var hash = sha256.ComputeHash(bytes);
+        var stringBuilder = new StringBuilder();
+        foreach (var b in hash)
+        {
+            stringBuilder.Append(b.ToString("x2"));
+        }
+        addProSportKorisnikRequest.Lozinka = stringBuilder.ToString();
+
+
         var proSportKorisnik = new ProSportKorisnici
         {
             Ime = addProSportKorisnikRequest.Ime,
