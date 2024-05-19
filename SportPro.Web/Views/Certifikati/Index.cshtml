@@ -1,0 +1,71 @@
+﻿@model IEnumerable<SportPro.Web.Models.Domains.Certifikati>
+
+@{
+    ViewData["Title"] = "Certifikati";
+}
+
+<p>
+    <a asp-action="Add">Dodaj novi certifikat</a>
+</p>
+@if (Model.Count() == 0)
+{
+    <h2 align="center">Nema podataka o certifikatima!</h2>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    Naziv
+                </th>
+                <th>
+                    Opis
+                </th>
+                <th>
+                    Datum dodjele
+                </th>
+                <th>
+                    Organizacija
+                </th>
+                <th>
+                    Slika
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Naziv)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Opis)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.DatumDodjele)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Organizacija)
+                    </td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(item.Slika))
+                        {
+                            <img src="@item.Slika" alt="Slika" style="max-width: 200px; max-height: 200px;" />
+                        }
+                        else
+                        {
+                            <text>Slika za ovaj certifikat ne postoji!</text>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.IDCertifikat">Uredi</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IDCertifikat">Izbriši</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}

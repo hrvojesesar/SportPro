@@ -30,6 +30,7 @@ builder.Services.AddScoped<IImagesRepository, ImagesRepository>();
 builder.Services.AddScoped<IKategorijeRepository, KategorijeRepository>();
 builder.Services.AddScoped<IArtikliRepository, ArtikliRepository>();
 builder.Services.AddScoped<IProSportKorisniciRepository, ProSportKorisniciRepository>();
+builder.Services.AddScoped<ICertifikatiRepository, CertifikatiRepository>();
 
 
 
