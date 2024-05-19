@@ -24,11 +24,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<Promocije> Promocije { get; set; }
     public DbSet<Kategorije> Kategorije { get; set; }
     public DbSet<Artikli> Artikli { get; set; }
-    public DbSet<ProSportKorisnici> ProSportKorisnici { get; set; }
     public DbSet<Certifikati> Certifikati { get; set; }
-
-public DbSet<SportPro.Web.Models.ViewModels.AddCertifikatRequest> AddCertifikatRequest { get; set; } = default!;
-
-public DbSet<SportPro.Web.Models.ViewModels.EditCertifikatRequest> EditCertifikatRequest { get; set; } = default!;
-
 }
