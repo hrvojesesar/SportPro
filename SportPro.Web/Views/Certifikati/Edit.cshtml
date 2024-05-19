@@ -18,7 +18,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Opis" class="control-label">Opis</label>
-                <input asp-for="Opis" class="form-control" />
+                <textarea asp-for="Opis" class="form-control" id="opis"></textarea>
                 <span asp-validation-for="Opis" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -68,6 +68,8 @@
     }
 
     <script>
+        var editor = new FroalaEditor('#opis');
+
         const imageUploadElement = document.getElementById('featuredImageUpload');
         const imageUrlElement = document.getElementById('featuredImageUrl');
         const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');

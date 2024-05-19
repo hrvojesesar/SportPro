@@ -42,7 +42,23 @@ else
                         @Html.DisplayFor(modelItem => item.Naziv)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Opis)
+                        <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDCertifikat">Prikaži opis</a>
+                        <div class="modal fade" id="opisModal_@item.IDCertifikat" tabindex="-1" aria-labelledby="opisModalLabel_@item.IDCertifikat" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="opisModalLabel_@item.IDCertifikat">Opis certifikata</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        @Html.Raw(item.Opis)
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.DatumDodjele)
