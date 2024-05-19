@@ -36,4 +36,17 @@ public class BojeRepository : IBojeRepository
         await applicationDbContext.SaveChangesAsync();
         return boja;
     }
+
+    public async Task<Boje>? DeleteAsync(int? id)
+    {
+        var boja = await applicationDbContext.Boje.FirstOrDefaultAsync(b => b.IDBoja == id);
+        if (boja == null)
+        {
+            return null;
+        }
+
+        applicationDbContext.Boje.Remove(boja);
+        await applicationDbContext.SaveChangesAsync();
+        return boja;
+    }
 }

@@ -8,4 +8,5 @@ public interface IBojeRepository
     Task<Boje> AddAsync(Boje boja);
     Task<Boje>? GetAsync(int? id);
     Task<Boje>? UpdateAsync(Boje boja);
+    Task<Boje>? DeleteAsync(int? id);
 }

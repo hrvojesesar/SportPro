@@ -91,6 +91,38 @@ public class BojeController : Controller
         return RedirectToAction("Index", new { id = editBojaRequest.IDBoja });
     }
 
+    [HttpGet]
+    public async Task<IActionResult> Delete(int? id)
+    {
+        if (id == null)
+        {
+            return NotFound();
+        }
+
+        var boja = await bojeRepository.GetAsync(id);
+
+        if (boja == null)
+        {
+            return NotFound();
+        }
+
+        return View(boja);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(EditBojaRequest editBojaRequest)
+    {
+        var boja = await bojeRepository.DeleteAsync(editBojaRequest.IDBoja);
+
+        if (boja == null)
+        {
+            return NotFound();
+        }
+
+        return RedirectToAction("Index", new { id = editBojaRequest.IDBoja });
+
+    }
+
     private void ValidateBojaForAdd(AddBojaRequest addBojaRequest)
     {
         if (addBojaRequest.NazivBoje.Length > 20)

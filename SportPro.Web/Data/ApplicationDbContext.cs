@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SportPro.Web.Models.Domains;
-using SportPro.Web.Models.ViewModels;
 
 namespace SportPro.Web.Data;
 
@@ -25,9 +24,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<Kategorije> Kategorije { get; set; }
     public DbSet<Artikli> Artikli { get; set; }
     public DbSet<ProSportKorisnici> ProSportKorisnici { get; set; }
-
-public DbSet<SportPro.Web.Models.ViewModels.AddProSportKorisnikRequest> AddProSportKorisnikRequest { get; set; } = default!;
-
-public DbSet<SportPro.Web.Models.ViewModels.EditProSportKorisnikRequest> EditProSportKorisnikRequest { get; set; } = default!;
 
 }

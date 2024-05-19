@@ -31,7 +31,8 @@ else
                         @Html.DisplayFor(modelItem => item.NazivBoje)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.IDBoja">Uredi</a>
+                        <a asp-action="Edit" asp-route-id="@item.IDBoja">Uredi</a> |
+                        <a asp-action="Delete" asp-route-id="@item.IDBoja">Izbriši</a>
                     </td>
                 </tr>
             }
