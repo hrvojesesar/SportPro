@@ -5,6 +5,7 @@ using SportPro.Web.Models.ViewModels;
 
 namespace SportPro.Web.Controllers;
 
+[Route("[controller]/[action]")]
 public class CertifikatiController : Controller
 {
     private readonly ICertifikatiRepository certifikatiRepository;
