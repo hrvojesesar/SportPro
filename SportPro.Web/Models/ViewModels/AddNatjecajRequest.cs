@@ -18,5 +18,5 @@ public class AddNatjecajRequest
     public DateTime TrajanjeDo { get; set; }
     public DateTime? DatumObjave { get; set; }
     public bool Aktivan { get; set; }
-    public string? Dobitnik { get; set; }
+    public string? Dobitnik { get; set; } = null;
 }
