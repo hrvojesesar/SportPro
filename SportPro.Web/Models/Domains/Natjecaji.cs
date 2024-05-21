@@ -13,4 +13,5 @@ public class Natjecaji
     public DateTime? DatumObjave { get; set; }
     public bool Aktivan { get; set; }
     public string? Dobitnik { get; set; }
+    public ICollection<Kandidati> Kandidati { get; set; }
 }
