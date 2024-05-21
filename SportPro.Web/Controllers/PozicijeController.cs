@@ -23,7 +23,7 @@ public class PozicijeController : Controller
     }
 
     [HttpGet]
-    public IActionResult Add()
+    public async Task<IActionResult> Add()
     {
         return View();
     }
@@ -74,7 +74,7 @@ public class PozicijeController : Controller
 
     [HttpPost]
     public async Task<IActionResult> Edit(EditPozicijaRequest editPozicijaRequest)
-    {    
+    {
         var pozicija = new Pozicije
         {
             IDPozicija = editPozicijaRequest.IDPozicija,

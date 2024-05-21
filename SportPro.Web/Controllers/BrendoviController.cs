@@ -23,7 +23,7 @@ public class BrendoviController : Controller
     }
 
     [HttpGet]
-    public IActionResult Add()
+    public async Task<IActionResult> Add()
     {
         return View();
     }
