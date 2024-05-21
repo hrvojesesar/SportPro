@@ -1,17 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
+using SportPro.Web.Repositories;
 
 namespace SportPro.Web.Controllers;
 [Route("[controller]/[action]")]
 public class NatjecajiController : Controller
 {
     private readonly INatjecajiRepository natjecajiRepository;
+    private readonly IKandidatiRepository kandidatiRepository;
 
-    public NatjecajiController(INatjecajiRepository natjecajiRepository)
+    public NatjecajiController(INatjecajiRepository natjecajiRepository, IKandidatiRepository kandidatiRepository)
     {
         this.natjecajiRepository = natjecajiRepository;
+        this.kandidatiRepository = kandidatiRepository;
     }
 
     [HttpGet]
@@ -22,10 +26,11 @@ public class NatjecajiController : Controller
     }
 
     [HttpGet]
-    public IActionResult Add()
+    public async Task<IActionResult> Add()
     {
         return View();
     }
+
 
     [HttpPost]
     public async Task<IActionResult> Add(AddNatjecajRequest addNatjecajRequest)
@@ -48,6 +53,7 @@ public class NatjecajiController : Controller
             Dobitnik = addNatjecajRequest.Dobitnik
         };
 
+
         await natjecajiRepository.AddAsync(natjecaj);
         return RedirectToAction("Index", new { natjecaj.IDNatjecaj });
     }
@@ -61,6 +67,7 @@ public class NatjecajiController : Controller
         }
 
         var natjecaj = await natjecajiRepository.GetAsync(id);
+        var kandidati = await kandidatiRepository.GetByNatjecajAsync(id);
 
         if (natjecaj == null)
         {
@@ -80,8 +87,12 @@ public class NatjecajiController : Controller
             Dobitnik = natjecaj.Dobitnik
         };
 
+        ViewData["Kandidati"] = new SelectList(kandidati, "IDKandidat", "ImePrezime");
+
+
         return View(editNatjecajRequest);
     }
+
 
     [HttpPost]
     public async Task<IActionResult> Edit(EditNatjecajRequest editNatjecajRequest)

@@ -9,4 +9,5 @@ public interface IKandidatiRepository
     Task<Kandidati>? GetAsync(int? id);
     Task<Kandidati>? UpdateAsync(Kandidati kandidat);
     Task<Kandidati>? DeleteAsync(int? id);
+    Task<IEnumerable<string>> GetByNatjecajAsync(int? idNatjecaj);
 }

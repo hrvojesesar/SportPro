@@ -69,4 +69,17 @@ public class KandidatiRepository : IKandidatiRepository
         await _context.SaveChangesAsync();
         return kandidat;
     }
+
+    public async Task<IEnumerable<string>> GetByNatjecajAsync(int? idNatjecaj)
+    {
+        var kandidati = await _context.Kandidati
+            .Include(k => k.Natjecaji)
+            .Where(k => k.Natjecaji.Any(n => n.IDNatjecaj == idNatjecaj))
+            .ToListAsync();
+
+        var imePrezimeList = kandidati.Select(k => $"{k.Ime} {k.Prezime}");
+
+        return imePrezimeList;
+    }
+
 }

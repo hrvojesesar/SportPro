@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Uređivanje natječaja";
+    var kandidatiList = ViewData["Kandidati"] as SelectList;
 }
 
 <hr />
@@ -47,9 +48,23 @@
             </div>
             <div class="form-group">
                 <label asp-for="Dobitnik" class="control-label">Dobitnik</label>
-                <input asp-for="Dobitnik" class="form-control" />
+                <select asp-for="Dobitnik" class="form-control">
+                    <option value=""></option>
+                    @if (kandidatiList.Items != null)
+                    {
+                        foreach (var item in kandidatiList.Items)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="">Nema prijavljenih kandidata na ovom natječaju!</option>
+                    }
+                </select>
                 <span asp-validation-for="Dobitnik" class="text-danger"></span>
             </div>
+
             <div class="form-group">
                 <input type="submit" value="Spremi" class="btn btn-primary" />
             </div>

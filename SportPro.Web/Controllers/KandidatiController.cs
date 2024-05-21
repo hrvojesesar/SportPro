@@ -29,6 +29,7 @@ public class KandidatiController : Controller
     public async Task<IActionResult> Add()
     {
         var natjecaji = await _natjecajiRepository.GetAllAsync();
+      
         var model = new AddKandidatRequest
         {
             Natjecaji = natjecaji.Select(n => new SelectListItem
@@ -205,4 +206,12 @@ public class KandidatiController : Controller
 
         return RedirectToAction("Index", new { id = editKandidatRequest.IDKandidat });
     }
+
+    [HttpGet]
+    public async Task<IActionResult> GetKandidatByNatjecaj(int idNatjecaj)
+    {
+        var imePrezimeList = await _kandidatiRepository.GetByNatjecajAsync(idNatjecaj);
+        return Ok(imePrezimeList);
+    }
+
 }
