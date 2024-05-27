@@ -67,7 +67,7 @@
                 <span asp-validation-for="Napomene" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DobavljacIDDobavljac" class="control-label"></label>
+                <label asp-for="DobavljacIDDobavljac" class="control-label">Dobavljač</label>
                 <select id="DobavljacIDDobavljac" name="DobavljacIDDobavljac" class="form-control">
                     <option value="">-- Odaberite dobavljača --</option>
                     @foreach (var dobavljac in Model.Dobavljacis)
