@@ -16,4 +16,5 @@ public class Dobavljaci
     public DateTime? KrajSuradnje { get; set; }
     public string? SuradnjaAktivna { get; set; }
     public ICollection<Artikli> Artikli { get; set; }
+    public ICollection<Narudzbe> Narudzbe { get; set; }
 }

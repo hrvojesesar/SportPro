@@ -31,6 +31,7 @@ builder.Services.AddScoped<IKategorijeRepository, KategorijeRepository>();
 builder.Services.AddScoped<IArtikliRepository, ArtikliRepository>();
 builder.Services.AddScoped<ICertifikatiRepository, CertifikatiRepository>();
 builder.Services.AddScoped<IKandidatiRepository, KandidatiRepository>();
+builder.Services.AddScoped<INarudzbeRepository, NarudzbeRepository>();
 
 
 

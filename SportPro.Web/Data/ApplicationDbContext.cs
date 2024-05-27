@@ -26,4 +26,5 @@ public class ApplicationDbContext : DbContext
     public DbSet<Artikli> Artikli { get; set; }
     public DbSet<Certifikati> Certifikati { get; set; }
     public DbSet<Kandidati> Kandidati { get; set; }
+    public DbSet<Narudzbe> Narudzbe { get; set; }
 }

@@ -1,0 +1,143 @@
+﻿@model SportPro.Web.Models.Domains.Narudzbe
+
+@{
+    ViewData["Title"] = "Brisanje narudžbe";
+
+    string GetDobavljac(int? id, IEnumerable<SportPro.Web.Models.Domains.Dobavljaci> dobavljaci)
+    {
+        var dobavljac = dobavljaci.FirstOrDefault(x => x.IDDobavljac == id);
+        if (dobavljac != null)
+        {
+            return dobavljac.Naziv;
+        }
+        return "";
+
+    }
+}
+
+
+<h3>Jeste sigurni da želite izbrisati narudžbu?</h3>
+<div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Naziv artikla
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.NazivArtikla)
+        </dd>
+        <dt class="col-sm-2">
+            Datum nabave
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DatumNabave)
+        </dd>
+        <dt class="col-sm-2">
+            Datum isporuke
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.DatumIsporuke)
+        </dd>
+        <dt class="col-sm-2">
+            Količina
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Kolicina)
+        </dd>
+        <dt class="col-sm-2">
+            Cijena po komadu
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.CijenaPoKomadu != null)
+            {
+                @Html.DisplayFor(model => model.CijenaPoKomadu) <text>KM</text>
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.CijenaPoKomadu)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Cijena dostave
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.CijenaDostave != null)
+            {
+                @Html.DisplayFor(model => model.CijenaDostave) <text>KM</text>
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.CijenaDostave)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Porez
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Porez != null)
+            {
+                @Html.DisplayFor(model => model.Porez) <text>KM</text>
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.Porez)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Dodatne naknade
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.DodatneNaknade != null)
+            {
+                @Html.DisplayFor(model => model.DodatneNaknade) <text>KM</text>
+
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.DodatneNaknade)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Ukupni trošak
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.UkupniTrosak != null)
+            {
+                @Html.DisplayFor(model => model.UkupniTrosak) <text>KM</text>
+            }
+            else
+            {
+                @Html.DisplayFor(model => model.UkupniTrosak)
+            }
+        </dd>
+        <dt class="col-sm-2">
+            Status
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Status)
+        </dd>
+        <dt class="col-sm-2">
+            Napomene
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Napomene)
+        </dd>
+        <dt class="col-sm-2">
+            Dobavljač
+        </dt>
+        <dd class="col-sm-10">
+            @{
+                var dobavljac = GetDobavljac(Model.DobavljacIDDobavljac, ViewBag.Dobavljaci as IEnumerable<SportPro.Web.Models.Domains.Dobavljaci>);
+                @dobavljac
+
+            }
+
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IDNarudzba" />
+        <input type="submit" value="Izbriši" class="btn btn-danger" /> |
+        <a asp-action="Index">Vrati se na popis</a>
+    </form>
+</div>

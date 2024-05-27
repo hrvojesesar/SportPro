@@ -24,7 +24,7 @@ public class AddDobavljacRequest
     [StringLength(100, ErrorMessage = "Email dobavljača ne smije imati više od 100 znakova!")]
     public string? Email { get; set; }
     public DateTime? PocetakSuradnje { get; set; }
-    [Compare(nameof(PocetakSuradnje), ErrorMessage = "Datum početka suradnje ne može biti veći od datuma završetka suradnje!")]
+    //[Compare(nameof(PocetakSuradnje), ErrorMessage = "Datum početka suradnje ne može biti veći od datuma završetka suradnje!")]
     public DateTime? KrajSuradnje { get; set; }
     public string? SuradnjaAktivna { get; set; }
 }
