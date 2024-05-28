@@ -32,6 +32,14 @@ public class AddZaposlenikRequest
     public string? Email { get; set; }
     [Required]
     public DateTime DatumZaposlenja { get; set; }
+    [Required]
+    public double Placa { get; set; }
+    [Required]
+    public double TopliObrok { get; set; }
+    [Required]
+    public double Prijevoz { get; set; }
+    public double? Bonus { get; set; } = 0;
+    public double UkupnaPlaca { get; set; } = 0;
     public string? Certifikati { get; set; }
     [Required]
     [MaxLength(20, ErrorMessage = "JMBG ne može imati više od 20 znakova!")]

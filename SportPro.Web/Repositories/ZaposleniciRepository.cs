@@ -48,6 +48,11 @@ public class ZaposleniciRepository : IZaposleniciRepository
         existingZaposlenik.Telefon = zaposlenik.Telefon;
         existingZaposlenik.Email = zaposlenik.Email;
         existingZaposlenik.DatumZaposlenja = zaposlenik.DatumZaposlenja;
+        existingZaposlenik.Placa = zaposlenik.Placa;
+        existingZaposlenik.TopliObrok = zaposlenik.TopliObrok;
+        existingZaposlenik.Prijevoz = zaposlenik.Prijevoz;
+        existingZaposlenik.Bonus = zaposlenik.Bonus;
+        existingZaposlenik.UkupnaPlaca = zaposlenik.UkupnaPlaca;
         existingZaposlenik.Certifikati = zaposlenik.Certifikati;
         existingZaposlenik.JMBG = zaposlenik.JMBG;
         existingZaposlenik.BrojBankovnogRacuna = zaposlenik.BrojBankovnogRacuna;

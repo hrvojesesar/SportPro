@@ -66,6 +66,8 @@ public class ZaposleniciController : Controller
         //    return BadRequest(ModelState);
         //}
 
+        addZaposlenikRequest.UkupnaPlaca = (double)(addZaposlenikRequest.Placa + addZaposlenikRequest.TopliObrok + addZaposlenikRequest.Prijevoz + addZaposlenikRequest.Bonus);
+
         var zaposlenik = new Zaposlenici
         {
             Ime = addZaposlenikRequest.Ime,
@@ -77,6 +79,11 @@ public class ZaposleniciController : Controller
             Telefon = addZaposlenikRequest.Telefon,
             Email = addZaposlenikRequest.Email,
             DatumZaposlenja = addZaposlenikRequest.DatumZaposlenja,
+            Placa = addZaposlenikRequest.Placa,
+            TopliObrok = addZaposlenikRequest.TopliObrok,
+            Prijevoz = addZaposlenikRequest.Prijevoz,
+            Bonus = addZaposlenikRequest.Bonus,
+            UkupnaPlaca = addZaposlenikRequest.UkupnaPlaca,
             Certifikati = addZaposlenikRequest.Certifikati,
             JMBG = addZaposlenikRequest.JMBG,
             BrojBankovnogRacuna = addZaposlenikRequest.BrojBankovnogRacuna,
@@ -134,6 +141,11 @@ public class ZaposleniciController : Controller
             Telefon = zaposlenik.Telefon,
             Email = zaposlenik.Email,
             DatumZaposlenja = zaposlenik.DatumZaposlenja,
+            Placa = zaposlenik.Placa,
+            TopliObrok = zaposlenik.TopliObrok,
+            Prijevoz = zaposlenik.Prijevoz,
+            Bonus = zaposlenik.Bonus,
+            UkupnaPlaca = zaposlenik.UkupnaPlaca,
             Certifikati = zaposlenik.Certifikati,
             JMBG = zaposlenik.JMBG,
             BrojBankovnogRacuna = zaposlenik.BrojBankovnogRacuna,
@@ -157,6 +169,8 @@ public class ZaposleniciController : Controller
     public async Task<IActionResult> Edit(EditZaposlenikRequest editZaposlenikRequest)
     {
 
+        editZaposlenikRequest.UkupnaPlaca = (double)(editZaposlenikRequest.Placa + editZaposlenikRequest.TopliObrok + editZaposlenikRequest.Prijevoz + editZaposlenikRequest.Bonus);
+
         var zaposlenik = new Zaposlenici
         {
             IDZaposlenik = editZaposlenikRequest.IDZaposlenik,
@@ -169,6 +183,11 @@ public class ZaposleniciController : Controller
             Telefon = editZaposlenikRequest.Telefon,
             Email = editZaposlenikRequest.Email,
             DatumZaposlenja = editZaposlenikRequest.DatumZaposlenja,
+            Placa = editZaposlenikRequest.Placa,
+            TopliObrok = editZaposlenikRequest.TopliObrok,
+            Prijevoz = editZaposlenikRequest.Prijevoz,
+            Bonus = editZaposlenikRequest.Bonus,
+            UkupnaPlaca = editZaposlenikRequest.UkupnaPlaca,
             Certifikati = editZaposlenikRequest.Certifikati,
             JMBG = editZaposlenikRequest.JMBG,
             BrojBankovnogRacuna = editZaposlenikRequest.BrojBankovnogRacuna,

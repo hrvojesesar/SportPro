@@ -54,6 +54,21 @@ else
                     Datum zaposlenja
                 </th>
                 <th>
+                    Plaća
+                </th>
+                <th>
+                    Topli obrok
+                </th>
+                <th>
+                    Prijevoz
+                </th>
+                <th>
+                    Bonus
+                </th>
+                <th>
+                    Ukupna plaća
+                </th>
+                <th>
                     Certifikati
                 </th>
                 <th>
@@ -112,6 +127,28 @@ else
                         @Html.DisplayFor(modelItem => item.DatumZaposlenja)
                     </td>
                     <td>
+                        @Html.DisplayFor(modelItem => item.Placa) KM
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TopliObrok) KM
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prijevoz) KM
+                    </td>
+                    <td>
+                        @if (item.Bonus != null)
+                        {
+                            @Html.DisplayFor(modelItem => item.Bonus) <text> KM</text>
+                        }
+                        else
+                        {
+                            <text>0 KM</text>
+                        }
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.UkupnaPlaca) KM
+                    </td>
+                    <td>
                         @Html.DisplayFor(modelItem => item.Certifikati)
                     </td>
                     <td>
@@ -140,9 +177,9 @@ else
                         {
                             <span>@pozicija.Naziv</span>
                         }
-                     
+
                     <td>
-                 
+
                         <a asp-action="Edit" asp-route-id="@item.IDZaposlenik">Uredi</a> |
                         <a asp-action="Delete" asp-route-id="@item.IDZaposlenik">Izbriši</a>
                     </td>

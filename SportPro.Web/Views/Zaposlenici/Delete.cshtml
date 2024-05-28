@@ -74,6 +74,38 @@
             @Html.DisplayFor(model => model.DatumZaposlenja)
         </dd>
         <dt class="col-sm-2">
+            Plaća
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Placa) KM
+        </dd>
+        <dt class="col-sm-2">
+            Topli obrok
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TopliObrok) KM
+        </dd>
+        <dt class="col-sm-2">
+            Prijevoz
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.Prijevoz) KM
+        </dd>
+        <dt class="col-sm-2">
+            Bonus
+        </dt>
+        <dd class="col-sm-10">
+            @if (Model.Bonus != null)
+            {
+                @Html.DisplayFor(model => model.Bonus) <text>KM</text>
+
+            }
+            else
+            {
+                <text>KM</text>
+            }
+        </dd>
+        <dt class="col-sm-2">
             Certifikati
         </dt>
         <dd class="col-sm-10">
@@ -122,12 +154,12 @@
             Pozicija
         </dt>
         <dd class="col-sm-10">
-           @foreach (var item in Model.Pozicije)
+            @foreach (var item in Model.Pozicije)
             {
                 <span>@item.Naziv</span>
             }
-            
-           
+
+
         </dd>
     </dl>
 

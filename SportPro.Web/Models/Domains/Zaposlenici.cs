@@ -15,6 +15,11 @@ public class Zaposlenici
     public string Telefon { get; set; }
     public string? Email { get; set; }
     public DateTime DatumZaposlenja { get; set; }
+    public double Placa { get; set; }
+    public double TopliObrok { get; set; }
+    public double Prijevoz { get; set; }
+    public double? Bonus { get; set; }
+    public double UkupnaPlaca { get; set; }
     public string? Certifikati { get; set; }
     public string JMBG { get; set; }
     public string BrojBankovnogRacuna { get; set; }
