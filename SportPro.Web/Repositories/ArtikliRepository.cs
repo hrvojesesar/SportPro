@@ -52,6 +52,7 @@ public class ArtikliRepository : IArtikliRepository
         existingArtikal.NabavnaCijena = artikal.NabavnaCijena;
         existingArtikal.CijenaDostave = artikal.CijenaDostave;
         existingArtikal.UkupniTrosak = artikal.UkupniTrosak;
+        existingArtikal.UkupnaZarada = artikal.UkupnaZarada;
         existingArtikal.DobavljacIDDobavljac = artikal.DobavljacIDDobavljac;
         existingArtikal.BrendIDBrend = artikal.BrendIDBrend;
         existingArtikal.Kategorije = artikal.Kategorije;

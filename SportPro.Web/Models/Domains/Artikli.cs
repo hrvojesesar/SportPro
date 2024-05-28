@@ -18,6 +18,7 @@ public class Artikli
     public double NabavnaCijena { get; set; }
     public double CijenaDostave { get; set; }
     public double UkupniTrosak { get; set; }
+    public double? UkupnaZarada { get; set; }
     public int DobavljacIDDobavljac { get; set; }
     public int BrendIDBrend { get; set; }
     public ICollection<Kategorije> Kategorije { get; set; }

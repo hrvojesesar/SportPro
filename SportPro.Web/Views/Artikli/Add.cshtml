@@ -67,6 +67,11 @@
                 <span asp-validation-for="CijenaDostave" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label asp-for="UkupnaZarada" class="control-label">Ukupna zarada</label>
+                <input asp-for="UkupnaZarada" class="form-control" />
+                <span asp-validation-for="UkupnaZarada" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <label for="DobavljacIDDobavljac" class="control-label">Dobavljač</label>
                 <select id="DobavljacIDDobavljac" name="DobavljacIDDobavljac" class="form-control">
                     @foreach (var dobavljac in Model.Dobavljacis)

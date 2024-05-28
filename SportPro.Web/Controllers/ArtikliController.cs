@@ -101,6 +101,7 @@ public class ArtikliController : Controller
             NabavnaCijena = addArtiklRequest.NabavnaCijena,
             CijenaDostave = addArtiklRequest.CijenaDostave,
             UkupniTrosak = addArtiklRequest.CijenaDostave + (addArtiklRequest.NabavnaCijena * addArtiklRequest.NabavnaKolicina),
+            UkupnaZarada = addArtiklRequest.UkupnaZarada,
             DobavljacIDDobavljac = addArtiklRequest.DobavljacIDDobavljac,
             BrendIDBrend = addArtiklRequest.BrendIDBrend,
         };
@@ -204,6 +205,7 @@ public class ArtikliController : Controller
             NabavnaCijena = artikl.NabavnaCijena,
             CijenaDostave = artikl.CijenaDostave,
             UkupniTrosak = artikl.UkupniTrosak,
+            UkupnaZarada = (double)artikl.UkupnaZarada,
             DobavljacIDDobavljac = artikl.DobavljacIDDobavljac,
             BrendIDBrend = artikl.BrendIDBrend,
             // Dobavljacis = applicationDbContext.Dobavljaci.ToList(),
@@ -256,6 +258,7 @@ public class ArtikliController : Controller
             NabavnaCijena = editArtiklRequest.NabavnaCijena,
             CijenaDostave = editArtiklRequest.CijenaDostave,
             UkupniTrosak = editArtiklRequest.CijenaDostave + (editArtiklRequest.NabavnaCijena * editArtiklRequest.NabavnaKolicina),
+            UkupnaZarada = editArtiklRequest.UkupnaZarada,
             DobavljacIDDobavljac = editArtiklRequest.DobavljacIDDobavljac,
             BrendIDBrend = editArtiklRequest.BrendIDBrend
         };
