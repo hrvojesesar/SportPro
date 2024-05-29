@@ -1,0 +1,75 @@
+﻿@model SportPro.Web.Models.Domains.Dashboard
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    @{
+        ViewData["Title"] = "Evidencija";
+    }
+    @*<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">*@
+
+    <h1 class="d-flex justify-content-center py-3 fw-bold">TROŠKOVI I PRIHODI</h1>
+
+</head>
+
+<body class="dashboard-design">
+    @* Summary Widgets *@
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="d-flex flex-row widget summary income">
+                <div class="d-flex flex-column justify-content-center p-5">
+                    <i class="fa fa-dollar" style="font-size:36px"></i>
+                </div>
+                <div class="d-flex flex-column m-auto py-3" style="color: white;">
+                    <span class="lead fst-italic">UKUPNI PRIHOD:</span>
+                    <h1 class="display-6 fw-bold">@Math.Round((double)(ViewBag.UkupniPrihodi ?? 0), 2)</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="d-flex flex-row widget summary expense">
+                <div class="d-flex flex-column justify-content-center p-5">
+                    <i class="fa fa-dollar" style="font-size:36px"></i>
+                </div>
+                <div class="d-flex flex-column m-auto py-3" style="color: white;">
+                    <span class="lead fst-italic">UKUPNI TROŠKOVI:</span>
+                    <h1 class="display-6 fw-bold">@Math.Round((double)(ViewBag.UkupniTrosak ?? 0), 2)</h1>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="d-flex flex-row widget summary balance">
+                <div class="d-flex flex-column justify-content-center p-5">
+                    <i class="fa fa-dollar" style="font-size:36px"></i>
+                </div>
+                <div class="d-flex flex-column m-auto py-3" style="color: white;">
+                    <span class="lead fst-italic">PROFIT:</span>
+                    <h1 class="display-6 fw-bold">@Math.Round((double)(ViewBag.UkupniProfit ?? 0), 2)</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-5 justify-content-center">
+        <div class="col-md-8">
+            <div class="widget chart">
+                <div class="p-4">
+                    <h5 class="fw-bold" style="color: white;">Grafički Prikaz:</h5>
+                </div>
+                <ejs-accumulationchart id="doughnutchart" enableSmartLabels background="#1a222b">
+                    <e-accumulation-series-collection>
+                        <e-accumulation-series DataSource="@ViewBag.dataSource"
+                                               xName="xValue" yName="yValue" innerRadius="60%" legendShape="Circle">
+                            <e-accumulationseries-datalabel name="formattedAmount" visible>
+                            </e-accumulationseries-datalabel>
+                        </e-accumulation-series>
+                    </e-accumulation-series-collection>
+                    <e-accumulationchart-legendsettings position="Top" toggleVisibility="false">
+                        <e-legendsettings-textstyle color="#fff" size="1rem"></e-legendsettings-textstyle>
+                    </e-accumulationchart-legendsettings>
+                    <e-accumulationchart-tooltipsettings enable></e-accumulationchart-tooltipsettings>
+                </ejs-accumulationchart>
+            </div>
+        </div>
+    </div>
+</body>
