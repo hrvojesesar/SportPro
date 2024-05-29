@@ -21,9 +21,9 @@
                 <div class="d-flex flex-column justify-content-center p-5">
                     <i class="fa fa-dollar" style="font-size:36px"></i>
                 </div>
-                <div class="d-flex flex-column m-auto py-3" style="color: white;">
+                <div class="d-flex flex-column m-auto py-3" style="color: black;">
                     <span class="lead fst-italic">UKUPNI PRIHOD:</span>
-                    <h1 class="display-6 fw-bold">@Math.Round((double)(ViewBag.UkupniPrihodi ?? 0), 2)</h1>
+                    <h1 class="display-6 fw-bold">@Math.Round((double)(ViewBag.UkupniPrihod ?? 0), 2)</h1>
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@
                 <div class="d-flex flex-column justify-content-center p-5">
                     <i class="fa fa-dollar" style="font-size:36px"></i>
                 </div>
-                <div class="d-flex flex-column m-auto py-3" style="color: white;">
+                <div class="d-flex flex-column m-auto py-3" style="color: black;">
                     <span class="lead fst-italic">UKUPNI TROŠKOVI:</span>
                     <h1 class="display-6 fw-bold">@Math.Round((double)(ViewBag.UkupniTrosak ?? 0), 2)</h1>
                 </div>
@@ -43,7 +43,7 @@
                 <div class="d-flex flex-column justify-content-center p-5">
                     <i class="fa fa-dollar" style="font-size:36px"></i>
                 </div>
-                <div class="d-flex flex-column m-auto py-3" style="color: white;">
+                <div class="d-flex flex-column m-auto py-3" style="color: black;">
                     <span class="lead fst-italic">PROFIT:</span>
                     <h1 class="display-6 fw-bold">@Math.Round((double)(ViewBag.UkupniProfit ?? 0), 2)</h1>
                 </div>
@@ -54,7 +54,7 @@
         <div class="col-md-8">
             <div class="widget chart">
                 <div class="p-4">
-                    <h5 class="fw-bold" style="color: white;">Grafički Prikaz:</h5>
+                    <h5 class="fw-bold" style="color: red;">Grafički Prikaz:</h5>
                 </div>
                 <ejs-accumulationchart id="doughnutchart" enableSmartLabels background="#1a222b">
                     <e-accumulation-series-collection>
