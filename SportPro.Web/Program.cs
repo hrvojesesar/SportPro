@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Azure;
 using SportPro.Web.Data;
@@ -13,6 +14,9 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+builder.Services.AddIdentity<IdentityUser, IdentityRole>()
+    .AddEntityFrameworkStores<ApplicationDbContext>();
 
 builder.Services.AddScoped<INatjecajiRepository, NatjecajiRepository>();
 builder.Services.AddScoped<IPozicijeRepository, PozicijeRepository>();
@@ -32,8 +36,6 @@ builder.Services.AddScoped<IArtikliRepository, ArtikliRepository>();
 builder.Services.AddScoped<ICertifikatiRepository, CertifikatiRepository>();
 builder.Services.AddScoped<IKandidatiRepository, KandidatiRepository>();
 builder.Services.AddScoped<INarudzbeRepository, NarudzbeRepository>();
-
-
 
 
 builder.Services.AddSwaggerGen(c =>
@@ -59,6 +61,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
