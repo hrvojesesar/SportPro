@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@inject SignInManager<IdentityUser> signInManager
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -79,7 +82,29 @@
                         <li class="nav-item">
                             <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Izvještaj</a>
                         </li>
-                        
+
+                        <div class="d-flex align-items-center">
+                            @if (signInManager.IsSignedIn(User))
+                            {
+                                <div class="me-3 text-light">
+                                    Dobrodošli, @User.Identity?.Name
+                                </div>
+                                <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Logout">
+                                    Odjava
+                                </a>
+                            }
+                            else
+                            {
+                                <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Register">
+                                    Registracija
+                                </a>
+
+
+                                <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Login">
+                                    Prijava
+                                </a>
+                            }
+                        </div>
                     </ul>
                 </div>
             </div>
