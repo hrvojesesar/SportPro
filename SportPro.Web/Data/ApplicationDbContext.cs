@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using SportPro.Web.Models.Domains;
+using SportPro.Web.Models.ViewModels;
 
 namespace SportPro.Web.Data;
 

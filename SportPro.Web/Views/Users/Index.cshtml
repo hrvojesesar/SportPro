@@ -41,6 +41,10 @@
                         </td>
                         <td>
                             <a asp-action="Manage" asp-route-userId="@item.UserId" class="btn btn-primary">Uredi uloge</a>
+                            <a asp-controller="Users" asp-action="Add">Dodaj novog korisnika</a>
+                            <a asp-action="Edit" asp-route-userId="@item.UserId">Uredi</a>
+                            <a asp-action="Delete" asp-route-userId="@item.UserId">Izbriši</a>
+
                         </td>
                     </tr>
                 }

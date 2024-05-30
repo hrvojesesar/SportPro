@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SportPro.Web.Data;
 using SportPro.Web.Models.Domains;
+using SportPro.Web.Models.ViewModels;
 
 namespace SportPro.Web.Controllers;
 
@@ -93,5 +94,104 @@ public class UsersController : Controller
             return View(model);
         }
         return RedirectToAction("Index");
+    }
+
+    [HttpGet]
+    public IActionResult Add()
+    {
+        return View();
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Add(AddUserRequest model)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
+            var result = await _userManager.CreateAsync(user, model.Password);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index");
+            }
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+        }
+        return View(model);
+
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Edit(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        var model = new EditUserRequest
+        {
+            UserName = user.UserName,
+            Email = user.Email
+        };
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Edit(EditUserRequest model)
+    {
+        if (ModelState.IsValid)
+        {
+            var user = await _userManager.FindByIdAsync(model.UserId);
+            if (user != null)
+            {
+                user.UserName = model.UserName;
+                user.Email = model.Email;
+                var result = await _userManager.UpdateAsync(user);
+                if (result.Succeeded)
+                {
+                    return RedirectToAction("Index", "Users");
+                }
+                ModelState.AddModelError("", "User not updated, something went wrong.");
+                return View(model);
+            }
+            return NotFound();
+        }
+        return View(model);
+
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> Delete(string userId)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+        if (user == null)
+        {
+            return NotFound();
+        }
+        var model = new Users
+        {
+            UserName = user.UserName,
+            Email = user.Email
+        };
+        return View(model);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Delete(EditUserRequest model)
+    {
+        var user = await _userManager.FindByIdAsync(model.UserId);
+        if (user != null)
+        {
+            var result = await _userManager.DeleteAsync(user);
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Index", "Users");
+            }
+            ModelState.AddModelError("", "User not deleted, something went wrong.");
+            return View(model);
+        }
+        return NotFound();
     }
 }
