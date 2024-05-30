@@ -1,0 +1,41 @@
+﻿@model List<SportPro.Web.Models.Domains.Roles>
+
+@{
+    ViewData["Title"] = "Uredi uloge";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form method="post">
+    <div class="card my-5">
+        <div class="card-header">
+            <h1 class="d-flex justify-content-center py-3 fw-bold">UREDI ULOGE KORISNIKA</h1>
+            <i>DODAJ/UKLONI uloge za korisnika:<b> @ViewBag.UserName</b></i>
+        </div>
+        <div class="card-body ms-4">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                <div class="form-check m-1">
+                    <input type="hidden" asp-for="@Model[i].RoleId" />
+                    <input type="hidden" asp-for="@Model[i].RoleName" />
+                    <input asp-for="@Model[i].Selected" class="form-check-input" />
+                    <label class="form-check-label" asp-for="@Model[i].Selected">
+                        @Model[i].RoleName
+                    </label>
+                </div>
+            }
+            <div asp-validation-summary="All" class="text-danger"></div>
+        </div>
+        <div class="card-footer">
+
+
+            <div class="btn-toolbar justify-content-between my-2" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group" role="group" aria-label="First group">
+                    <input type="submit" value="Spremi Promjene" class="btn btn-success fw-bold" style="width:auto" />
+                </div>
+                <div class="input-group">
+                    <a href="/Users" class="btn btn-danger fw-bold" style="width:auto">Odustani</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

@@ -81,6 +81,12 @@ public class AccountController : Controller
         return RedirectToAction("Index", "Home");
     }
 
+    [HttpGet]
+    public async Task<IActionResult> AccessDenied()
+    {
+        return View();
+    }
+
     private void ValidateRegisterViewModel(RegisterViewModel registerViewModel)
     {
         if (!registerViewModel.Email.EndsWith("@sportpro.ba"))

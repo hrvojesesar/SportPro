@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
@@ -15,6 +16,7 @@ public class BojeController : Controller
         this.bojeRepository = bojeRepository;
     }
 
+    [Authorize(Roles = "Uposlenik")]
     [HttpGet]
     public async Task<IActionResult> Index()
     {
@@ -22,12 +24,14 @@ public class BojeController : Controller
         return View(boje);
     }
 
+    [Authorize(Roles = "Uposlenik")]
     [HttpGet]
     public async Task<IActionResult> Add()
     {
         return View();
     }
 
+    [Authorize(Roles = "Uposlenik")]
     [HttpPost]
     public async Task<IActionResult> Add(AddBojaRequest addBojaRequest)
     {
@@ -47,6 +51,7 @@ public class BojeController : Controller
         return RedirectToAction("Index", new { id = addBojaRequest.IDBoja });
     }
 
+    [Authorize(Roles = "Uposlenik")]
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -71,6 +76,7 @@ public class BojeController : Controller
         return View(editBojaRequest);
     }
 
+    [Authorize(Roles = "Uposlenik")]
     [HttpPost]
     public async Task<IActionResult> Edit(EditBojaRequest editBojaRequest)
     {
@@ -91,6 +97,7 @@ public class BojeController : Controller
         return RedirectToAction("Index", new { id = editBojaRequest.IDBoja });
     }
 
+    [Authorize(Roles = "Uposlenik")]
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -109,6 +116,7 @@ public class BojeController : Controller
         return View(boja);
     }
 
+    [Authorize(Roles = "Uposlenik")]
     [HttpPost]
     public async Task<IActionResult> Delete(EditBojaRequest editBojaRequest)
     {

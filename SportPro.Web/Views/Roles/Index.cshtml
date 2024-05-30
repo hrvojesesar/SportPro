@@ -1,0 +1,31 @@
+﻿@model List<Microsoft.AspNetCore.Identity.IdentityRole>
+@{
+    ViewData["Title"] = "Upravljanje ulogama";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h1 class="d-flex justify-content-center py-3 fw-bold">UPRAVLJANJE ULOGAMA</h1>
+<form method="post" asp-action="AddRole" asp-controller="Roles">
+    <div class="input-group" style="display:block">
+        <input name="roleName" class="form-control-2" placeholder="Unesite naziv uloge...">
+        <span class="input-group-btn">
+            <button action="submit" class="btn btn-primary ms-2 mb-1 px-3 fw-bold">Dodaj Novu Ulogu</button>
+        </span>
+    </div>
+</form>
+<table class="table table-hover table-bordered border-secondary mt-4">
+    <thead style=" background-color: #45526e; color: white;">
+        <tr>
+            <th>Id</th>
+            <th>Uloga</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var role in Model)
+        {
+            <tr>
+                <td>@role.Id</td>
+                <td>@role.Name</td>
+            </tr>
+        }
+    </tbody>
+</table>
