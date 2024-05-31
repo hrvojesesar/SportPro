@@ -105,6 +105,8 @@ public class UsersController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(AddUserRequest model)
     {
+        ValidateRegisterViewModel(model);
+
         if (ModelState.IsValid)
         {
             var user = new IdentityUser { UserName = model.UserName, Email = model.Email };
@@ -148,6 +150,9 @@ public class UsersController : Controller
             {
                 user.UserName = model.UserName;
                 user.Email = model.Email;
+
+                ValidateRegisterModelForEdit(model);
+
                 var result = await _userManager.UpdateAsync(user);
                 if (result.Succeeded)
                 {
@@ -193,5 +198,21 @@ public class UsersController : Controller
             return View(model);
         }
         return NotFound();
+    }
+
+    private void ValidateRegisterViewModel(AddUserRequest addUserRequest)
+    {
+        if (!addUserRequest.Email.EndsWith("@sportpro.ba"))
+        {
+            ModelState.AddModelError("Email", "Email mora biti sa domenom sportpro.ba");
+        }
+    }
+
+    private void ValidateRegisterModelForEdit(EditUserRequest editUserRequest)
+    {
+        if (!editUserRequest.Email.EndsWith("@sportpro.ba"))
+        {
+            ModelState.AddModelError("Email", "Email mora biti sa domenom sportpro.ba");
+        }
     }
 }
