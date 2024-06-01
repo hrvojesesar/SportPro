@@ -8,6 +8,7 @@ using SportPro.Web.Models.ViewModels;
 namespace SportPro.Web.Controllers;
 
 [Route("[controller]/[action]")]
+
 public class ArtikliController : Controller
 {
     private readonly IArtikliRepository artikliRepository;

@@ -7,6 +7,7 @@ using SportPro.Web.Models.ViewModels;
 namespace SportPro.Web.Controllers;
 
 [Route("[controller]/[action]")]
+[Authorize(Roles = "Uposlenik")]
 public class BojeController : Controller
 {
     private readonly IBojeRepository bojeRepository;

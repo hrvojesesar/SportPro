@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Shared;
+using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
 
 namespace SportPro.Web.Controllers;
+
 
 public class AccountController : Controller
 {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
@@ -12,6 +13,7 @@ using System.Text.RegularExpressions;
 namespace SportPro.Web.Controllers;
 
 [Route("[controller]/[action]")]
+[Authorize(Roles = "Vlasnik, Menadzer")]
 public class ZaposleniciController : Controller
 {
     private readonly IZaposleniciRepository zaposleniciRepository;

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportPro.Web.Data;
 
 namespace SportPro.Web.Controllers;
 
+[Authorize(Roles = "Vlasnik")]
 public class DashboardController : Controller
 {
     private readonly ApplicationDbContext _context;

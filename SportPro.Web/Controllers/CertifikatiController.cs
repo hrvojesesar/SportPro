@@ -1,11 +1,14 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
 
 namespace SportPro.Web.Controllers;
 
+
 [Route("[controller]/[action]")]
+[Authorize(Roles = "Uposlenik")]
 public class CertifikatiController : Controller
 {
     private readonly ICertifikatiRepository certifikatiRepository;

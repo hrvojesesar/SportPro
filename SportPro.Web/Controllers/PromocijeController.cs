@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using SportPro.Web.Data;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
@@ -9,6 +10,7 @@ using System.Net;
 namespace SportPro.Web.Controllers;
 
 [Route("[controller]/[action]")]
+[Authorize(Roles = "Uposlenik")]
 public class PromocijeController : Controller
 {
     private readonly IPromocijeRepository promocijeRepository;

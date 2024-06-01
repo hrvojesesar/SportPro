@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
@@ -7,6 +8,7 @@ using SportPro.Web.Repositories;
 
 namespace SportPro.Web.Controllers;
 [Route("[controller]/[action]")]
+[Authorize(Roles = "Menadzer")]
 public class NatjecajiController : Controller
 {
     private readonly INatjecajiRepository natjecajiRepository;

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.V4.Pages.Internal;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -8,6 +9,7 @@ using SportPro.Web.Models.ViewModels;
 
 namespace SportPro.Web.Controllers;
 
+[Authorize(Roles = "Admin")]
 public class UsersController : Controller
 {
     private readonly UserManager<IdentityUser> _userManager;
