@@ -4,23 +4,31 @@
     ViewData["Title"] = "Brisanje veličine";
 }
 
+@if (User.IsInRole("Uposlenik"))
+{
+    <h3>Jeste sigurni da želite izbrisati veličinu?</h3>
+    <div>
+        <h4>Velicine</h4>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Veličina
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Velicina)
+            </dd>
+        </dl>
 
-<h3>Jeste sigurni da želite izbrisati veličinu?</h3>
-<div>
-    <h4>Velicine</h4>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Veličina
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Velicina)
-        </dd>
-    </dl>
-
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IDVelicina" />
-        <input type="submit" value="Izbriši" class="btn btn-danger" /> |
-        <a asp-action="Index">Vrati se na popis</a>
-    </form>
-</div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="IDVelicina" />
+            <input type="submit" value="Izbriši" class="btn btn-danger" /> |
+            <a asp-action="Index">Vrati se na popis</a>
+        </form>
+    </div>
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">You are not allowed to access this page!</h2>
+    </div>
+}

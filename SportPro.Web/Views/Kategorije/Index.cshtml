@@ -5,44 +5,52 @@
 }
 
 
-
-<p>
-    <a asp-controller="Kategorije" asp-action="Add">Dodaj novu kategoriju</a>
-</p>
-@if (Model.Count() == 0)
+@if (User.IsInRole("Uposlenik"))
 {
-    <h2 align="center">Nema podataka o kategorijama!</h2>
+    <p>
+        <a asp-controller="Kategorije" asp-action="Add">Dodaj novu kategoriju</a>
+    </p>
+    @if (Model.Count() == 0)
+    {
+        <h2 align="center">Nema podataka o kategorijama!</h2>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Naziv
+                    </th>
+                    <th>
+                        Opis
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Naziv)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Opis)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IDKategorija">Uredi</a> |
+                            <a asp-action="Delete" asp-route-id="@item.IDKategorija">Izbriši</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Naziv
-                </th>
-                <th>
-                    Opis
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Naziv)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Opis)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.IDKategorija">Uredi</a> |
-                        <a asp-action="Delete" asp-route-id="@item.IDKategorija">Izbriši</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="container my-5">
+        <h2 align="center">You are not allowed to access this page!</h2>
+    </div>
 }

@@ -24,196 +24,204 @@
     }
 }
 
-
-<p>
-    <a asp-action="Add">Dodaj novi artikl</a>
-</p>
-@if (Model.Count() == 0)
+@if (User.IsInRole("Uposlenik"))
 {
-    <h2 align="center">Nema podataka o artiklima!</h2>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Naziv artikla
-                </th>
-                <th>
-                    Opis
-                </th>
-                <th>
-                    Cijena
-                </th>
-                <th>
-                    Snižen
-                </th>
-                <th>
-                    Snižena cijena
-                </th>
-                <th>
-                    Nabavna količina
-                </th>
-                <th>
-                    Trenutna količina
-                </th>
-                <th>
-                    Na stanju
-                </th>
-                <th>
-                    Datum nabave
-                </th>
-                <th>
-                    Nabavna cijena (po komadu)
-                </th>
-                <th>
-                    Cijena dostave
-                </th>
-                <th>
-                    Ukupni trošak
-                </th>
-                <th>
-                    Ukupna zarada
-                </th>
-                <th>
-                    Dobavljač
-                </th>
-                <th>
-                    Brend
-                </th>
-                <th>
-                    Kategorije
-                </th>
-                <th>
-                    Boje
-                </th>
-                <th>
-                    Veličine
-                </th>
-                <th>
-                    Poslovnice
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <p>
+        <a asp-action="Add">Dodaj novi artikl</a>
+    </p>
+    @if (Model.Count() == 0)
+    {
+        <h2 align="center">Nema podataka o artiklima!</h2>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Naziv)
-                    </td>
-                    <td>
-                        <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDArtikal">Prikaži opis</a>
-                        <div class="modal fade" id="opisModal_@item.IDArtikal" tabindex="-1" aria-labelledby="opisModalLabel_@item.IDArtikal" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="opisModalLabel_@item.IDArtikal">Opis artikla</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        @Html.Raw(item.Opis)
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                    <th>
+                        Naziv artikla
+                    </th>
+                    <th>
+                        Opis
+                    </th>
+                    <th>
+                        Cijena
+                    </th>
+                    <th>
+                        Snižen
+                    </th>
+                    <th>
+                        Snižena cijena
+                    </th>
+                    <th>
+                        Nabavna količina
+                    </th>
+                    <th>
+                        Trenutna količina
+                    </th>
+                    <th>
+                        Na stanju
+                    </th>
+                    <th>
+                        Datum nabave
+                    </th>
+                    <th>
+                        Nabavna cijena (po komadu)
+                    </th>
+                    <th>
+                        Cijena dostave
+                    </th>
+                    <th>
+                        Ukupni trošak
+                    </th>
+                    <th>
+                        Ukupna zarada
+                    </th>
+                    <th>
+                        Dobavljač
+                    </th>
+                    <th>
+                        Brend
+                    </th>
+                    <th>
+                        Kategorije
+                    </th>
+                    <th>
+                        Boje
+                    </th>
+                    <th>
+                        Veličine
+                    </th>
+                    <th>
+                        Poslovnice
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Naziv)
+                        </td>
+                        <td>
+                            <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDArtikal">Prikaži opis</a>
+                            <div class="modal fade" id="opisModal_@item.IDArtikal" tabindex="-1" aria-labelledby="opisModalLabel_@item.IDArtikal" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="opisModalLabel_@item.IDArtikal">Opis artikla</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @Html.Raw(item.Opis)
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Cijena) KM
-                    </td>
-                    <td>
-                        @if (item.Snizen)
-                        {
-                            <text>Da</text>
-                        }
-                        else
-                        {
-                            <text>Ne</text>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.SnizenaCijena) KM
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NabavnaKolicina)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TrenutnaKolicina)
-                    </td>
-                    <td>
-                        @if (item.NaStanju)
-                        {
-                            <text>Da</text>
-                        }
-                        else
-                        {
-                            <text>Ne</text>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DatumNabave)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NabavnaCijena) KM
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CijenaDostave) KM
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UkupniTrosak) KM
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UkupnaZarada) KM
-                    </td>
-                    <td>
-                        @{
-                            var dobavljac = GetDobavljacName(item.DobavljacIDDobavljac, ViewData["Dobavljaci"] as IEnumerable<SportPro.Web.Models.Domains.Dobavljaci>);
-                            @dobavljac
-                        }
-                    </td>
-                    <td>
-                        @{
-                            var brend = GetBrendName(item.BrendIDBrend, ViewData["Brendovi"] as IEnumerable<SportPro.Web.Models.Domains.Brendovi>);
-                            @brend
-                        }
-                    </td>
-                    <td>
-                        @foreach (var kategorija in item.Kategorije)
-                        {
-                            <span>@kategorija.Naziv</span>
-                        }
-                    </td>
-                    <td>
-                        @foreach (var boja in item.Boje)
-                        {
-                            <span>@boja.NazivBoje</span>
-                        }
-                    </td>
-                    <td>
-                        @foreach (var velicina in item.Velicine)
-                        {
-                            <span>@velicina.Velicina</span>
-                        }
-                    </td>
-                    <td>
-                        @foreach (var poslovnica in item.Poslovnice)
-                        {
-                            <span>@poslovnica.Naziv</span>
-                        }
-                    </td>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Cijena) KM
+                        </td>
+                        <td>
+                            @if (item.Snizen)
+                            {
+                                <text>Da</text>
+                            }
+                            else
+                            {
+                                <text>Ne</text>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.SnizenaCijena) KM
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NabavnaKolicina)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrenutnaKolicina)
+                        </td>
+                        <td>
+                            @if (item.NaStanju)
+                            {
+                                <text>Da</text>
+                            }
+                            else
+                            {
+                                <text>Ne</text>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DatumNabave)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NabavnaCijena) KM
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.CijenaDostave) KM
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UkupniTrosak) KM
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UkupnaZarada) KM
+                        </td>
+                        <td>
+                            @{
+                                var dobavljac = GetDobavljacName(item.DobavljacIDDobavljac, ViewData["Dobavljaci"] as IEnumerable<SportPro.Web.Models.Domains.Dobavljaci>);
+                                @dobavljac
+                            }
+                        </td>
+                        <td>
+                            @{
+                                var brend = GetBrendName(item.BrendIDBrend, ViewData["Brendovi"] as IEnumerable<SportPro.Web.Models.Domains.Brendovi>);
+                                @brend
+                            }
+                        </td>
+                        <td>
+                            @foreach (var kategorija in item.Kategorije)
+                            {
+                                <span>@kategorija.Naziv</span>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var boja in item.Boje)
+                            {
+                                <span>@boja.NazivBoje</span>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var velicina in item.Velicine)
+                            {
+                                <span>@velicina.Velicina</span>
+                            }
+                        </td>
+                        <td>
+                            @foreach (var poslovnica in item.Poslovnice)
+                            {
+                                <span>@poslovnica.Naziv</span>
+                            }
+                        </td>
 
-                    <td>
+                        <td>
 
-                        <a asp-action="Edit" asp-route-id="@item.IDArtikal">Uredi</a> |
-                        <a asp-action="Delete" asp-route-id="@item.IDArtikal">Izbriši</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                            <a asp-action="Edit" asp-route-id="@item.IDArtikal">Uredi</a> |
+                            <a asp-action="Delete" asp-route-id="@item.IDArtikal">Izbriši</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">You are not allowed to access this page!</h2>
+    </div>
 }

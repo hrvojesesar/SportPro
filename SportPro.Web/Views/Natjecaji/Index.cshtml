@@ -4,102 +4,111 @@
     ViewData["Title"] = "Natječaji";
 
 }
-<p>
-    <a asp-controller="Natjecaji" asp-action="Add">Dodaj novi natječaj</a>
-</p>
-@if (Model.Count() == 0)
+@if (User.IsInRole("Menadzer"))
 {
-    <h2 align="center">Nema podataka o natječajima!</h2>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Naziv
-                </th>
-                <th>
-                    Opis
-                </th>
-                <th>
-                    Procijenjena vrijednost
-                </th>
-                <th>
-                    Trajanje od
-                </th>
-                <th>
-                    Trajanje do
-                </th>
-                <th>
-                    Datum objavljivanja
-                </th>
-                <th>
-                    Aktivan
-                </th>
-                <th>
-                    Dobitnik
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <p>
+        <a asp-controller="Natjecaji" asp-action="Add">Dodaj novi natječaj</a>
+    </p>
+    @if (Model.Count() == 0)
+    {
+        <h2 align="center">Nema podataka o natječajima!</h2>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Naziv)
-                    </td>
-                    <td>
-                        <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDNatjecaj">Prikaži opis</a>
-                        <div class="modal fade" id="opisModal_@item.IDNatjecaj" tabindex="-1" aria-labelledby="opisModalLabel_@item.IDNatjecaj" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="opisModalLabel_@item.IDNatjecaj">Opis natječaja</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        @Html.Raw(item.Opis)
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                    <th>
+                        Naziv
+                    </th>
+                    <th>
+                        Opis
+                    </th>
+                    <th>
+                        Procijenjena vrijednost
+                    </th>
+                    <th>
+                        Trajanje od
+                    </th>
+                    <th>
+                        Trajanje do
+                    </th>
+                    <th>
+                        Datum objavljivanja
+                    </th>
+                    <th>
+                        Aktivan
+                    </th>
+                    <th>
+                        Dobitnik
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Naziv)
+                        </td>
+                        <td>
+                            <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDNatjecaj">Prikaži opis</a>
+                            <div class="modal fade" id="opisModal_@item.IDNatjecaj" tabindex="-1" aria-labelledby="opisModalLabel_@item.IDNatjecaj" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="opisModalLabel_@item.IDNatjecaj">Opis natječaja</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @Html.Raw(item.Opis)
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProcijenjenaVrijednost) KM
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TrajanjeOd)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TrajanjeDo)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DatumObjave)
-                    </td>
-                    <td>
-                        @if (item.Aktivan)
-                        {
-                            <text>Da</text>
-                        }
-                        else
-                        {
-                            <text>Ne</text>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Dobitnik)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.IDNatjecaj">Uredi</a> |
-                        <a asp-action="Delete" asp-route-id="@item.IDNatjecaj">Izbriši</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.ProcijenjenaVrijednost) KM
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrajanjeOd)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TrajanjeDo)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DatumObjave)
+                        </td>
+                        <td>
+                            @if (item.Aktivan)
+                            {
+                                <text>Da</text>
+                            }
+                            else
+                            {
+                                <text>Ne</text>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Dobitnik)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IDNatjecaj">Uredi</a> |
+                            <a asp-action="Delete" asp-route-id="@item.IDNatjecaj">Izbriši</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">You are not allowed to access this page!</h2>
+    </div>
 }

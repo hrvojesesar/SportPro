@@ -4,109 +4,118 @@
     ViewData["Title"] = "Dodavanje nove promocije";
 }
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Add">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Naziv" class="control-label">Naziv</label>
-                <input asp-for="Naziv" class="form-control" />
-                <span asp-validation-for="Naziv" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label for="TipoviPromocijaIDTipPromocije" class="control-label">Tip promocije</label>
-                <select id="TipoviPromocijaIDTipPromocije" name="TipoviPromocijaIDTipPromocije" class="form-control">
-                    @foreach (var tipPromocije in Model.TipoviPromocijas)
-                    {
-                        <option value="@tipPromocije.IDTipPromocije">@tipPromocije.Naziv</option>
-                    }
-                </select>
-                <span asp-validation-for="TipoviPromocijaIDTipPromocije" class="text-danger"></span>
+@if (User.IsInRole("Uposlenik"))
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Add">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
-                    <label asp-for="Opis" class="control-label">Opis</label>
-                    <input asp-for="Opis" class="form-control" />
-                    <span asp-validation-for="Opis" class="text-danger"></span>
+                    <label asp-for="Naziv" class="control-label">Naziv</label>
+                    <input asp-for="Naziv" class="form-control" />
+                    <span asp-validation-for="Naziv" class="text-danger"></span>
                 </div>
                 <div class="form-group">
-                    <label asp-for="DatumPocetka" class="control-label">Datum početka</label>
-                    <input asp-for="DatumPocetka" class="form-control" />
-                    <span asp-validation-for="DatumPocetka" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DatumZavrsetka" class="control-label">Datum završetka</label>
-                    <input asp-for="DatumZavrsetka" class="form-control" />
-                    <span asp-validation-for="DatumZavrsetka" class="text-danger"></span>
-                </div>
-                <div class="form-group form-check">
-                    <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Aktivna" /> @Html.DisplayNameFor(model => model.Aktivna)
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DodatniUvjeti" class="control-label">Dodatni uvjeti</label>
-                    <input asp-for="DodatniUvjeti" class="form-control" />
-                    <span asp-validation-for="DodatniUvjeti" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Učitaj sliku</label>
-                    <input type="file" id="featuredImageUpload" class="form-control" />
+                    <label for="TipoviPromocijaIDTipPromocije" class="control-label">Tip promocije</label>
+                    <select id="TipoviPromocijaIDTipPromocije" name="TipoviPromocijaIDTipPromocije" class="form-control">
+                        @foreach (var tipPromocije in Model.TipoviPromocijas)
+                        {
+                            <option value="@tipPromocije.IDTipPromocije">@tipPromocije.Naziv</option>
+                        }
+                    </select>
+                    <span asp-validation-for="TipoviPromocijaIDTipPromocije" class="text-danger"></span>
+                    <div class="form-group">
+                        <label asp-for="Opis" class="control-label">Opis</label>
+                        <input asp-for="Opis" class="form-control" />
+                        <span asp-validation-for="Opis" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DatumPocetka" class="control-label">Datum početka</label>
+                        <input asp-for="DatumPocetka" class="form-control" />
+                        <span asp-validation-for="DatumPocetka" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DatumZavrsetka" class="control-label">Datum završetka</label>
+                        <input asp-for="DatumZavrsetka" class="form-control" />
+                        <span asp-validation-for="DatumZavrsetka" class="text-danger"></span>
+                    </div>
+                    <div class="form-group form-check">
+                        <label class="form-check-label">
+                            <input class="form-check-input" asp-for="Aktivna" /> @Html.DisplayNameFor(model => model.Aktivna)
+                        </label>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="DodatniUvjeti" class="control-label">Dodatni uvjeti</label>
+                        <input asp-for="DodatniUvjeti" class="form-control" />
+                        <span asp-validation-for="DodatniUvjeti" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Učitaj sliku</label>
+                        <input type="file" id="featuredImageUpload" class="form-control" />
 
-                    <img src="" id="featuredImageDisplay" style="display:none;width: 300px;" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Slika" class="control-label">URL slike</label>
-                    <input type="text" id="featuredImageUrl" asp-for="Slika" class="form-control" />
-                    <span asp-validation-for="Slika" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Dodaj" class="btn btn-primary" />
-                </div>
-        </form>
+                        <img src="" id="featuredImageDisplay" style="display:none;width: 300px;" />
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Slika" class="control-label">URL slike</label>
+                        <input type="text" id="featuredImageUrl" asp-for="Slika" class="form-control" />
+                        <span asp-validation-for="Slika" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Dodaj" class="btn btn-primary" />
+                    </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 
-@section Scripts {
+    @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
 
-        <script>
-         const imageUploadElement = document.getElementById('featuredImageUpload');
-        const imageUrlElement = document.getElementById('featuredImageUrl');
-        const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+            <script>
+                const imageUploadElement = document.getElementById('featuredImageUpload');
+                const imageUrlElement = document.getElementById('featuredImageUrl');
+                const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
 
-        async function uploadFeaturedImage(e) {
-            console.log(e.target.files[0]);
+                async function uploadFeaturedImage(e) {
+                    console.log(e.target.files[0]);
 
-            let data = new FormData();
-            data.append('files', e.target.files[0]);
+                    let data = new FormData();
+                    data.append('files', e.target.files[0]);
 
-            try {
-                const response = await fetch('/Images/Upload', {
-                    method: 'POST',
-                    body: data
-                });
+                    try {
+                        const response = await fetch('/Images/Upload', {
+                            method: 'POST',
+                            body: data
+                        });
 
-                if (!response.ok) {
-                    throw new Error('Error uploading image');
+                        if (!response.ok) {
+                            throw new Error('Error uploading image');
+                        }
+
+                        const result = await response.json();
+                        imageUrlElement.value = result.link;
+                        featuredImageDisplayElement.src = result.link;
+                        featuredImageDisplayElement.style.display = 'block';
+                    } catch (error) {
+                        console.error('Error:', error);
+                    }
                 }
 
-                const result = await response.json();
-                imageUrlElement.value = result.link;
-                featuredImageDisplayElement.src = result.link;
-                featuredImageDisplayElement.style.display = 'block';
-            } catch (error) {
-                console.error('Error:', error);
-            }
+                imageUploadElement.addEventListener('change', uploadFeaturedImage);
+            </script>
+
         }
-
-        imageUploadElement.addEventListener('change', uploadFeaturedImage);
-    </script>
-
     }
-}
 
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">You are not allowed to access this page!</h2>
+    </div>
+}

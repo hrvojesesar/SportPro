@@ -1,7 +1,7 @@
 ﻿@model SportPro.Web.Models.Domains.Zaposlenici
 
 @{
-    ViewData["Title"] = "Brisanje zpaoslenika";
+    ViewData["Title"] = "Brisanje zaposlenika";
 
     string GetPoslovnicaName(int? id, IEnumerable<SportPro.Web.Models.Domains.Poslovnice> poslovnice)
     {
@@ -14,158 +14,166 @@
     }
 }
 
+@if (User.IsInRole("Vlasnik") || User.IsInRole("Menadzer"))
+{
+    <h3>Jeste sigurni da želite izbrisati zaposlenika?</h3>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Ime
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Ime)
+            </dd>
+            <dt class="col-sm-2">
+                Prezime
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Prezime)
+            </dd>
+            <dt class="col-sm-2">
+                Spol
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Spol)
+            </dd>
+            <dt class="col-sm-2">
+                Adresa
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Adresa)
+            </dd>
+            <dt class="col-sm-2">
+                Grad
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Grad)
+            </dd>
+            <dt class="col-sm-2">
+                Država
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Drzava)
+            </dd>
+            <dt class="col-sm-2">
+                Telefon
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Telefon)
+            </dd>
+            <dt class="col-sm-2">
+                Email
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-2">
+                Datum zaposlenja
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DatumZaposlenja)
+            </dd>
+            <dt class="col-sm-2">
+                Plaća
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Placa) KM
+            </dd>
+            <dt class="col-sm-2">
+                Topli obrok
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.TopliObrok) KM
+            </dd>
+            <dt class="col-sm-2">
+                Prijevoz
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Prijevoz) KM
+            </dd>
+            <dt class="col-sm-2">
+                Bonus
+            </dt>
+            <dd class="col-sm-10">
+                @if (Model.Bonus != null)
+                {
+                    @Html.DisplayFor(model => model.Bonus) <text>KM</text>
 
-<h3>Jeste sigurni da želite izbrisati zaposlenika?</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Ime
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Ime)
-        </dd>
-        <dt class="col-sm-2">
-            Prezime
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prezime)
-        </dd>
-        <dt class="col-sm-2">
-            Spol
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Spol)
-        </dd>
-        <dt class="col-sm-2">
-            Adresa
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Adresa)
-        </dd>
-        <dt class="col-sm-2">
-            Grad
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Grad)
-        </dd>
-        <dt class="col-sm-2">
-            Država
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Drzava)
-        </dd>
-        <dt class="col-sm-2">
-            Telefon
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Telefon)
-        </dd>
-        <dt class="col-sm-2">
-            Email
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-2">
-            Datum zaposlenja
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DatumZaposlenja)
-        </dd>
-        <dt class="col-sm-2">
-            Plaća
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Placa) KM
-        </dd>
-        <dt class="col-sm-2">
-            Topli obrok
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.TopliObrok) KM
-        </dd>
-        <dt class="col-sm-2">
-            Prijevoz
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Prijevoz) KM
-        </dd>
-        <dt class="col-sm-2">
-            Bonus
-        </dt>
-        <dd class="col-sm-10">
-            @if (Model.Bonus != null)
-            {
-                @Html.DisplayFor(model => model.Bonus) <text>KM</text>
-
-            }
-            else
-            {
-                <text>KM</text>
-            }
-        </dd>
-        <dt class="col-sm-2">
-            Certifikati
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Certifikati)
-        </dd>
-        <dt class="col-sm-2">
-            JMBG
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.JMBG)
-        </dd>
-        <dt class="col-sm-2">
-            Broj bankovnog računa
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.BrojBankovnogRacuna)
-        </dd>
-        <dt class="col-sm-2">
-            Kvalifikacija
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Kvalifikacija)
-        </dd>
-        <dt class="col-sm-2">
-            Status
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Status)
-        </dd>
-        <dt class="col-sm-2">
-            Datum završetka radnog odnosa
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.DatumZavrsetkaRadnogOdnosa)
-        </dd>
-        <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Poslovnica)
-        </dt>
-        <dd class="col-sm-10">
-            @{
-                var poslovnicaName = GetPoslovnicaName(Model.PoslovnicaID, ViewData["Poslovnice"] as IEnumerable<SportPro.Web.Models.Domains.Poslovnice>);
-                @poslovnicaName
-            }
-        </dd>
-        <dt class="col-sm-10">
-            Pozicija
-        </dt>
-        <dd class="col-sm-10">
-            @foreach (var item in Model.Pozicije)
-            {
-                <span>@item.Naziv</span>
-            }
+                }
+                else
+                {
+                    <text>KM</text>
+                }
+            </dd>
+            <dt class="col-sm-2">
+                Certifikati
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Certifikati)
+            </dd>
+            <dt class="col-sm-2">
+                JMBG
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.JMBG)
+            </dd>
+            <dt class="col-sm-2">
+                Broj bankovnog računa
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.BrojBankovnogRacuna)
+            </dd>
+            <dt class="col-sm-2">
+                Kvalifikacija
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Kvalifikacija)
+            </dd>
+            <dt class="col-sm-2">
+                Status
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Status)
+            </dd>
+            <dt class="col-sm-2">
+                Datum završetka radnog odnosa
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DatumZavrsetkaRadnogOdnosa)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Poslovnica)
+            </dt>
+            <dd class="col-sm-10">
+                @{
+                    var poslovnicaName = GetPoslovnicaName(Model.PoslovnicaID, ViewData["Poslovnice"] as IEnumerable<SportPro.Web.Models.Domains.Poslovnice>);
+                    @poslovnicaName
+                }
+            </dd>
+            <dt class="col-sm-10">
+                Pozicija
+            </dt>
+            <dd class="col-sm-10">
+                @foreach (var item in Model.Pozicije)
+                {
+                    <span>@item.Naziv</span>
+                }
 
 
-        </dd>
-    </dl>
+            </dd>
+        </dl>
 
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IDZaposlenik" />
-        <input type="submit" value="Izbriši" class="btn btn-danger" /> |
-        <a asp-action="Index">Vrati se na popis</a>
-    </form>
-</div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="IDZaposlenik" />
+            <input type="submit" value="Izbriši" class="btn btn-danger" /> |
+            <a asp-action="Index">Vrati se na popis</a>
+        </form>
+    </div>
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">You are not allowed to access this page!</h2>
+    </div>
+}

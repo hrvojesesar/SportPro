@@ -4,62 +4,70 @@
     ViewData["Title"] = "Dodavanje novog natječaja";
 }
 
-
-<div class="row d-flex justify-content-center">
-    <div class="col-md-4">
-        <form asp-action="Add">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Naziv" class="control-label">Naziv</label>
-                <input asp-for="Naziv" class="form-control" require maxlength="200" />
-                <span asp-validation-for="Naziv" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Opis" class="control-label">Opis</label>
-                <textarea asp-for="Opis" class="form-control" id="opis" required></textarea>
-                <span asp-validation-for="Opis" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="ProcijenjenaVrijednost" class="control-label">Procijenjena vrijednost</label>
-                <input asp-for="ProcijenjenaVrijednost" class="form-control" required />
-                <span asp-validation-for="ProcijenjenaVrijednost" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TrajanjeOd" class="control-label">Trajanje od</label>
-                <input asp-for="TrajanjeOd" class="form-control" required />
-                <span asp-validation-for="TrajanjeOd" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TrajanjeDo" class="control-label">Trajanje do</label>
-                <input asp-for="TrajanjeDo" class="form-control" required />
-                <span asp-validation-for="TrajanjeDo" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DatumObjave" class="control-label">Datum objavljivanja</label>
-                <input asp-for="DatumObjave" class="form-control" />
-                <span asp-validation-for="DatumObjave" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Aktivan" /> @Html.DisplayNameFor(model => model.Aktivan)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Dodaj" class="btn btn-primary" />
-            </div>
-        </form>
+@if (User.IsInRole("Menadzer"))
+{
+    <div class="row d-flex justify-content-center">
+        <div class="col-md-4">
+            <form asp-action="Add">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Naziv" class="control-label">Naziv</label>
+                    <input asp-for="Naziv" class="form-control" require maxlength="200" />
+                    <span asp-validation-for="Naziv" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Opis" class="control-label">Opis</label>
+                    <textarea asp-for="Opis" class="form-control" id="opis" required></textarea>
+                    <span asp-validation-for="Opis" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProcijenjenaVrijednost" class="control-label">Procijenjena vrijednost</label>
+                    <input asp-for="ProcijenjenaVrijednost" class="form-control" required />
+                    <span asp-validation-for="ProcijenjenaVrijednost" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TrajanjeOd" class="control-label">Trajanje od</label>
+                    <input asp-for="TrajanjeOd" class="form-control" required />
+                    <span asp-validation-for="TrajanjeOd" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TrajanjeDo" class="control-label">Trajanje do</label>
+                    <input asp-for="TrajanjeDo" class="form-control" required />
+                    <span asp-validation-for="TrajanjeDo" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DatumObjave" class="control-label">Datum objavljivanja</label>
+                    <input asp-for="DatumObjave" class="form-control" />
+                    <span asp-validation-for="DatumObjave" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Aktivan" /> @Html.DisplayNameFor(model => model.Aktivan)
+                    </label>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Dodaj" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-<div>
-    <a asp-action="Index">Vrati se na popis</a>
-</div>
+    <div>
+        <a asp-action="Index">Vrati se na popis</a>
+    </div>
 
-@section Scripts {
+    @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
 
-    <script>
-        var editor = new FroalaEditor('#opis');
-    </script>
+        <script>
+            var editor = new FroalaEditor('#opis');
+        </script>
+    }
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">You are not allowed to access this page!</h2>
+    </div>
 }

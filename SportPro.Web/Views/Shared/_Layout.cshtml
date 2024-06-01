@@ -18,107 +18,156 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SportPro.Web</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">SportPro</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Natjecaji" asp-action="Index">Natječaji</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pozicije" asp-action="Index">Pozicije</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Poslovnice" asp-action="Index">Poslovnice</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Zaposlenici" asp-action="Index">Zaposlenici</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Pravilnici" asp-action="Index">Pravilnici</a>
-                        </li>
-                        @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                        @if (signInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Boje" asp-action="Index">Boje</a>
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Početna</a>
+                            </li>
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Administracija
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Korisnici</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Uloge</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (User.IsInRole("Menadzer"))
+                            {
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Natječaji
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Natjecaji" asp-action="Index">Natječaji</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Kandidati" asp-action="Index">Kandidati</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            }
+                            @if (User.IsInRole("Uposlenik"))
+                            {
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Artikli
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Artikli" asp-action="Index">Artikli</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Kategorije" asp-action="Index">Kategorije</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Boje" asp-action="Index">Boje</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Velicine" asp-action="Index">Veličine</a>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                            }
+                            @if (User.IsInRole("Uposlenik"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pozicije" asp-action="Index">Pozicije</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Poslovnice" asp-action="Index">Poslovnice</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Vlasnik") || User.IsInRole("Menadzer"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Zaposlenici" asp-action="Index">Zaposlenici</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Uposlenik"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Pravilnici" asp-action="Index">Pravilnici</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Brendovi" asp-action="Index">Brendovi</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="VrstePlacanja" asp-action="Index">Vrste plaćanja</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Dobavljaci" asp-action="Index">Dobavljači</a>
+                                </li>
+                                <div class="dropdown">
+                                    <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                        Promocije
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="Promocije" asp-action="Index">Promocije</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link text-dark" asp-area="" asp-controller="TipoviPromocija" asp-action="Index">Tipovi promocija</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Certifikati" asp-action="Index">Certifikati</a>
+                                </li>
+
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Narudzbe" asp-action="Index">Narudžbe</a>
+                                </li>
+                            }
+                            @if (User.IsInRole("Vlasnik"))
+                            {
+                                <li class="nav-item">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Izvještaj</a>
+                                </li>
+                            }
+
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Postavke
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">
+                                        Odjava
+                                    </a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangePassword">
+                                        Promijeni lozinku
+                                    </a>
+                                </ul>
+                            </div>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark">  Dobrodošli, @User.Identity?.Name </a>
                             </li>
                         }
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Brendovi" asp-action="Index">Brendovi</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Velicine" asp-action="Index">Veličine</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="VrstePlacanja" asp-action="Index">Vrste plaćanja</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Dobavljaci" asp-action="Index">Dobavljači</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="TipoviPromocija" asp-action="Index">Tipovi promocija</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Promocije" asp-action="Index">Promocije</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Kategorije" asp-action="Index">Kategorije</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Artikli" asp-action="Index">Artikli</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Certifikati" asp-action="Index">Certifikati</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Kandidati" asp-action="Index">Kandidati</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Narudzbe" asp-action="Index">Narudžbe</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Dashboard" asp-action="Index">Izvještaj</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Korisnici</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Roles" asp-action="Index">Uloge</a>
-                        </li>
-
-                        <div class="d-flex align-items-center">
-                            @if (signInManager.IsSignedIn(User))
-                            {
-                                <div class="me-3 text-light">
-                                    Dobrodošli, @User.Identity?.Name
-                                </div>
-                                <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Logout">
-                                    Odjava
-                                </a>
-                                 <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="ChangePassword">
-                                    Promijeni lozinku
-                                </a>
-                            }
-                            else
-                            {
-                                <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Register">
-                                    Registracija
-                                </a>
-
-
-                                <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Login">
-                                    Prijava
-                                </a>
-                            }
-                        </div>
-                    </ul>
+                        else
+                        {
+                            <a class="btn me-3 bg-light text-dark" asp-area="" asp-controller="Account" asp-action="Login">
+                                Prijava
+                            </a>
+                        }
                 </div>
+                </ul>
+            </div>
             </div>
         </nav>
     </header>

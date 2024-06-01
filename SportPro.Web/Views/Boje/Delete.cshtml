@@ -4,22 +4,30 @@
     ViewData["Title"] = "Brisanje boje";
 }
 
+@if (User.IsInRole("Uposlenik"))
+{
+    <h3>Jeste sigurni da želite izbrisati boju?</h3>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Naziv boje
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.NazivBoje)
+            </dd>
+        </dl>
 
-<h3>Jeste sigurni da želite izbrisati boju?</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Naziv boje
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.NazivBoje)
-        </dd>
-    </dl>
-
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IDBoja" />
-        <input type="submit" value="Izbriši" class="btn btn-danger" /> |
-        <a asp-action="Index">Vrati se na popis</a>
-    </form>
-</div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="IDBoja" />
+            <input type="submit" value="Izbriši" class="btn btn-danger" /> |
+            <a asp-action="Index">Vrati se na popis</a>
+        </form>
+    </div>
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">You are not allowed to access this page!</h2>
+    </div>
+}

@@ -4,91 +4,99 @@
     ViewData["Title"] = "Dodavanje novog certifikata";
 }
 
+@if (User.IsInRole("Uposlenik"))
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Add">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Naziv" class="control-label">Naziv</label>
+                    <input asp-for="Naziv" class="form-control" required />
+                    <span asp-validation-for="Naziv" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Opis" class="control-label">Opis</label>
+                    <textarea asp-for="Opis" class="form-control" id="opis"></textarea>
+                    <span asp-validation-for="Opis" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="DatumDodjele" class="control-label">Datum dodjele</label>
+                    <input asp-for="DatumDodjele" class="form-control" required />
+                    <span asp-validation-for="DatumDodjele" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Organizacija" class="control-label">Organizacija</label>
+                    <input asp-for="Organizacija" class="form-control" required />
+                    <span asp-validation-for="Organizacija" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label class="form-label">Učitaj sliku</label>
+                    <input type="file" id="featuredImageUpload" class="form-control" />
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Add">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Naziv" class="control-label">Naziv</label>
-                <input asp-for="Naziv" class="form-control" required />
-                <span asp-validation-for="Naziv" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Opis" class="control-label">Opis</label>
-                <textarea asp-for="Opis" class="form-control" id="opis"></textarea>
-                <span asp-validation-for="Opis" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="DatumDodjele" class="control-label">Datum dodjele</label>
-                <input asp-for="DatumDodjele" class="form-control" required />
-                <span asp-validation-for="DatumDodjele" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Organizacija" class="control-label">Organizacija</label>
-                <input asp-for="Organizacija" class="form-control" required />
-                <span asp-validation-for="Organizacija" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label class="form-label">Učitaj sliku</label>
-                <input type="file" id="featuredImageUpload" class="form-control" />
-
-                <img src="" id="featuredImageDisplay" style="display:none;width: 300px;" />
-            </div>
-            <div class="form-group">
-                <label asp-for="Slika" class="control-label">URL slike</label>
-                <input type="text" id="featuredImageUrl" asp-for="Slika" class="form-control" />
-                <span asp-validation-for="Slika" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Dodaj" class="btn btn-primary" />
-            </div>
-        </form>
+                    <img src="" id="featuredImageDisplay" style="display:none;width: 300px;" />
+                </div>
+                <div class="form-group">
+                    <label asp-for="Slika" class="control-label">URL slike</label>
+                    <input type="text" id="featuredImageUrl" asp-for="Slika" class="form-control" />
+                    <span asp-validation-for="Slika" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Dodaj" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Vrati se na popis</a>
-</div>
+    <div>
+        <a asp-action="Index">Vrati se na popis</a>
+    </div>
 
-@section Scripts {
+    @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
-    }
-
-    <script>
-        var editor = new FroalaEditor('#opis');
-
-        const imageUploadElement = document.getElementById('featuredImageUpload');
-        const imageUrlElement = document.getElementById('featuredImageUrl');
-        const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
-
-        async function uploadFeaturedImage(e) {
-            console.log(e.target.files[0]);
-
-            let data = new FormData();
-            data.append('files', e.target.files[0]);
-
-            try {
-                const response = await fetch('/Images/Upload', {
-                    method: 'POST',
-                    body: data
-                });
-
-                if (!response.ok) {
-                    throw new Error('Error uploading image');
-                }
-
-                const result = await response.json();
-                imageUrlElement.value = result.link;
-                featuredImageDisplayElement.src = result.link;
-                featuredImageDisplayElement.style.display = 'block';
-            } catch (error) {
-                console.error('Error:', error);
-            }
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
         }
 
-        imageUploadElement.addEventListener('change', uploadFeaturedImage);
-    </script>
+        <script>
+            var editor = new FroalaEditor('#opis');
+
+            const imageUploadElement = document.getElementById('featuredImageUpload');
+            const imageUrlElement = document.getElementById('featuredImageUrl');
+            const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+
+            async function uploadFeaturedImage(e) {
+                console.log(e.target.files[0]);
+
+                let data = new FormData();
+                data.append('files', e.target.files[0]);
+
+                try {
+                    const response = await fetch('/Images/Upload', {
+                        method: 'POST',
+                        body: data
+                    });
+
+                    if (!response.ok) {
+                        throw new Error('Error uploading image');
+                    }
+
+                    const result = await response.json();
+                    imageUrlElement.value = result.link;
+                    featuredImageDisplayElement.src = result.link;
+                    featuredImageDisplayElement.style.display = 'block';
+                } catch (error) {
+                    console.error('Error:', error);
+                }
+            }
+
+            imageUploadElement.addEventListener('change', uploadFeaturedImage);
+        </script>
+    }
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">You are not allowed to access this page!</h2>
+    </div>
 }

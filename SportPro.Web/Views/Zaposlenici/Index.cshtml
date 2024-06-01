@@ -13,178 +13,186 @@
         return "";
     }
 }
-
-<p>
-    <a asp-controller="Zaposlenici" asp-action="Add">Dodaj novog zaposlenika</a>
-</p>
-@if (Model.Count() == 0)
+@if (User.IsInRole("Vlasnik") || User.IsInRole("Menadzer"))
 {
-    <h2 align="center">Nema podataka o zaposlenicima!</h2>
+    <p>
+        <a asp-controller="Zaposlenici" asp-action="Add">Dodaj novog zaposlenika</a>
+    </p>
+    @if (Model.Count() == 0)
+    {
+        <h2 align="center">Nema podataka o zaposlenicima!</h2>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Ime
+                    </th>
+                    <th>
+                        Prezime
+                    </th>
+                    <th>
+                        Spol
+                    </th>
+                    <th>
+                        Adresa
+                    </th>
+                    <th>
+                        Grad
+                    </th>
+                    <th>
+                        Država
+                    </th>
+                    <th>
+                        Telefon
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
+                        Datum zaposlenja
+                    </th>
+                    <th>
+                        Plaća
+                    </th>
+                    <th>
+                        Topli obrok
+                    </th>
+                    <th>
+                        Prijevoz
+                    </th>
+                    <th>
+                        Bonus
+                    </th>
+                    <th>
+                        Ukupna plaća
+                    </th>
+                    <th>
+                        Certifikati
+                    </th>
+                    <th>
+                        JMBG
+                    </th>
+                    <th>
+                        Broj bankovnog računa
+                    </th>
+                    <th>
+                        Kvalifikacija
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th>
+                        Datum završetka radnog odnosa
+                    </th>
+                    <th>
+                        Poslovnica
+                    </th>
+                    <th>
+                        Pozicije
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Ime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Prezime)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Spol)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Adresa)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Grad)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Drzava)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Telefon)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Email)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DatumZaposlenja)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Placa) KM
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.TopliObrok) KM
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Prijevoz) KM
+                        </td>
+                        <td>
+                            @if (item.Bonus != null)
+                            {
+                                @Html.DisplayFor(modelItem => item.Bonus) <text> KM</text>
+                            }
+                            else
+                            {
+                                <text>0 KM</text>
+                            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.UkupnaPlaca) KM
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Certifikati)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.JMBG)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.BrojBankovnogRacuna)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Kvalifikacija)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DatumZavrsetkaRadnogOdnosa)
+                        </td>
+                        <td>
+                            @{
+                                var poslovnicaName = GetPoslovnicaName(item.PoslovnicaID, ViewData["Poslovnice"] as IEnumerable<SportPro.Web.Models.Domains.Poslovnice>);
+                                @poslovnicaName
+                            }
+                        </td>
+                        <td>
+                            @foreach (var pozicija in item.Pozicije)
+                            {
+                                <span>@pozicija.Naziv</span>
+                            }
+
+                        <td>
+
+                            <a asp-action="Edit" asp-route-id="@item.IDZaposlenik">Uredi</a> |
+                            <a asp-action="Delete" asp-route-id="@item.IDZaposlenik">Izbriši</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Ime
-                </th>
-                <th>
-                    Prezime
-                </th>
-                <th>
-                    Spol
-                </th>
-                <th>
-                    Adresa
-                </th>
-                <th>
-                    Grad
-                </th>
-                <th>
-                    Država
-                </th>
-                <th>
-                    Telefon
-                </th>
-                <th>
-                    Email
-                </th>
-                <th>
-                    Datum zaposlenja
-                </th>
-                <th>
-                    Plaća
-                </th>
-                <th>
-                    Topli obrok
-                </th>
-                <th>
-                    Prijevoz
-                </th>
-                <th>
-                    Bonus
-                </th>
-                <th>
-                    Ukupna plaća
-                </th>
-                <th>
-                    Certifikati
-                </th>
-                <th>
-                    JMBG
-                </th>
-                <th>
-                    Broj bankovnog računa
-                </th>
-                <th>
-                    Kvalifikacija
-                </th>
-                <th>
-                    Status
-                </th>
-                <th>
-                    Datum završetka radnog odnosa
-                </th>
-                <th>
-                    Poslovnica
-                </th>
-                <th>
-                    Pozicije
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Ime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Prezime)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Spol)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Adresa)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Grad)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Drzava)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Telefon)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DatumZaposlenja)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Placa) KM
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.TopliObrok) KM
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Prijevoz) KM
-                    </td>
-                    <td>
-                        @if (item.Bonus != null)
-                        {
-                            @Html.DisplayFor(modelItem => item.Bonus) <text> KM</text>
-                        }
-                        else
-                        {
-                            <text>0 KM</text>
-                        }
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.UkupnaPlaca) KM
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Certifikati)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.JMBG)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BrojBankovnogRacuna)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Kvalifikacija)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DatumZavrsetkaRadnogOdnosa)
-                    </td>
-                    <td>
-                        @{
-                            var poslovnicaName = GetPoslovnicaName(item.PoslovnicaID, ViewData["Poslovnice"] as IEnumerable<SportPro.Web.Models.Domains.Poslovnice>);
-                            @poslovnicaName
-                        }
-                    </td>
-                    <td>
-                        @foreach (var pozicija in item.Pozicije)
-                        {
-                            <span>@pozicija.Naziv</span>
-                        }
-
-                    <td>
-
-                        <a asp-action="Edit" asp-route-id="@item.IDZaposlenik">Uredi</a> |
-                        <a asp-action="Delete" asp-route-id="@item.IDZaposlenik">Izbriši</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="container my-5">
+        <h2 align="center">You are not allowed to access this page!</h2>
+    </div>
 }
