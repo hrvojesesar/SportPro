@@ -5,70 +5,78 @@
 }
 
 
+@if (User.IsInRole("Uposlenik"))
+{
+    <h3>Jeste sigurni da želite izbrisati dobavljača?</h3>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Naziv
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Naziv)
+            </dd>
+            <dt class="col-sm-2">
+                Adresa
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Adresa)
+            </dd>
+            <dt class="col-sm-2">
+                Grad
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Grad)
+            </dd>
+            <dt class="col-sm-2">
+                Država
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Drzava)
+            </dd>
+            <dt class="col-sm-2">
+                Telefon
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Telefon)
+            </dd>
+            <dt class="col-sm-2">
+                Email
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Email)
+            </dd>
+            <dt class="col-sm-2">
+                Datum početka suradnje
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.PocetakSuradnje)
+            </dd>
+            <dt class="col-sm-2">
+                Datum kraja suradnje
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.KrajSuradnje)
+            </dd>
+            <dt class="col-sm-2">
+                Aktivna suradnja
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.SuradnjaAktivna)
+            </dd>
+        </dl>
 
-<h3>Jeste sigurni da želite izbrisati dobavljača?</h3>
-<div>
-    <hr />
-    <dl class="row">
-        <dt class="col-sm-2">
-            Naziv
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Naziv)
-        </dd>
-        <dt class="col-sm-2">
-            Adresa
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Adresa)
-        </dd>
-        <dt class="col-sm-2">
-            Grad
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Grad)
-        </dd>
-        <dt class="col-sm-2">
-            Država
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Drzava)
-        </dd>
-        <dt class="col-sm-2">
-            Telefon
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Telefon)
-        </dd>
-        <dt class="col-sm-2">
-            Email
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Email)
-        </dd>
-        <dt class="col-sm-2">
-            Datum početka suradnje
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.PocetakSuradnje)
-        </dd>
-        <dt class="col-sm-2">
-            Datum kraja suradnje
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.KrajSuradnje)
-        </dd>
-        <dt class="col-sm-2">
-            Aktivna suradnja
-        </dt>
-        <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.SuradnjaAktivna)
-        </dd>
-    </dl>
-
-    <form asp-action="Delete">
-        <input type="hidden" asp-for="IDDobavljac" />
-        <input type="submit" value="Izbriši" class="btn btn-danger" /> |
-        <a asp-action="Index">Vrati se na popis</a>
-    </form>
-</div>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="IDDobavljac" />
+            <input type="submit" value="Izbriši" class="btn btn-danger" /> |
+            <a asp-action="Index">Vrati se na popis</a>
+        </form>
+    </div>
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">Nemate pravo pristupa ovoj stranici!</h2>
+    </div>
+}

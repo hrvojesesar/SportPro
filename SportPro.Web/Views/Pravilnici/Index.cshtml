@@ -4,80 +4,90 @@
     ViewData["Title"] = "Pravilnici";
 }
 
-<p>
-    <a asp-asp-controller="Pravilnici" asp-action="Add">Dodaj novi pravilnik</a>
-</p>
 
-@if (Model.Count() == 0)
+@if (User.IsInRole("Uposlenik"))
 {
-    <h2 align="center">Nema podataka o pravilnicima!</h2>
-}
-else
-{
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Naziv
-                </th>
-                <th>
-                    Opis
-                </th>
-                <th>
-                    Datum objave
-                </th>
-                <th>
-                    Aktivan
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
+    <p>
+        <a asp-asp-controller="Pravilnici" asp-action="Add">Dodaj novi pravilnik</a>
+    </p>
+
+    @if (Model.Count() == 0)
+    {
+        <h2 align="center">Nema podataka o pravilnicima!</h2>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
                 <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Naziv)
-                    </td>
-                    <td>
-                        <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDPravilnik">Prikaži opis</a>
-                        <div class="modal fade" id="opisModal_@item.IDPravilnik" tabindex="-1" aria-labelledby="opisModalLabel_@item.IDPravilnik" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="opisModalLabel_@item.IDPravilnik">Opis pravilnika</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        @Html.Raw(item.Opis)
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                    <th>
+                        Naziv
+                    </th>
+                    <th>
+                        Opis
+                    </th>
+                    <th>
+                        Datum objave
+                    </th>
+                    <th>
+                        Aktivan
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Naziv)
+                        </td>
+                        <td>
+                            <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDPravilnik">Prikaži opis</a>
+                            <div class="modal fade" id="opisModal_@item.IDPravilnik" tabindex="-1" aria-labelledby="opisModalLabel_@item.IDPravilnik" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="opisModalLabel_@item.IDPravilnik">Opis pravilnika</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            @Html.Raw(item.Opis)
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.DatumObjavljivanja)
-                    </td>
-                    <td>
-                        @if (item.Aktivan)
-                        {
-                            <text>Da</text>
-                        }
-                        else
-                        {
-                            <text>Ne</text>
-                        }
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.IDPravilnik">Uredi</a> |
-                        <a asp-action="Delete" asp-route-id="@item.IDPravilnik">Izbriši</a>
-                    </td>
-                </tr>
-            }
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.DatumObjavljivanja)
+                        </td>
+                        <td>
+                            @if (item.Aktivan)
+                            {
+                                <text>Da</text>
+                            }
+                            else
+                            {
+                                <text>Ne</text>
+                            }
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IDPravilnik">Uredi</a> |
+                            <a asp-action="Delete" asp-route-id="@item.IDPravilnik">Izbriši</a>
+                        </td>
+                    </tr>
+                }
 
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">Nemate pravo pristupa ovoj stranici!</h2>
+    </div>
 }

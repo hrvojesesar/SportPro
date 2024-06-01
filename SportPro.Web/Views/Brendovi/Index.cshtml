@@ -4,73 +4,82 @@
     ViewData["Title"] = "Brendovi";
 }
 
-<p>
-    <a asp-controller="Brendovi" asp-action="Add">Dodaj novi brend</a>
-</p>
-@if (Model.Count() == 0)
+@if (User.IsInRole("Uposlenik"))
 {
-    <h2 align="center">Nema podataka o brendovima!</h2>
+    <p>
+        <a asp-controller="Brendovi" asp-action="Add">Dodaj novi brend</a>
+    </p>
+    @if (Model.Count() == 0)
+    {
+        <h2 align="center">Nema podataka o brendovima!</h2>
+    }
+    else
+    {
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        Naziv brenda
+                    </th>
+                    <th>
+                        Vrsta
+                    </th>
+                    <th>
+                        Osnivač
+                    </th>
+                    <th>
+                        Godina osnivanja
+                    </th>
+                    <th>
+                        Sjedište
+                    </th>
+                    <th>
+                        Predsjednik
+                    </th>
+                    <th>
+                        Status
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.NazivBrenda)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Vrsta)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Osnivac)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.GodinaOsnivanja)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Sjediste)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Predsjednik)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Status)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IDBrend">Uredi</a> |
+                            <a asp-action="Delete" asp-route-id="@item.IDBrend">Izbriši</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
 }
 else
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    Naziv brenda
-                </th>
-                <th>
-                    Vrsta
-                </th>
-                <th>
-                    Osnivač
-                </th>
-                <th>
-                    Godina osnivanja
-                </th>
-                <th>
-                    Sjedište
-                </th>
-                <th>
-                    Predsjednik
-                </th>
-                <th>
-                    Status
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.NazivBrenda)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Vrsta)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Osnivac)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.GodinaOsnivanja)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Sjediste)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Predsjednik)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Status)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.IDBrend">Uredi</a> |
-                        <a asp-action="Delete" asp-route-id="@item.IDBrend">Izbriši</a>
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    <div class="container my-5">
+        <h2 align="center">Nemate pravo pristupa ovoj stranici!</h2>
+    </div>
 }

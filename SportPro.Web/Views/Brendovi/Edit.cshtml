@@ -4,60 +4,70 @@
     ViewData["Title"] = "Uređivanje brenda";
 }
 
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="IDBrend" />
-            <div class="form-group">
-                <label asp-for="NazivBrenda" class="control-label">Naziv brenda</label>
-                <input asp-for="NazivBrenda" class="form-control" />
-                <span asp-validation-for="NazivBrenda" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Vrsta" class="control-label">Vrsta</label>
-                <input asp-for="Vrsta" class="form-control" />
-                <span asp-validation-for="Vrsta" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Osnivac" class="control-label">Osnivač</label>
-                <input asp-for="Osnivac" class="form-control" />
-                <span asp-validation-for="Osnivac" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="GodinaOsnivanja" class="control-label">Godina osnivanja</label>
-                <input asp-for="GodinaOsnivanja" class="form-control" />
-                <span asp-validation-for="GodinaOsnivanja" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Sjediste" class="control-label">Sjedište</label>
-                <input asp-for="Sjediste" class="form-control" />
-                <span asp-validation-for="Sjediste" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Predsjednik" class="control-label">Predsjednik</label>
-                <input asp-for="Predsjednik" class="form-control" />
-                <span asp-validation-for="Predsjednik" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Status" class="control-label">Status</label>
-                <input asp-for="Status" class="form-control" />
-                <span asp-validation-for="Status" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Spremi" class="btn btn-primary" />
-            </div>
-        </form>
+
+@if (User.IsInRole("Uposlenik"))
+{
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="IDBrend" />
+                <div class="form-group">
+                    <label asp-for="NazivBrenda" class="control-label">Naziv brenda</label>
+                    <input asp-for="NazivBrenda" class="form-control" />
+                    <span asp-validation-for="NazivBrenda" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Vrsta" class="control-label">Vrsta</label>
+                    <input asp-for="Vrsta" class="form-control" />
+                    <span asp-validation-for="Vrsta" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Osnivac" class="control-label">Osnivač</label>
+                    <input asp-for="Osnivac" class="form-control" />
+                    <span asp-validation-for="Osnivac" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="GodinaOsnivanja" class="control-label">Godina osnivanja</label>
+                    <input asp-for="GodinaOsnivanja" class="form-control" />
+                    <span asp-validation-for="GodinaOsnivanja" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Sjediste" class="control-label">Sjedište</label>
+                    <input asp-for="Sjediste" class="form-control" />
+                    <span asp-validation-for="Sjediste" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Predsjednik" class="control-label">Predsjednik</label>
+                    <input asp-for="Predsjednik" class="form-control" />
+                    <span asp-validation-for="Predsjednik" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Status" class="control-label">Status</label>
+                    <input asp-for="Status" class="form-control" />
+                    <span asp-validation-for="Status" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Spremi" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Vrati se na popis</a>
-</div>
+    <div>
+        <a asp-action="Index">Vrati se na popis</a>
+    </div>
 
-@section Scripts {
+    @section Scripts {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+            await Html.RenderPartialAsync("_ValidationScriptsPartial");
+        }
     }
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">Nemate pravo pristupa ovoj stranici!</h2>
+    </div>
 }
