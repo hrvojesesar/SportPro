@@ -106,15 +106,16 @@ public class VelicineController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> Delete(int id)
+    public async Task<IActionResult> Delete(EditVelicinaRequest editVelicinaRequest)
     {
-        var velicina = await _velicineRepository.DeleteAsync(id);
+        var velicina = await _velicineRepository.DeleteAsync(editVelicinaRequest.IDVelicina);
+
         if (velicina == null)
         {
             return NotFound();
         }
 
-        return RedirectToAction("Index", new { id = id });
+        return RedirectToAction("Index", new { id = editVelicinaRequest.IDVelicina });
     }
 
     private void ValidateVelicinaForAdd(AddVelicinaRequest addVelicinaRequest)
