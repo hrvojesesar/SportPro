@@ -20,7 +20,6 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Boje> Boje { get; set; }
     public DbSet<Brendovi> Brendovi { get; set; }
     public DbSet<Velicine> Velicine { get; set; }
-    public DbSet<VrstePlacanja> VrstePlacanja { get; set; }
     public DbSet<Dobavljaci> Dobavljaci { get; set; }
     public DbSet<TipoviPromocija> TipoviPromocija { get; set; }
     public DbSet<Promocije> Promocije { get; set; }

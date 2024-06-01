@@ -62,7 +62,6 @@ builder.Services.AddScoped<IPravilniciRepository, PravilniciRepository>();
 builder.Services.AddScoped<IBojeRepository, BojeRepository>();
 builder.Services.AddScoped<IBrendoviRepository, BrendoviRepository>();
 builder.Services.AddScoped<IVelicineRepository, VelicineRepository>();
-builder.Services.AddScoped<IVrstePlacanjaRepository, VrstePlacanjaRepository>();
 builder.Services.AddScoped<IDobavljaciRepository, DobavljaciRepository>();
 builder.Services.AddScoped<ITipoviPromocijaRepository, TipoviPromocijaRepository>();
 builder.Services.AddScoped<IPromocijeRepository, PromocijeRepository>();
