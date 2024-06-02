@@ -10,5 +10,5 @@ public class EditCertifikatRequest
     public string? Opis { get; set; }
     public DateTime DatumDodjele { get; set; }
     public string Organizacija { get; set; }
-    public string Slika { get; set; }
+    public string? Slika { get; set; }
 }

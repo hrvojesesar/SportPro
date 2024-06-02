@@ -14,5 +14,5 @@ public class AddCertifikatRequest
     public DateTime DatumDodjele { get; set; }
     [Required]
     public string Organizacija { get; set; }
-    public string Slika { get; set; }
+    public string? Slika { get; set; }
 }
