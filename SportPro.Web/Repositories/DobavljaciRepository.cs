@@ -16,7 +16,7 @@ public class DobavljaciRepository : IDobavljaciRepository
 
     public async Task<IEnumerable<Dobavljaci>> GetAllAsync()
     {
-        return await applicationDbContext.Dobavljaci.ToListAsync();
+      return await applicationDbContext.Dobavljaci.ToListAsync();
     }
 
     public async Task<Dobavljaci> AddAsync(Dobavljaci dobavljac)
@@ -54,5 +54,10 @@ public class DobavljaciRepository : IDobavljaciRepository
     public async Task<IEnumerable<Dobavljaci>> GetActiveDobavljaci()
     {
         return await applicationDbContext.Dobavljaci.Where(d => d.SuradnjaAktivna == "Da").ToListAsync();
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await applicationDbContext.Dobavljaci.CountAsync();
     }
 }

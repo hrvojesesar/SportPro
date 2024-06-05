@@ -11,4 +11,5 @@ public interface INatjecajiRepository
     Task<Natjecaji?> UpdateAsync(Natjecaji natjecaj);
     Task<Natjecaji?> DeleteAsync(int id);
     Task<int> CountAsync();
+    Task<IEnumerable<Natjecaji>> GetAllForKandidatiAsync();
 }

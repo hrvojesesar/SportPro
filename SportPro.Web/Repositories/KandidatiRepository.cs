@@ -14,9 +14,11 @@ public class KandidatiRepository : IKandidatiRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Kandidati>> GetAllAsync()
+    public async Task<IEnumerable<Kandidati>> GetAllAsync(int pageNumber = 5, int pageSize = 100)
     {
-        return await _context.Kandidati.Include(k => k.Natjecaji).ToListAsync();
+
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await _context.Kandidati.Include(k => k.Natjecaji).Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Kandidati> AddAsync(Kandidati kandidat)
@@ -80,6 +82,11 @@ public class KandidatiRepository : IKandidatiRepository
         var imePrezimeList = kandidati.Select(k => $"{k.Ime} {k.Prezime}");
 
         return imePrezimeList;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await _context.Kandidati.CountAsync();
     }
 
 }

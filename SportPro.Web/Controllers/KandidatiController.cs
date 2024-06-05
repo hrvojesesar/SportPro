@@ -21,9 +21,27 @@ public class KandidatiController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
     {
-        var kandidati = await _kandidatiRepository.GetAllAsync();
+        var totalKandidati = await _kandidatiRepository.CountAsync();
+        var totalPages = Math.Ceiling((decimal)totalKandidati / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+
+        var kandidati = await _kandidatiRepository.GetAllAsync(pageNumber, pageSize);
         return View(kandidati);
     }
 
@@ -31,7 +49,7 @@ public class KandidatiController : Controller
     public async Task<IActionResult> Add()
     {
         var natjecaji = await _natjecajiRepository.GetAllAsync();
-      
+
         var model = new AddKandidatRequest
         {
             Natjecaji = natjecaji.Select(n => new SelectListItem

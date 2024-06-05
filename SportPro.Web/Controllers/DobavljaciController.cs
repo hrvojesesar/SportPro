@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
+using SportPro.Web.Repositories;
 
 namespace SportPro.Web.Controllers;
 

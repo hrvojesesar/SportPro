@@ -58,4 +58,9 @@ public class NatjecajiRepository : INatjecajiRepository
     {
         return await applicationDbContext.Natjecaji.CountAsync();
     }
+
+    public async Task<IEnumerable<Natjecaji>> GetAllForKandidatiAsync()
+    {
+        return await applicationDbContext.Natjecaji.ToListAsync();
+    }
 }
