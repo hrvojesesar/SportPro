@@ -18,9 +18,26 @@ public class PoslovniceController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 3, int pageNumber = 1)
     {
-        var poslovnice = await _poslovniceRepository.GetAllAsync();
+        var totalRecords = await _poslovniceRepository.CountAsync();
+        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+        var poslovnice = await _poslovniceRepository.GetAllAsync(pageNumber, pageSize);
         return View(poslovnice);
     }
 

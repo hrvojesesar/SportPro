@@ -14,9 +14,10 @@ public class DobavljaciRepository : IDobavljaciRepository
         this.applicationDbContext = applicationDbContext;
     }
 
-    public async Task<IEnumerable<Dobavljaci>> GetAllAsync()
+    public async Task<IEnumerable<Dobavljaci>> GetAllAsync(int pageNumber = 5, int pageSize = 100)
     {
-      return await applicationDbContext.Dobavljaci.ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await applicationDbContext.Dobavljaci.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Dobavljaci> AddAsync(Dobavljaci dobavljac)

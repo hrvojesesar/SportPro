@@ -19,9 +19,26 @@ public class DobavljaciController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
     {
-        var dobavljaci = await dobavljaciRepository.GetAllAsync();
+        var totalRecords = await dobavljaciRepository.CountAsync();
+        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+        var dobavljaci = await dobavljaciRepository.GetAllAsync(pageNumber, pageSize);
         return View(dobavljaci);
     }
 

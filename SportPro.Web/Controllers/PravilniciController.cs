@@ -18,9 +18,26 @@ public class PravilniciController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 8, int pageNumber = 1)
     {
-        var pravilnici = await _pravilniciRepository.GetAllAsync();
+        var totalRecords = await _pravilniciRepository.CountAsync();
+        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+        var pravilnici = await _pravilniciRepository.GetAllAsync(pageNumber, pageSize);
         return View(pravilnici);
     }
 

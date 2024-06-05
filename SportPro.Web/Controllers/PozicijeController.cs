@@ -18,9 +18,27 @@ public class PozicijeController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 6, int pageNumber = 1)
     {
-        var pozicije = await _pozicijeRepository.GetAllAsync();
+        var totalPozicije = await _pozicijeRepository.CountAsync();
+        var totalPages = Math.Ceiling((double)totalPozicije / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+
+        var pozicije = await _pozicijeRepository.GetAllAsync(pageNumber, pageSize);
         return View(pozicije);
     }
 

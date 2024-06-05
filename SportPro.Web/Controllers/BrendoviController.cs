@@ -18,9 +18,26 @@ public class BrendoviController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
     {
-        var brendovi = await brendoviRepository.GetAllAsync();
+        var totalRecords = await brendoviRepository.CountAsync();
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+        var brendovi = await brendoviRepository.GetAllAsync(pageNumber, pageSize);
         return View(brendovi);
     }
 

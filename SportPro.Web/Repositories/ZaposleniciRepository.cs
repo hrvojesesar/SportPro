@@ -13,9 +13,10 @@ public class ZaposleniciRepository : IZaposleniciRepository
         this.applicationDbContext = applicationDbContext;
     }
 
-    public async Task<IEnumerable<Zaposlenici>> GetAllAsync()
+    public async Task<IEnumerable<Zaposlenici>> GetAllAsync(int pageNumber = 3, int pageSize = 100)
     {
-        return await applicationDbContext.Zaposlenici.Include(x => x.Pozicije).ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await applicationDbContext.Zaposlenici.Include(x => x.Pozicije).Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Zaposlenici> AddAsync(Zaposlenici zaposlenik)
@@ -76,5 +77,10 @@ public class ZaposleniciRepository : IZaposleniciRepository
         applicationDbContext.Zaposlenici.Remove(zaposlenik);
         await applicationDbContext.SaveChangesAsync();
         return zaposlenik;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await applicationDbContext.Zaposlenici.CountAsync();
     }
 }

@@ -27,17 +27,35 @@ public class PromocijeController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 3, int pageNumber = 1)
     {
-        var promocije = await promocijeRepository.GetAllAsync();
+        var totalPromocije = await promocijeRepository.CountAsync();
+        var totalPages = Math.Ceiling((double)totalPromocije / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+
+        var promocije = await promocijeRepository.GetAllAsync(pageNumber, pageSize);
 
         var tipoviPromocija = await tipoviPromocijaRepository.GetAllAsync();
 
-       
+
 
 
         ViewData["TipoviPromocija"] = tipoviPromocija;
-   
+
 
         return View(promocije);
     }

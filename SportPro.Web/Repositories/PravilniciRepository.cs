@@ -14,9 +14,10 @@ public class PravilniciRepository : IPravilniciRepository
         this.applicationDbContext = applicationDbContext;
     }
 
-    public async Task<IEnumerable<Pravilnici>> GetAllAsync()
+    public async Task<IEnumerable<Pravilnici>> GetAllAsync(int pageNumber = 8, int pageSize = 100)
     {
-        return await applicationDbContext.Pravilnici.ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await applicationDbContext.Pravilnici.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Pravilnici> AddAsync(Pravilnici pravilnik)
@@ -49,5 +50,10 @@ public class PravilniciRepository : IPravilniciRepository
         applicationDbContext.Pravilnici.Remove(pravilnik);
         await applicationDbContext.SaveChangesAsync();
         return pravilnik;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await applicationDbContext.Pravilnici.CountAsync();
     }
 }

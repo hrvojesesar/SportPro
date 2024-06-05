@@ -14,9 +14,10 @@ public class NarudzbeRepository : INarudzbeRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Narudzbe>> GetAllAsync()
+    public async Task<IEnumerable<Narudzbe>> GetAllAsync(int pageNumber = 5, int pageSize = 100)
     {
-        return await _context.Narudzbe.ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await _context.Narudzbe.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Narudzbe> AddAsync(Narudzbe narudzba)
@@ -50,5 +51,10 @@ public class NarudzbeRepository : INarudzbeRepository
         _context.Narudzbe.Remove(narudzba);
         await _context.SaveChangesAsync();
         return narudzba;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await _context.Narudzbe.CountAsync();
     }
 }

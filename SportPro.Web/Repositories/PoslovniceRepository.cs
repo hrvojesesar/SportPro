@@ -13,9 +13,10 @@ public class PoslovniceRepository : IPoslovniceRepository
         this.applicationDbContext = applicationDbContext;
     }
 
-    public async Task<IEnumerable<Poslovnice>> GetAllAsync()
+    public async Task<IEnumerable<Poslovnice>> GetAllAsync(int pageNumber = 3, int pageSize = 100)
     {
-        return await applicationDbContext.Poslovnice.ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await applicationDbContext.Poslovnice.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Poslovnice> AddAsync(Poslovnice poslovnice)
@@ -47,5 +48,10 @@ public class PoslovniceRepository : IPoslovniceRepository
         applicationDbContext.Poslovnice.Remove(poslovnice);
         await applicationDbContext.SaveChangesAsync();
         return poslovnice;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await applicationDbContext.Poslovnice.CountAsync();
     }
 }

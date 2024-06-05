@@ -13,9 +13,10 @@ public class CertifikatiRepository : ICertifikatiRepository
     {
         _context = context;
     }
-    public async Task<IEnumerable<Certifikati>> GetAllAsync()
+    public async Task<IEnumerable<Certifikati>> GetAllAsync(int pageNumber = 3, int pageSize = 100)
     {
-        return await _context.Certifikati.ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await _context.Certifikati.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Certifikati> AddAsync(Certifikati certifikat)
@@ -35,5 +36,10 @@ public class CertifikatiRepository : ICertifikatiRepository
         _context.Certifikati.Update(certifikat);
         await _context.SaveChangesAsync();
         return certifikat;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await _context.Certifikati.CountAsync();
     }
 }

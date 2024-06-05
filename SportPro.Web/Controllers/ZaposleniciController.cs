@@ -30,9 +30,27 @@ public class ZaposleniciController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 3, int pageNumber = 1)
     {
-        var zaposlenici = await zaposleniciRepository.GetAllAsync();
+        var totalRecords = await zaposleniciRepository.CountAsync();
+        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+
+        var zaposlenici = await zaposleniciRepository.GetAllAsync(pageNumber, pageSize);
         var poslovnice = await poslovniceRepository.GetAllAsync(); // Get the collection of Poslovnice
 
         ViewData["Poslovnice"] = poslovnice; // Pass the Poslovnice collection to the view

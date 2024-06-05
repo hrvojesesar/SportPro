@@ -14,9 +14,10 @@ public class TipoviPromocijaRepository : ITipoviPromocijaRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<TipoviPromocija>> GetAllAsync()
+    public async Task<IEnumerable<TipoviPromocija>> GetAllAsync(int pageNumber = 10, int pageSize = 100)
     {
-        return await _context.TipoviPromocija.ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await _context.TipoviPromocija.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<TipoviPromocija> AddAsync(TipoviPromocija tipPromocije)
@@ -49,5 +50,10 @@ public class TipoviPromocijaRepository : ITipoviPromocijaRepository
         _context.TipoviPromocija.Remove(tipPromocije);
         await _context.SaveChangesAsync();
         return tipPromocije;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await _context.TipoviPromocija.CountAsync();
     }
 }

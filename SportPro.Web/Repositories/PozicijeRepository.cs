@@ -13,9 +13,10 @@ public class PozicijeRepository : IPozicijeRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Pozicije>> GetAllAsync()
+    public async Task<IEnumerable<Pozicije>> GetAllAsync(int pageNumber = 6, int pageSize = 100)
     {
-        return await _context.Pozicije.ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await _context.Pozicije.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Pozicije> AddAsync(Pozicije pozicija)
@@ -46,5 +47,10 @@ public class PozicijeRepository : IPozicijeRepository
             await _context.SaveChangesAsync();
         }
         return pozicija;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await _context.Pozicije.CountAsync();
     }
 }

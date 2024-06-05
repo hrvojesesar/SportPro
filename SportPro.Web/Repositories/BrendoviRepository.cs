@@ -14,9 +14,10 @@ public class BrendoviRepository : IBrendoviRepository
         this.applicationDbContext = applicationDbContext;
     }
 
-    public async Task<IEnumerable<Brendovi>> GetAllAsync()
+    public async Task<IEnumerable<Brendovi>> GetAllAsync(int pageNumber = 5, int pageSize = 100)
     {
-        return await applicationDbContext.Brendovi.ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await applicationDbContext.Brendovi.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Brendovi> AddAsync(Brendovi brend)
@@ -48,5 +49,10 @@ public class BrendoviRepository : IBrendoviRepository
         applicationDbContext.Brendovi.Remove(brend);
         await applicationDbContext.SaveChangesAsync();
         return brend;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await applicationDbContext.Brendovi.CountAsync();
     }
 }

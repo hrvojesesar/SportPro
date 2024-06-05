@@ -20,9 +20,26 @@ public class NarudzbeController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
     {
-        var narudzbe = await _narudzbeRepository.GetAllAsync();
+        var totalRecords = await _narudzbeRepository.CountAsync();
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+        var narudzbe = await _narudzbeRepository.GetAllAsync(pageNumber, pageSize);
         var dobavljaci = await _dobavljaciRepository.GetAllAsync();
 
         ViewData["Dobavljaci"] = dobavljaci;
