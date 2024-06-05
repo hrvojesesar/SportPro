@@ -21,9 +21,27 @@ public class NatjecajiController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
     {
-        var natjecaji = await natjecajiRepository.GetAllAsync();
+        var totalRecords = await natjecajiRepository.CountAsync();
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+
+        var natjecaji = await natjecajiRepository.GetAllAsync(pageNumber, pageSize);
         return View(natjecaji);
     }
 

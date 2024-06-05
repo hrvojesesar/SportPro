@@ -3,6 +3,8 @@
 @{
     ViewData["Title"] = "Natječaji";
 
+    int nextPage = Convert.ToInt32(ViewBag.PageNumber) + 1;
+    int prevPage = Convert.ToInt32(ViewBag.PageNumber) - 1;
 }
 @if (User.IsInRole("Menadzer"))
 {
@@ -94,7 +96,15 @@
                             }
                         </td>
                         <td>
-                            @Html.DisplayFor(modelItem => item.Dobitnik)
+                            @*  @Html.DisplayFor(modelItem => item.Dobitnik) *@
+                            @if (item.Dobitnik != null)
+                            {
+                                <text>@item.Dobitnik</text>
+                            }
+                            else
+                            {
+                                <text>Nema dobitnika</text>
+                            }
                         </td>
                         <td>
                             <a asp-action="Edit" asp-route-id="@item.IDNatjecaj">Uredi</a> |
@@ -104,6 +114,37 @@
                 }
             </tbody>
         </table>
+
+    
+        <nav aria-label="Page navigation example">
+            <ul class="pagination d-flex justify-content-center">
+                <li class="page-item">
+                    <a class="page-link" aria-label="Previous"
+                       asp-controller="Natjecaji"
+                       asp-action="Index"
+                       asp-route-pageNumber="@prevPage"
+                       asp-route-pageSize="@ViewBag.PageSize">
+                        <span aria-hidden="true">&laquo;</span>
+                    </a>
+                </li>
+
+                @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                {
+                    <li class="page-item"><a class="page-link" asp-controller="Natjecaji" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize">@i</a></li>
+                }
+
+                <li class="page-item">
+                    <a class="page-link" aria-label="Next"
+                       asp-controller="Natjecaji"
+                       asp-action="Index"
+                       asp-route-pageNumber="@nextPage"
+                       asp-route-pageSize="@ViewBag.PageSize">
+                        <span aria-hidden="true">&raquo;</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
+   
     }
 }
 else

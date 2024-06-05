@@ -12,6 +12,7 @@ public class Natjecaji
     public DateTime TrajanjeDo { get; set; }
     public DateTime? DatumObjave { get; set; }
     public bool Aktivan { get; set; }
+    [StringLength(int.MaxValue)]
     public string? Dobitnik { get; set; }
     public ICollection<Kandidati> Kandidati { get; set; }
 }

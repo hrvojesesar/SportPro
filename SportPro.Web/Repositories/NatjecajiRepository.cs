@@ -2,6 +2,7 @@
 using SportPro.Web.Data;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
+using Syncfusion.EJ2.TreeGrid;
 
 namespace SportPro.Web.Repositories;
 public class NatjecajiRepository : INatjecajiRepository
@@ -13,9 +14,13 @@ public class NatjecajiRepository : INatjecajiRepository
         this.applicationDbContext = applicationDbContext;
     }
 
-    public async Task<IEnumerable<Natjecaji>> GetAllAsync()
+    public async Task<IEnumerable<Natjecaji>> GetAllAsync(int pageNumber = 5, int pageSize = 100)
     {
-        return await applicationDbContext.Natjecaji.ToListAsync();
+
+        //Pagination
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await applicationDbContext.Natjecaji.Skip(skipResults).Take(pageSize).ToListAsync();
+
     }
 
     public async Task<Natjecaji> AddAsync(Natjecaji natjecaj)
@@ -47,5 +52,10 @@ public class NatjecajiRepository : INatjecajiRepository
         applicationDbContext.Natjecaji.Remove(natjecaj);
         await applicationDbContext.SaveChangesAsync();
         return natjecaj;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await applicationDbContext.Natjecaji.CountAsync();
     }
 }
