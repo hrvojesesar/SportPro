@@ -21,22 +21,46 @@ public class UsersController : Controller
         _roleManager = roleManager;
     }
 
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
     {
-        var users = await _userManager.Users.ToListAsync();
-        var userRoles = new List<Users>();
-        foreach (IdentityUser user in users)
-        {
-            var thisViewModel = new Users();
-            thisViewModel.UserId = user.Id;
-            thisViewModel.UserName = user.UserName;
-            thisViewModel.Email = user.Email;
-            thisViewModel.Roles = await GetUserRoles(user);
-            userRoles.Add(thisViewModel);
+        var totalRecords = await _userManager.Users.CountAsync();
+        var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
 
+        if (pageNumber > totalPages)
+        {
+            pageNumber = totalPages;
         }
+
+        if (pageNumber < 1)
+        {
+            pageNumber = 1;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+        var users = await _userManager.Users
+                            .Skip((pageNumber - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToListAsync();
+
+        var userRoles = new List<Users>();
+        foreach (var user in users)
+        {
+            var thisViewModel = new Users
+            {
+                UserId = user.Id,
+                UserName = user.UserName,
+                Email = user.Email,
+                Roles = await GetUserRoles(user)
+            };
+            userRoles.Add(thisViewModel);
+        }
+
         return View(userRoles);
     }
+
 
     private async Task<IEnumerable<string>> GetUserRoles(IdentityUser user)
     {

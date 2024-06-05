@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Org.BouncyCastle.Crypto;
 using SportPro.Web.Data;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
@@ -14,9 +15,11 @@ public class ArtikliRepository : IArtikliRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Artikli>> GetAllAsync()
+    public async Task<IEnumerable<Artikli>> GetAllAsync(int pageNumber = 2, int pageSize = 100)
     {
-        return await _context.Artikli.Include(a => a.Boje).Include(a => a.Kategorije).Include(a => a.Velicine).Include(a => a.Poslovnice).ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await _context.Artikli.Include(a => a.Boje).Include(a => a.Kategorije).Include(a => a.Velicine).Include(a => a.Poslovnice).Skip(skipResults).Take(pageSize).ToListAsync();
+        //return await _context.Artikli.Include(a => a.Boje).Include(a => a.Kategorije).Include(a => a.Velicine).Include(a => a.Poslovnice).ToListAsync();
     }
 
     public async Task<Artikli> AddAsync(Artikli artikal)
@@ -79,4 +82,8 @@ public class ArtikliRepository : IArtikliRepository
         return artikal;
     }
 
+    public async Task<int> CountAsync()
+    {
+        return await _context.Artikli.CountAsync();
+    }
 }

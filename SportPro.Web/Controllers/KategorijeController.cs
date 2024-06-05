@@ -18,9 +18,26 @@ public class KategorijeController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 8, int pageNumber = 1)
     {
-        var kategorije = await _kategorijeRepository.GetAllAsync();
+        var totalRecords = await _kategorijeRepository.CountAsync();
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+        var kategorije = await _kategorijeRepository.GetAllAsync(pageNumber, pageSize);
         return View(kategorije);
     }
 

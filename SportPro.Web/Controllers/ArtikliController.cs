@@ -33,8 +33,26 @@ public class ArtikliController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 2, int pageNumber = 1)
     {
+        var totalRecords = await artikliRepository.CountAsync();
+        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+
         var brend = await brendoviRepository.GetAllAsync();
         // var dobavljaci = await dobavljaciRepository.GetAllAsync();
         var dobavljaci = await dobavljaciRepository.GetActiveDobavljaci();
@@ -42,7 +60,7 @@ public class ArtikliController : Controller
         ViewData["Brendovi"] = brend;
         ViewData["Dobavljaci"] = dobavljaci;
 
-        var artikli = await artikliRepository.GetAllAsync();
+        var artikli = await artikliRepository.GetAllAsync(pageNumber, pageSize);
         return View(artikli);
     }
 

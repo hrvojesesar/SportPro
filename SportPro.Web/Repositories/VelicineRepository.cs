@@ -14,9 +14,10 @@ public class VelicineRepository : IVelicineRepository
         this.applicationDbContext = applicationDbContext;
     }
 
-    public async Task<IEnumerable<Velicine>> GetAllAsync()
+    public async Task<IEnumerable<Velicine>> GetAllAsync(int pageNumber = 8, int pageSize = 100)
     {
-        return await applicationDbContext.Velicine.ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await applicationDbContext.Velicine.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Velicine> AddAsync(Velicine velicina)
@@ -48,5 +49,10 @@ public class VelicineRepository : IVelicineRepository
         applicationDbContext.Velicine.Remove(velicina);
         await applicationDbContext.SaveChangesAsync();
         return velicina;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await applicationDbContext.Velicine.CountAsync();
     }
 }

@@ -14,9 +14,10 @@ public class KategorijeRepository : IKategorijeRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Kategorije>> GetAllAsync()
+    public async Task<IEnumerable<Kategorije>> GetAllAsync(int pageNumber = 8, int pageSize = 100)
     {
-        return await _context.Kategorije.ToListAsync();
+        var skipResults = (pageNumber - 1) * pageSize;
+        return await _context.Kategorije.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Kategorije> AddAsync(Kategorije kategorija)
@@ -49,5 +50,10 @@ public class KategorijeRepository : IKategorijeRepository
         _context.Kategorije.Remove(kategorija);
         await _context.SaveChangesAsync();
         return kategorija;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await _context.Kategorije.CountAsync();
     }
 }

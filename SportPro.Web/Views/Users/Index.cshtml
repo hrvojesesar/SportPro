@@ -3,6 +3,10 @@
 @{
     ViewData["Title"] = "Korisnici";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    int nextPage = Convert.ToInt32(ViewBag.PageNumber) + 1;
+    int prevPage = Convert.ToInt32(ViewBag.PageNumber) - 1;
+    int currentPage = Convert.ToInt32(ViewBag.PageNumber);
 }
 
 @if (User.IsInRole("Admin"))
@@ -51,6 +55,38 @@
                     }
                 </tbody>
             </table>
+
+            <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item @(prevPage < 1 ? "disabled" : "")">
+                        <a class="page-link" aria-label="Previous"
+                           asp-controller="Users"
+                           asp-action="Index"
+                           asp-route-pageNumber="@prevPage"
+                           asp-route-pageSize="@ViewBag.PageSize">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                    {
+                        <li class="page-item @(i == currentPage ? "active" : "")">
+                            <a class="page-link" asp-controller="Users" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize">@i</a>
+                        </li>
+                    }
+
+                    <li class="page-item @(nextPage > ViewBag.TotalPages ? "disabled" : "")">
+                        <a class="page-link" aria-label="Next"
+                           asp-controller="Users"
+                           asp-action="Index"
+                           asp-route-pageNumber="@nextPage"
+                           asp-route-pageSize="@ViewBag.PageSize">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
         </div>
     </div>
 }

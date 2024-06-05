@@ -13,9 +13,10 @@ public class BojeRepository : IBojeRepository
     {
         this.applicationDbContext = applicationDbContext;
     }
-    public async Task<IEnumerable<Boje>> GetAllAsync()
+    public async Task<IEnumerable<Boje>> GetAllAsync(int pageNuber = 10, int pageSize = 100)
     {
-        return await applicationDbContext.Boje.ToListAsync();
+        var skipResults = (pageNuber - 1) * pageSize;
+        return await applicationDbContext.Boje.Skip(skipResults).Take(pageSize).ToListAsync();
     }
 
     public async Task<Boje> AddAsync(Boje boja)
@@ -48,5 +49,10 @@ public class BojeRepository : IBojeRepository
         applicationDbContext.Boje.Remove(boja);
         await applicationDbContext.SaveChangesAsync();
         return boja;
+    }
+
+    public async Task<int> CountAsync()
+    {
+        return await applicationDbContext.Boje.CountAsync();
     }
 }

@@ -18,9 +18,26 @@ public class VelicineController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(int pageSize = 8, int pageNumber = 1)
     {
-        var velicine = await _velicineRepository.GetAllAsync();
+        var totalRecords = await _velicineRepository.CountAsync();
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
+        var velicine = await _velicineRepository.GetAllAsync(pageNumber, pageSize);
         return View(velicine);
     }
 
