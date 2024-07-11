@@ -19,10 +19,10 @@ public class BojeController : Controller
 
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 10, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await bojeRepository.CountAsync();
-        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
 
         if (pageNumber > totalPages)
         {
@@ -35,10 +35,16 @@ public class BojeController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
+        ViewBag.SearchQuery = searchQuery;
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
-        var boje = await bojeRepository.GetAllAsync(pageNumber, pageSize);
+        var boje = await bojeRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
         return View(boje);
     }
 

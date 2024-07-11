@@ -13,10 +13,30 @@ public class BojeRepository : IBojeRepository
     {
         this.applicationDbContext = applicationDbContext;
     }
-    public async Task<IEnumerable<Boje>> GetAllAsync(int pageNuber = 10, int pageSize = 100)
+    public async Task<IEnumerable<Boje>> GetAllAsync(string? searchQuery, string? sortBy, string? sortDirection, int pageNumber = 1, int pageSize = 100)
     {
-        var skipResults = (pageNuber - 1) * pageSize;
-        return await applicationDbContext.Boje.Skip(skipResults).Take(pageSize).ToListAsync();
+       var query = applicationDbContext.Boje.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            query = query.Where(x => x.NazivBoje.Contains(searchQuery));
+        }
+
+        if (string.IsNullOrWhiteSpace(sortBy) == false)
+        {
+            var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+            if (string.Equals(sortBy, "NazivBoje", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(x => x.NazivBoje) : query.OrderBy(x => x.NazivBoje);
+            }
+        }
+
+        //Paginacija
+        var skipResults = (pageNumber - 1) * pageSize;
+        query = query.Skip(skipResults).Take(pageSize);
+
+        return await query.ToListAsync();
     }
 
     public async Task<Boje> AddAsync(Boje boja)

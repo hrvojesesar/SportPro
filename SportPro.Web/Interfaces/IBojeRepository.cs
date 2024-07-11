@@ -4,7 +4,7 @@ namespace SportPro.Web.Interfaces;
 
 public interface IBojeRepository
 {
-    Task<IEnumerable<Boje>> GetAllAsync(int pageNumber = 10, int pageSize = 100);
+    Task<IEnumerable<Boje>> GetAllAsync(string? searchQuery = null, string? sortBy = null, string? sortDirection = null, int pageNumber = 1, int pageSize = 100);
     Task<Boje> AddAsync(Boje boja);
     Task<Boje>? GetAsync(int? id);
     Task<Boje>? UpdateAsync(Boje boja);
