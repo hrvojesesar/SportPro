@@ -21,7 +21,7 @@ public class NatjecajiController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? searchQuery, string? searchQuery2, int? minValue, int? maxValue, DateTime? startDate, DateTime? endDate, string? sortBy, string? sortDirection, int pageSize=5, int pageNumber = 1)
     {
         var totalRecords = await natjecajiRepository.CountAsync();
         var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
@@ -37,13 +37,32 @@ public class NatjecajiController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
+        ViewBag.SearchQuery = searchQuery;
+        ViewBag.SearchQuery2 = searchQuery2;
+        ViewBag.MinValue = minValue ?? 0; // Default to 0 if not provided
+        ViewBag.MaxValue = maxValue ?? 10000; // Default to 10000 if not provided
+        ViewBag.StartDate = startDate?.ToString("yyyy-MM-dd");
+        ViewBag.EndDate = endDate?.ToString("yyyy-MM-dd");
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
 
-        var natjecaji = await natjecajiRepository.GetAllAsync(pageNumber, pageSize);
+        var selectList = new SelectList(new[]
+        {
+        new { Value = "", Text = "Svi" },
+        new { Value = "1", Text = "Aktivni" },
+        new { Value = "0", Text = "Neaktivni" },
+        }, "Value", "Text", searchQuery2);
+
+        ViewBag.AktivanList = selectList;
+
+        var natjecaji = await natjecajiRepository.GetAllAsync(searchQuery, searchQuery2, minValue, maxValue, startDate, endDate, sortBy, sortDirection, pageNumber, pageSize);
         return View(natjecaji);
     }
+
 
     [HttpGet]
     public async Task<IActionResult> Add()
