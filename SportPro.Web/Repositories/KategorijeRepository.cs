@@ -14,10 +14,30 @@ public class KategorijeRepository : IKategorijeRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Kategorije>> GetAllAsync(int pageNumber = 8, int pageSize = 100)
+    public async Task<IEnumerable<Kategorije>> GetAllAsync(string? searchQuery, string? sortBy, string? sortDirection, int pageNumber = 1, int pageSize = 100)
     {
+       var query = _context.Kategorije.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            query = query.Where(x => x.Naziv.Contains(searchQuery));
+        }
+
+        if (string.IsNullOrWhiteSpace(sortBy) == false)
+        {
+            var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+            if (string.Equals(sortBy, "Naziv", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(x => x.Naziv) : query.OrderBy(x => x.Naziv);
+            }
+        }
+
+        //Paginacija
         var skipResults = (pageNumber - 1) * pageSize;
-        return await _context.Kategorije.Skip(skipResults).Take(pageSize).ToListAsync();
+        query = query.Skip(skipResults).Take(pageSize);
+
+        return await query.ToListAsync();
     }
 
     public async Task<Kategorije> AddAsync(Kategorije kategorija)

@@ -18,7 +18,7 @@ public class KategorijeController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 8, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _kategorijeRepository.CountAsync();
         var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
@@ -33,11 +33,15 @@ public class KategorijeController : Controller
             pageNumber++;
         }
 
-        ViewBag.TotalPages = totalPages;
+        ViewBag.SearchQuery = searchQuery;
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
-        var kategorije = await _kategorijeRepository.GetAllAsync(pageNumber, pageSize);
+        var kategorije = await _kategorijeRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
         return View(kategorije);
     }
 
