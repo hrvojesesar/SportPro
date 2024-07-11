@@ -14,6 +14,31 @@
     <p>
         <a asp-action="Add">Dodaj novog kandidata</a>
     </p>
+
+    <form method="get" asp-controller="Kandidati" asp-action="Index">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="ime" value="@ViewBag.Ime" placeholder="Ime" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="prezime" value="@ViewBag.Prezime" placeholder="Prezime" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="grad" value="@ViewBag.Grad" placeholder="Grad" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="natjecaj" value="@ViewBag.Natjecaj" placeholder="Natječaj" />
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-warning">Pretraži</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
     @if (Model.Count() == 0)
     {
         <h2 align="center">Nema podataka o kandidatima!</h2>
@@ -25,36 +50,176 @@
                 <tr>
                     <th>
                         Ime
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Ime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Ime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Prezime
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Adresa
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Grad
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Država
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Poštanski broj
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Email
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Telefon
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Datum prijave
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Napomene
                     </th>
                     <th>
                         Natječaj
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
+                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th></th>
                 </tr>
@@ -115,7 +280,9 @@
                        asp-controller="Kandidati"
                        asp-action="Index"
                        asp-route-pageNumber="@prevPage"
-                       asp-route-pageSize="@ViewBag.PageSize">
+                       asp-route-pageSize="@ViewBag.PageSize"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-sortDirection="@ViewBag.SortDirection">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -123,7 +290,8 @@
                 @for (int i = 1; i <= ViewBag.TotalPages; i++)
                 {
                     <li class="page-item @(i == currentPage ? "active" : "")">
-                        <a class="page-link" asp-controller="Kandidati" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize">@i</a>
+                        <a class="page-link" asp-controller="Kandidati" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize" asp-route-sortBy="@ViewBag.SortBy"
+                           asp-route-sortDirection="@ViewBag.SortDirection">@i</a>
                     </li>
                 }
 
@@ -132,12 +300,15 @@
                        asp-controller="Kandidati"
                        asp-action="Index"
                        asp-route-pageNumber="@nextPage"
-                       asp-route-pageSize="@ViewBag.PageSize">
+                       asp-route-pageSize="@ViewBag.PageSize"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-sortDirection="@ViewBag.SortDirection">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </nav>
+
     }
 }
 else

@@ -21,10 +21,10 @@ public class KandidatiController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? ime, string? prezime, string? grad, string? natjecaj, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1)
     {
-        var totalKandidati = await _kandidatiRepository.CountAsync();
-        var totalPages = Math.Ceiling((decimal)totalKandidati / pageSize);
+        var totalRecords = await _kandidatiRepository.CountAsync();
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
 
         if (pageNumber > totalPages)
         {
@@ -37,11 +37,19 @@ public class KandidatiController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
+        ViewBag.Ime = ime;
+        ViewBag.Prezime = prezime;
+        ViewBag.Grad = grad;
+        ViewBag.Natjecaj = natjecaj;
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
-
-        var kandidati = await _kandidatiRepository.GetAllAsync(pageNumber, pageSize);
+        var kandidati = await _kandidatiRepository.GetAllAsync(ime, prezime, grad, natjecaj, sortBy, sortDirection, pageNumber, pageSize);
         return View(kandidati);
     }
 

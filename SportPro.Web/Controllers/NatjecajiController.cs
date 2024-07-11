@@ -21,7 +21,7 @@ public class NatjecajiController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(string? searchQuery, string? searchQuery2, int? minValue, int? maxValue, DateTime? startDate, DateTime? endDate, string? sortBy, string? sortDirection, int pageSize=5, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? searchQuery, string? searchQuery2, int? minValue, int? maxValue, DateTime? startDate, DateTime? endDate, string? sortBy, string? sortDirection, int pageSize=3, int pageNumber = 1)
     {
         var totalRecords = await natjecajiRepository.CountAsync();
         var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
