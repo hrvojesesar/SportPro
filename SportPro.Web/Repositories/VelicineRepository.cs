@@ -14,10 +14,31 @@ public class VelicineRepository : IVelicineRepository
         this.applicationDbContext = applicationDbContext;
     }
 
-    public async Task<IEnumerable<Velicine>> GetAllAsync(int pageNumber = 8, int pageSize = 100)
+    public async Task<IEnumerable<Velicine>> GetAllAsync(string? searchQuery, string? sortBy, string? sortDirection, int pageNumber = 1, int pageSize = 100)
     {
+        var query = applicationDbContext.Velicine.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            query = query.Where(v => v.Velicina.Contains(searchQuery));
+        }
+
+        if (string.IsNullOrWhiteSpace(sortBy) == false)
+        {
+            var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+            if (string.Equals(sortBy, "Velicina", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(v => v.Velicina) : query.OrderBy(v => v.Velicina);
+            }
+        }
+
+        //Paginacija
         var skipResults = (pageNumber - 1) * pageSize;
-        return await applicationDbContext.Velicine.Skip(skipResults).Take(pageSize).ToListAsync();
+        query = query.Skip(skipResults).Take(pageSize);
+
+        return await query.ToListAsync();
+
     }
 
     public async Task<Velicine> AddAsync(Velicine velicina)
