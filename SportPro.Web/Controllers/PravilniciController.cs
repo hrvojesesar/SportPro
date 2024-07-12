@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
@@ -18,10 +19,10 @@ public class PravilniciController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 8, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? searchQuery, string? searchQuery2, DateTime? startDate, DateTime? endDate, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _pravilniciRepository.CountAsync();
-        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
 
         if (pageNumber > totalPages)
         {
@@ -34,10 +35,28 @@ public class PravilniciController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
+        ViewBag.SearchQuery = searchQuery;
+        ViewBag.SearchQuery2 = searchQuery2;
+        ViewBag.StartDate = startDate?.ToString("yyyy-MM-dd");
+        ViewBag.EndDate = endDate?.ToString("yyyy-MM-dd");
+
+        var selectList = new SelectList(new[]
+        {
+        new { Value = "", Text = "Svi" },
+        new { Value = "1", Text = "Aktivni" },
+        new { Value = "0", Text = "Neaktivni" },
+        }, "Value", "Text", searchQuery2);
+
+        ViewBag.AktivanList = selectList;
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
-        var pravilnici = await _pravilniciRepository.GetAllAsync(pageNumber, pageSize);
+        var pravilnici = await _pravilniciRepository.GetAllAsync(searchQuery, searchQuery2, startDate, endDate, sortBy, sortDirection, pageNumber, pageSize);
         return View(pravilnici);
     }
 
