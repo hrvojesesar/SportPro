@@ -75,4 +75,9 @@ public class TipoviPromocijaRepository : ITipoviPromocijaRepository
     {
         return await _context.TipoviPromocija.CountAsync();
     }
+
+    public async Task<IEnumerable<TipoviPromocija>> GetAllSecAsync()
+    {
+        return await _context.TipoviPromocija.ToListAsync();
+    }
 }

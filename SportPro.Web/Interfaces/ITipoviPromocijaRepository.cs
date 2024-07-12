@@ -10,4 +10,6 @@ public interface ITipoviPromocijaRepository
     Task<TipoviPromocija>? UpdateAsync(TipoviPromocija tipPromocije);
     Task<TipoviPromocija>? DeleteAsync(int? id);
     Task<int> CountAsync();
+    Task<IEnumerable<TipoviPromocija>> GetAllSecAsync();
+
 }

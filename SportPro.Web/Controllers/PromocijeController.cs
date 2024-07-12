@@ -49,7 +49,7 @@ public class PromocijeController : Controller
 
         var promocije = await promocijeRepository.GetAllAsync(pageNumber, pageSize);
 
-        var tipoviPromocija = await tipoviPromocijaRepository.GetAllAsync();
+        var tipoviPromocija = await tipoviPromocijaRepository.GetAllSecAsync();
 
 
 
