@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SportPro.Web.Data;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
@@ -27,10 +28,10 @@ public class PromocijeController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 3, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? naziv, string? tipPromocije, string? aktivan, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1)
     {
-        var totalPromocije = await promocijeRepository.CountAsync();
-        var totalPages = Math.Ceiling((double)totalPromocije / pageSize);
+        var totalRecords = await promocijeRepository.CountAsync();
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
 
         if (pageNumber > totalPages)
         {
@@ -43,22 +44,49 @@ public class PromocijeController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
+        ViewBag.Naziv = naziv;
+        ViewBag.TipPromocije = tipPromocije;
+        ViewBag.Aktivan = aktivan;
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
+        var statusList = new SelectList(new[]
+        {
+        new { Value = "", Text = "Svi" },
+        new { Value = "1", Text = "Aktivni" },
+        new { Value = "0", Text = "Neaktivni" },
+    }, "Value", "Text", aktivan);
 
-        var promocije = await promocijeRepository.GetAllAsync(pageNumber, pageSize);
+        ViewBag.AktivanList = statusList;
 
         var tipoviPromocija = await tipoviPromocijaRepository.GetAllSecAsync();
 
+        var tipPromocijeList = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "", Text = "Svi" } 
+    };
 
+        tipPromocijeList.AddRange(tipoviPromocija.Select(tp => new SelectListItem
+        {
+            Value = tp.IDTipPromocije.ToString(),
+            Text = tp.Naziv
+        }));
 
+        ViewBag.TipPromocijeList = new SelectList(tipPromocijeList, "Value", "Text", tipPromocije);
+
+        var promocije = await promocijeRepository.GetAllAsync(naziv, tipPromocije, aktivan, sortBy, sortDirection, pageNumber, pageSize);
 
         ViewData["TipoviPromocija"] = tipoviPromocija;
 
-
         return View(promocije);
     }
+
+
 
     [HttpGet]
     public async Task<IActionResult> Add()

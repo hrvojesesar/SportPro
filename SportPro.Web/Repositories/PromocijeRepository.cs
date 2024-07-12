@@ -14,11 +14,50 @@ public class PromocijeRepository : IPromocijeRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Promocije>> GetAllAsync(int pageNumber = 3, int pageSize = 100)
+    public async Task<IEnumerable<Promocije>> GetAllAsync(string? naziv, string? tipPromocije, string? aktivan, string? sortBy, string? sortDirection, int pageNumber = 1, int pageSize = 100)
     {
+        var query = _context.Promocije.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(naziv))
+        {
+            query = query.Where(x => x.Naziv.Contains(naziv));
+        }
+
+        if (!string.IsNullOrWhiteSpace(tipPromocije))
+        {
+            query = query.Where(x => x.TipoviPromocijaIDTipPromocije.ToString() == tipPromocije);
+        }
+
+        if (!string.IsNullOrWhiteSpace(aktivan))
+        {
+            bool isActive = aktivan == "1";
+            query = query.Where(x => x.Aktivna == isActive);
+        }
+
+        if (string.IsNullOrWhiteSpace(sortBy) == false)
+        {
+            var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+            if (string.Equals(sortBy, "Naziv", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(x => x.Naziv) : query.OrderBy(x => x.Naziv);
+            }
+            else if (string.Equals(sortBy, "DatumPocetka", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(x => x.DatumPocetka) : query.OrderBy(x => x.DatumPocetka);
+            }
+            else if (string.Equals(sortBy, "DatumZavrsetka", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(x => x.DatumZavrsetka) : query.OrderBy(x => x.DatumZavrsetka);
+            }
+        }
+
         var skipResults = (pageNumber - 1) * pageSize;
-        return await _context.Promocije.Skip(skipResults).Take(pageSize).ToListAsync();
+        query = query.Skip(skipResults).Take(pageSize);
+
+        return await query.ToListAsync();
     }
+
 
     public async Task<Promocije> AddAsync(Promocije promocije)
     {
