@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
@@ -18,7 +19,7 @@ public class BrendoviController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? nazivBrenda, string? vrsta, string? status, string? sortBy, string? sortDirection, int pageSize = 4, int pageNumber = 1)
     {
         var totalRecords = await brendoviRepository.CountAsync();
         var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
@@ -34,10 +35,35 @@ public class BrendoviController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
-        var brendovi = await brendoviRepository.GetAllAsync(pageNumber, pageSize);
+        ViewBag.NazivBrenda = nazivBrenda;
+        ViewBag.Vrsta = vrsta;
+        ViewBag.Status = status;
+
+        var vrstaList = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "", Text = "Svi" },
+        new SelectListItem { Value = "Javni", Text = "Javni" },
+        new SelectListItem { Value = "Privatni", Text = "Privatni" },
+    };
+        ViewBag.VrstaList = new SelectList(vrstaList, "Value", "Text", vrsta);
+
+        var statusList = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "", Text = "Svi" },
+        new SelectListItem { Value = "Dostupni", Text = "Dostupni" },
+        new SelectListItem { Value = "Nedostupni", Text = "Nedostupni" },
+    };
+        ViewBag.StatusList = new SelectList(statusList, "Value", "Text", status);
+
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
+        var brendovi = await brendoviRepository.GetAllAsync(nazivBrenda, vrsta, status, sortBy, sortDirection, pageNumber, pageSize);
         return View(brendovi);
     }
 

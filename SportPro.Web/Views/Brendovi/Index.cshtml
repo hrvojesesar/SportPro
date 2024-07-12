@@ -13,6 +13,26 @@
     <p>
         <a asp-controller="Brendovi" asp-action="Add">Dodaj novi brend</a>
     </p>
+
+    <form method="get" asp-controller="Brendovi" asp-action="Index">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="nazivBrenda" value="@ViewBag.NazivBrenda" placeholder="Naziv brenda" />
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="vrsta" asp-items="@ViewBag.VrstaList"></select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="status" asp-items="@ViewBag.StatusList"></select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-warning">Pretraži</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
     @if (Model.Count() == 0)
     {
         <h2 align="center">Nema podataka o brendovima!</h2>
@@ -24,21 +44,61 @@
                 <tr>
                     <th>
                         Naziv brenda
+                        <span>
+                            <a class="btn btn-light" asp-controller="Brendovi" asp-action="Index" asp-route-sortBy="NazivBrenda" asp-route-sortDirection="Asc" asp-route-nazivBrenda="@ViewBag.NazivBrenda" asp-route-vrsta="@ViewBag.Vrsta" asp-route-status="@ViewBag.Status">
+                                <i class="bi bi-arrow-up"></i>
+                            </a>
+                            <a class="btn btn-light" asp-controller="Brendovi" asp-action="Index" asp-route-sortBy="NazivBrenda" asp-route-sortDirection="Desc" asp-route-nazivBrenda="@ViewBag.NazivBrenda" asp-route-vrsta="@ViewBag.Vrsta" asp-route-status="@ViewBag.Status">
+                                <i class="bi bi-arrow-down"></i>
+                            </a>
+                        </span>
                     </th>
                     <th>
                         Vrsta
                     </th>
                     <th>
                         Osnivač
+                        <span>
+                            <a class="btn btn-light" asp-controller="Brendovi" asp-action="Index" asp-route-sortBy="Osnivac" asp-route-sortDirection="Asc" asp-route-nazivBrenda="@ViewBag.NazivBrenda" asp-route-vrsta="@ViewBag.Vrsta" asp-route-status="@ViewBag.Status">
+                                <i class="bi bi-arrow-up"></i>
+                            </a>
+                            <a class="btn btn-light" asp-controller="Brendovi" asp-action="Index" asp-route-sortBy="Osnivac" asp-route-sortDirection="Desc" asp-route-nazivBrenda="@ViewBag.NazivBrenda" asp-route-vrsta="@ViewBag.Vrsta" asp-route-status="@ViewBag.Status">
+                                <i class="bi bi-arrow-down"></i>
+                            </a>
+                        </span>
                     </th>
                     <th>
                         Godina osnivanja
+                        <span>
+                            <a class="btn btn-light" asp-controller="Brendovi" asp-action="Index" asp-route-sortBy="GodinaOsnivanja" asp-route-sortDirection="Asc" asp-route-nazivBrenda="@ViewBag.NazivBrenda" asp-route-vrsta="@ViewBag.Vrsta" asp-route-status="@ViewBag.Status">
+                                <i class="bi bi-arrow-up"></i>
+                            </a>
+                            <a class="btn btn-light" asp-controller="Brendovi" asp-action="Index" asp-route-sortBy="GodinaOsnivanja" asp-route-sortDirection="Desc" asp-route-nazivBrenda="@ViewBag.NazivBrenda" asp-route-vrsta="@ViewBag.Vrsta" asp-route-status="@ViewBag.Status">
+                                <i class="bi bi-arrow-down"></i>
+                            </a>
+                        </span>
                     </th>
                     <th>
                         Sjedište
+                        <span>
+                            <a class="btn btn-light" asp-controller="Brendovi" asp-action="Index" asp-route-sortBy="Sjediste" asp-route-sortDirection="Asc" asp-route-nazivBrenda="@ViewBag.NazivBrenda" asp-route-vrsta="@ViewBag.Vrsta" asp-route-status="@ViewBag.Status">
+                                <i class="bi bi-arrow-up"></i>
+                            </a>
+                            <a class="btn btn-light" asp-controller="Brendovi" asp-action="Index" asp-route-sortBy="Sjediste" asp-route-sortDirection="Desc" asp-route-nazivBrenda="@ViewBag.NazivBrenda" asp-route-vrsta="@ViewBag.Vrsta" asp-route-status="@ViewBag.Status">
+                                <i class="bi bi-arrow-down"></i>
+                            </a>
+                        </span>
                     </th>
                     <th>
                         Predsjednik
+                        <span>
+                            <a class="btn btn-light" asp-controller="Brendovi" asp-action="Index" asp-route-sortBy="Predsjednik" asp-route-sortDirection="Asc" asp-route-nazivBrenda="@ViewBag.NazivBrenda" asp-route-vrsta="@ViewBag.Vrsta" asp-route-status="@ViewBag.Status">
+                                <i class="bi bi-arrow-up"></i>
+                            </a>
+                            <a class="btn btn-light" asp-controller="Brendovi" asp-action="Index" asp-route-sortBy="Predsjednik" asp-route-sortDirection="Desc" asp-route-nazivBrenda="@ViewBag.NazivBrenda" asp-route-vrsta="@ViewBag.Vrsta" asp-route-status="@ViewBag.Status">
+                                <i class="bi bi-arrow-down"></i>
+                            </a>
+                        </span>
                     </th>
                     <th>
                         Status
@@ -87,7 +147,9 @@
                        asp-controller="Brendovi"
                        asp-action="Index"
                        asp-route-pageNumber="@prevPage"
-                       asp-route-pageSize="@ViewBag.PageSize">
+                       asp-route-pageSize="@ViewBag.PageSize"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-sortDirection="@ViewBag.SortDirection">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -95,7 +157,8 @@
                 @for (int i = 1; i <= ViewBag.TotalPages; i++)
                 {
                     <li class="page-item @(i == currentPage ? "active" : "")">
-                        <a class="page-link" asp-controller="Brendovi" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize">@i</a>
+                        <a class="page-link" asp-controller="Brendovi" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize" asp-route-sortBy="@ViewBag.SortBy"
+                           asp-route-sortDirection="@ViewBag.SortDirection">@i</a>
                     </li>
                 }
 
@@ -104,12 +167,15 @@
                        asp-controller="Brendovi"
                        asp-action="Index"
                        asp-route-pageNumber="@nextPage"
-                       asp-route-pageSize="@ViewBag.PageSize">
+                       asp-route-pageSize="@ViewBag.PageSize"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-sortDirection="@ViewBag.SortDirection">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </nav>
+
     }
 }
 else
