@@ -14,10 +14,29 @@ public class TipoviPromocijaRepository : ITipoviPromocijaRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<TipoviPromocija>> GetAllAsync(int pageNumber = 10, int pageSize = 100)
+    public async Task<IEnumerable<TipoviPromocija>> GetAllAsync(string? searchQuery, string? sortBy, string? sortDirection, int pageNumber = 5, int pageSize = 100)
     {
+        var query = _context.TipoviPromocija.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            query = query.Where(x => x.Naziv.Contains(searchQuery));
+        }
+
+        if (string.IsNullOrWhiteSpace(sortBy) == false)
+        {
+            var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+            if (string.Equals(sortBy, "Naziv", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(x => x.Naziv) : query.OrderBy(x => x.Naziv);
+            }
+        }
+
         var skipResults = (pageNumber - 1) * pageSize;
-        return await _context.TipoviPromocija.Skip(skipResults).Take(pageSize).ToListAsync();
+        query = query.Skip(skipResults).Take(pageSize);
+
+        return await query.ToListAsync();
     }
 
     public async Task<TipoviPromocija> AddAsync(TipoviPromocija tipPromocije)

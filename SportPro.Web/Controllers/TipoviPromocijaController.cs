@@ -18,10 +18,10 @@ public class TipoviPromocijaController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 10, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _tipoviPromocijaRepository.CountAsync();
-        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
 
         if (pageNumber > totalPages)
         {
@@ -34,11 +34,16 @@ public class TipoviPromocijaController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
+        ViewBag.SearchQuery = searchQuery;
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
-
-        var tipoviPromocija = await _tipoviPromocijaRepository.GetAllAsync(pageNumber, pageSize);
+        var tipoviPromocija = await _tipoviPromocijaRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
         return View(tipoviPromocija);
     }
 
