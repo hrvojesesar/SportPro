@@ -13,10 +13,34 @@ public class PozicijeRepository : IPozicijeRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Pozicije>> GetAllAsync(int pageNumber = 6, int pageSize = 100)
+    public async Task<IEnumerable<Pozicije>> GetAllAsync(string? searchQuery, string? sortBy, string? sortDirection, int pageNumber = 1, int pageSize = 100)
     {
+        var query = _context.Pozicije.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            query = query.Where(p => p.Naziv.Contains(searchQuery));
+        }
+
+        if (string.IsNullOrWhiteSpace(sortBy) == false)
+        {
+            var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+            if (string.Equals(sortBy, "Naziv", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(p => p.Naziv) : query.OrderBy(p => p.Naziv);
+            }
+
+            if (string.Equals(sortBy, "Opis", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(p => p.Opis) : query.OrderBy(p => p.Opis);
+            }
+        }
+
         var skipResults = (pageNumber - 1) * pageSize;
-        return await _context.Pozicije.Skip(skipResults).Take(pageSize).ToListAsync();
+        query = query.Skip(skipResults).Take(pageSize);
+
+        return await query.ToListAsync();
     }
 
     public async Task<Pozicije> AddAsync(Pozicije pozicija)

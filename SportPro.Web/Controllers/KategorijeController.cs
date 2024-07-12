@@ -33,6 +33,8 @@ public class KategorijeController : Controller
             pageNumber++;
         }
 
+        ViewBag.TotalPages = totalPages;
+
         ViewBag.SearchQuery = searchQuery;
 
         ViewBag.SortBy = sortBy;

@@ -18,10 +18,10 @@ public class PozicijeController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 6, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
-        var totalPozicije = await _pozicijeRepository.CountAsync();
-        var totalPages = Math.Ceiling((double)totalPozicije / pageSize);
+        var totalRecords = await _pozicijeRepository.CountAsync();
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
 
         if (pageNumber > totalPages)
         {
@@ -34,11 +34,16 @@ public class PozicijeController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
+        ViewBag.SearchQuery = searchQuery;
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
-
-        var pozicije = await _pozicijeRepository.GetAllAsync(pageNumber, pageSize);
+        var pozicije = await _pozicijeRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
         return View(pozicije);
     }
 
