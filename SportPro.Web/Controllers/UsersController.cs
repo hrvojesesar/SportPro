@@ -21,14 +21,14 @@ public class UsersController : Controller
         _roleManager = roleManager;
     }
 
-    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _userManager.Users.CountAsync();
-        var totalPages = (int)Math.Ceiling((double)totalRecords / pageSize);
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
 
         if (pageNumber > totalPages)
         {
-            pageNumber = totalPages;
+            pageNumber = (int)totalPages;
         }
 
         if (pageNumber < 1)
@@ -39,11 +39,35 @@ public class UsersController : Controller
         ViewBag.TotalPages = totalPages;
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
+        ViewBag.SearchQuery = searchQuery;
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
 
-        var users = await _userManager.Users
-                            .Skip((pageNumber - 1) * pageSize)
-                            .Take(pageSize)
-                            .ToListAsync();
+        sortDirection = string.IsNullOrEmpty(sortDirection) ? "asc" : sortDirection.ToLower();
+
+        var usersQuery = _userManager.Users.AsQueryable();
+
+        if (!string.IsNullOrEmpty(searchQuery))
+        {
+            usersQuery = usersQuery.Where(u => u.UserName.Contains(searchQuery));
+        }
+
+        switch (sortBy)
+        {
+            case "UserName":
+                usersQuery = sortDirection == "desc" ? usersQuery.OrderByDescending(u => u.UserName) : usersQuery.OrderBy(u => u.UserName);
+                break;
+            case "Email":
+                usersQuery = sortDirection == "desc" ? usersQuery.OrderByDescending(u => u.Email) : usersQuery.OrderBy(u => u.Email);
+                break;
+            default:
+                usersQuery = usersQuery.OrderBy(u => u.UserName);
+                break;
+        }
+
+        usersQuery = usersQuery.Skip((pageNumber - 1) * pageSize).Take(pageSize);
+
+        var users = await usersQuery.ToListAsync();
 
         var userRoles = new List<Users>();
         foreach (var user in users)
@@ -60,6 +84,8 @@ public class UsersController : Controller
 
         return View(userRoles);
     }
+
+
 
 
     private async Task<IEnumerable<string>> GetUserRoles(IdentityUser user)

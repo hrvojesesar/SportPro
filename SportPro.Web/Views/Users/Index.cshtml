@@ -15,80 +15,135 @@
         <div class="card-header">
             <h1 class="d-flex justify-content-center py-3 fw-bold">KORISNICI</h1>
         </div>
-        <div class="card-body">
-            <table class="table table-striped table-hover">
-                <thead>
-                    <tr>
-                        <th>
-                            Korisničko ime
-                        </th>
-                        <th>
-                            Email
-                        </th>
-                        <th>
-                            Uloge
-                        </th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
-                    {
+
+        <form method="get"
+              asp-controller="Users" ,
+              asp-action="Index">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-3 d-flex">
+                        <input type="text" class="form-control"
+                               name="searchQuery" value="@ViewBag.SearchQuery" placeholder="Pretraži po imenu" />
+                        <button type="submit" class="btn btn-warning ms-3">Pretraži</button>
+                    </div>
+                </div>
+            </div>
+        </form>
+
+        @if (Model.Count() == 0)
+        {
+            <h2 align="center">Nema podataka o korisnicima!</h2>
+        }
+
+        else
+        {
+
+            <div class="card-body">
+                <table class="table table-striped table-hover">
+                    <thead>
                         <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.UserName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @string.Join(", ", item.Roles.ToList())
-                            </td>
-                            <td>
-                                <a asp-action="Manage" asp-route-userId="@item.UserId" class="btn btn-primary">Uredi uloge</a>
-                                <a asp-controller="Users" asp-action="Add">Dodaj novog korisnika</a>
-                                <a asp-action="Edit" asp-route-userId="@item.UserId">Uredi</a>
-                                <a asp-action="Delete" asp-route-userId="@item.UserId">Izbriši</a>
-
-                            </td>
+                            <th>
+                                Korisničko ime
+                                <span>
+                                    <span>
+                                        <a class="btn btn-light" asp-controller="Users" asp-action="Index" asp-route-sortBy="UserName" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery">
+                                            <i class="bi bi-arrow-up"></i>
+                                        </a>
+                                    </span>
+                                    <span>
+                                        <a class="btn btn-light" asp-controller="Users" asp-action="Index" asp-route-sortBy="UserName" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery">
+                                            <i class="bi bi-arrow-down"></i>
+                                        </a>
+                                    </span>
+                                </span>
+                            </th>
+                            <th>
+                                Email
+                                <span>
+                                    <span>
+                                        <a class="btn btn-light" asp-controller="Users" asp-action="Index" asp-route-sortBy="Email" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery">
+                                            <i class="bi bi-arrow-up"></i>
+                                        </a>
+                                    </span>
+                                    <span>
+                                        <a class="btn btn-light" asp-controller="Users" asp-action="Index" asp-route-sortBy="Email" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery">
+                                            <i class="bi bi-arrow-down"></i>
+                                        </a>
+                                    </span>
+                                </span>
+                            </th>
+                            <th>
+                                Uloge
+                            </th>
+                            <th></th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.UserName)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Email)
+                                </td>
+                                <td>
+                                    @string.Join(", ", item.Roles.ToList())
+                                </td>
+                                <td>
+                                    <a asp-action="Manage" asp-route-userId="@item.UserId" class="btn btn-primary">Uredi uloge</a>
+                                    <a asp-controller="Users" asp-action="Add">Dodaj novog korisnika</a>
+                                    <a asp-action="Edit" asp-route-userId="@item.UserId">Uredi</a>
+                                    <a asp-action="Delete" asp-route-userId="@item.UserId">Izbriši</a>
 
-            <nav aria-label="Page navigation example">
-                <ul class="pagination justify-content-center">
-                    <li class="page-item @(prevPage < 1 ? "disabled" : "")">
-                        <a class="page-link" aria-label="Previous"
-                           asp-controller="Users"
-                           asp-action="Index"
-                           asp-route-pageNumber="@prevPage"
-                           asp-route-pageSize="@ViewBag.PageSize">
-                            <span aria-hidden="true">&laquo;</span>
-                        </a>
-                    </li>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
 
-                    @for (int i = 1; i <= ViewBag.TotalPages; i++)
-                    {
-                        <li class="page-item @(i == currentPage ? "active" : "")">
-                            <a class="page-link" asp-controller="Users" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize">@i</a>
+                <nav aria-label="Page navigation example">
+                    <ul class="pagination justify-content-center">
+                        <li class="page-item @(prevPage < 1 ? "disabled" : "")">
+                            <a class="page-link" aria-label="Previous"
+                               asp-controller="Users"
+                               asp-action="Index"
+                               asp-route-pageNumber="@prevPage"
+                               asp-route-pageSize="@ViewBag.PageSize"
+                               asp-route-sortBy="@ViewBag.SortBy"
+                               asp-route-sortDirection="@ViewBag.SortDirection">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
                         </li>
-                    }
 
-                    <li class="page-item @(nextPage > ViewBag.TotalPages ? "disabled" : "")">
-                        <a class="page-link" aria-label="Next"
-                           asp-controller="Users"
-                           asp-action="Index"
-                           asp-route-pageNumber="@nextPage"
-                           asp-route-pageSize="@ViewBag.PageSize">
-                            <span aria-hidden="true">&raquo;</span>
-                        </a>
-                    </li>
-                </ul>
-            </nav>
+                        @for (int i = 1; i <= ViewBag.TotalPages; i++)
+                        {
+                            <li class="page-item @(i == currentPage ? "active" : "")">
+                                <a class="page-link" asp-controller="Users" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize" asp-route-sortBy="@ViewBag.SortBy"
+                                   asp-route-sortDirection="@ViewBag.SortDirection">@i</a>
+                            </li>
+                        }
 
-        </div>
+                        <li class="page-item @(nextPage > ViewBag.TotalPages ? "disabled" : "")">
+                            <a class="page-link" aria-label="Next"
+                               asp-controller="Users"
+                               asp-action="Index"
+                               asp-route-pageNumber="@nextPage"
+                               asp-route-pageSize="@ViewBag.PageSize"
+                               asp-route-sortBy="@ViewBag.SortBy"
+                               asp-route-sortDirection="@ViewBag.SortDirection">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+
+            </div>
+        }
     </div>
+
 }
 else
 {
