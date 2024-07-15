@@ -13,10 +13,32 @@ public class CertifikatiRepository : ICertifikatiRepository
     {
         _context = context;
     }
-    public async Task<IEnumerable<Certifikati>> GetAllAsync(int pageNumber = 3, int pageSize = 100)
+    public async Task<IEnumerable<Certifikati>> GetAllAsync(string? searchQuery, string? sortBy, string? sortDirection, int pageNumber = 1, int pageSize = 100)
     {
+        var query = _context.Certifikati.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(searchQuery))
+        {
+            query = query.Where(x => x.Naziv.Contains(searchQuery));
+        }
+
+        if (string.IsNullOrWhiteSpace(sortBy) == false)
+        {
+            var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+            query = sortBy switch
+            {
+                "Naziv" => isDesc ? query.OrderByDescending(x => x.Naziv) : query.OrderBy(x => x.Naziv),
+                "DatumDodjele" => isDesc ? query.OrderByDescending(x => x.DatumDodjele) : query.OrderBy(x => x.DatumDodjele),
+                "Organizacija" => isDesc ? query.OrderByDescending(x => x.Organizacija) : query.OrderBy(x => x.Organizacija),
+                _ => query
+            };
+        }
+
         var skipResults = (pageNumber - 1) * pageSize;
-        return await _context.Certifikati.Skip(skipResults).Take(pageSize).ToListAsync();
+        query = query.Skip(skipResults).Take(pageSize);
+
+        return await query.ToListAsync();
     }
 
     public async Task<Certifikati> AddAsync(Certifikati certifikat)

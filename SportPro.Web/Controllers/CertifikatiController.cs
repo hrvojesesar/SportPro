@@ -19,7 +19,7 @@ public class CertifikatiController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 3, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await certifikatiRepository.CountAsync();
         var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
@@ -35,10 +35,16 @@ public class CertifikatiController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
-        var certifikati = await certifikatiRepository.GetAllAsync(pageNumber, pageSize);
+        ViewBag.SearchQuery = searchQuery;
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
+        var certifikati = await certifikatiRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
         return View(certifikati);
     }
 
