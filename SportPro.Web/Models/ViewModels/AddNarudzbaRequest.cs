@@ -26,5 +26,5 @@ public class AddNarudzbaRequest
     public string Status { get; set; }
     public string? Napomene { get; set; }
     public int DobavljacIDDobavljac { get; set; }
-    public IEnumerable<Dobavljaci> Dobavljacis { get; set; }
+    public IEnumerable<Dobavljaci>? Dobavljacis { get; set; }
 }

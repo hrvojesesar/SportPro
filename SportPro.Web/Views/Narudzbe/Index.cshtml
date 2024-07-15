@@ -16,12 +16,34 @@
     int nextPage = Convert.ToInt32(ViewBag.PageNumber) + 1;
     int prevPage = Convert.ToInt32(ViewBag.PageNumber) - 1;
     int currentPage = Convert.ToInt32(ViewBag.PageNumber);
+
 }
 @if (User.IsInRole("Uposlenik"))
 {
     <p>
         <a asp-action="Add">Dodaj novu narudžbu</a>
     </p>
+
+    <form method="get" asp-controller="Narudzbe" asp-action="Index">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="naziv" value="@ViewBag.Naziv" placeholder="Naziv" />
+                </div>
+                <div class="col-md-3">
+                    <input type="date" class="form-control" name="startDate" value="@ViewBag.StartDate" placeholder="Datum nabave" />
+                    <input type="date" class="form-control" name="endDate" value="@ViewBag.EndDate" placeholder="Datum isporuke" />
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="status" asp-items="@ViewBag.StatusList"></select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-warning">Pretraži</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
     @if (Model.Count() == 0)
     {
         <h2 align="center">Nema podataka o narudžbama!</h2>
@@ -33,24 +55,108 @@
                 <tr>
                     <th>
                         Naziv artikla
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="NazivArtikla" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="NazivArtikla" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Dobavljač
                     </th>
                     <th>
                         Datum nabave
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="DatumNabave" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="DatumNabave" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Datum isporuke
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="DatumIsporuke" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="DatumIsporuke" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Količina
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="Kolicina" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="Kolicina" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Cijena po komadu
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="CijenaPoKomadu" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="CijenaPoKomadu" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Cijena dostave
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="CijenaDostave" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Narudzbe" asp-action="Index" asp-route-sortBy="CijenaDostave" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate" asp-route-status="@ViewBag.StatusList">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Porez
@@ -166,7 +272,9 @@
                        asp-controller="Narudzbe"
                        asp-action="Index"
                        asp-route-pageNumber="@prevPage"
-                       asp-route-pageSize="@ViewBag.PageSize">
+                       asp-route-pageSize="@ViewBag.PageSize"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-sortDirection="@ViewBag.SortDirection">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -174,7 +282,8 @@
                 @for (int i = 1; i <= ViewBag.TotalPages; i++)
                 {
                     <li class="page-item @(i == currentPage ? "active" : "")">
-                        <a class="page-link" asp-controller="Narudzbe" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize">@i</a>
+                        <a class="page-link" asp-controller="Narudzbe" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize" asp-route-sortBy="@ViewBag.SortBy"
+                           asp-route-sortDirection="@ViewBag.SortDirection">@i</a>
                     </li>
                 }
 
@@ -183,13 +292,14 @@
                        asp-controller="Narudzbe"
                        asp-action="Index"
                        asp-route-pageNumber="@nextPage"
-                       asp-route-pageSize="@ViewBag.PageSize">
+                       asp-route-pageSize="@ViewBag.PageSize"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-sortDirection="@ViewBag.SortDirection">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </nav>
-
     }
 }
 else

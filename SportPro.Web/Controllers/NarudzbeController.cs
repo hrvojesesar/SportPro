@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Mvc;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
+using Microsoft.AspNetCore.Mvc.Rendering;
+
 
 namespace SportPro.Web.Controllers;
 
@@ -20,7 +22,7 @@ public class NarudzbeController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? naziv, DateTime? startDate, DateTime? endDate, string? status, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _narudzbeRepository.CountAsync();
         var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
@@ -36,11 +38,31 @@ public class NarudzbeController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
-        var narudzbe = await _narudzbeRepository.GetAllAsync(pageNumber, pageSize);
-        var dobavljaci = await _dobavljaciRepository.GetAllAsync();
+        ViewBag.Naziv = naziv;
+        ViewBag.StartDate = startDate?.ToString("yyyy-MM-dd");
+        ViewBag.EndDate = endDate?.ToString("yyyy-MM-dd");
+        ViewBag.Status = status;
+
+        var statusList = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "", Text = "Svi" },
+            new SelectListItem { Value = "Na čekanju", Text = "Na čekanju" },
+            new SelectListItem { Value = "U obradi", Text = "U obradi" },
+            new SelectListItem { Value = "Odbijeno", Text = "Odbijeno" },
+            new SelectListItem { Value = "Završeno", Text = "Završeno" }
+        };
+
+        ViewBag.StatusList = new SelectList(statusList, "Value", "Text", status);
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
+        var narudzbe = await _narudzbeRepository.GetAllAsync(naziv, startDate, endDate, status, sortBy, sortDirection, pageNumber, pageSize);
+        var dobavljaci = await _dobavljaciRepository.GetAllSecAsync();
 
         ViewData["Dobavljaci"] = dobavljaci;
 
@@ -52,7 +74,7 @@ public class NarudzbeController : Controller
     {
         var model = new AddNarudzbaRequest
         {
-            Dobavljacis = await _dobavljaciRepository.GetAllAsync()
+            Dobavljacis = await _dobavljaciRepository.GetAllSecAsync()
         };
 
         return View(model);
