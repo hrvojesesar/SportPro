@@ -13,6 +13,26 @@
     <p>
         <a asp-controller="Poslovnice" asp-action="Add">Dodaj novu poslovnicu</a>
     </p>
+
+
+    <form method="get" asp-controller="Poslovnice" asp-action="Index">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="naziv" value="@ViewBag.Naziv" placeholder="Naziv" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="grad" value="@ViewBag.Grad" placeholder="Grad" />
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="status" asp-items="@ViewBag.StatusList"></select>
+                </div>                 
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-warning">Pretraži</button>
+                </div>
+        </div>
+    </form>
+
     @if (Model.Count() == 0)
     {
         <h2 align="center">Nema podataka o poslovnicama!</h2>
@@ -24,9 +44,37 @@
                 <tr>
                     <th>
                         Naziv
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Adresa" asp-route-status="@ViewBag.Status">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Adresa" asp-route-status="@ViewBag.Status">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Adresa
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="Adresa" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Adresa" asp-route-status="@ViewBag.Status">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="Adresa" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Adresa" asp-route-status="@ViewBag.Status">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Grad
@@ -36,9 +84,37 @@
                     </th>
                     <th>
                         Telefon
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="Telefon" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Adresa" asp-route-status="@ViewBag.Status">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="Telefon" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Adresa" asp-route-status="@ViewBag.Status">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Email
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="Email" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Adresa" asp-route-status="@ViewBag.Status">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="Email" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Adresa" asp-route-status="@ViewBag.Status">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Početak radnog vremena
@@ -48,6 +124,20 @@
                     </th>
                     <th>
                         Datum otvaranja
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="DatumOtvaranja" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Adresa" asp-route-status="@ViewBag.Status">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="DatumOtvaranja" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Adresa" asp-route-status="@ViewBag.Status">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Status
@@ -105,7 +195,9 @@
                        asp-controller="Poslovnice"
                        asp-action="Index"
                        asp-route-pageNumber="@prevPage"
-                       asp-route-pageSize="@ViewBag.PageSize">
+                       asp-route-pageSize="@ViewBag.PageSize"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-sortDirection="@ViewBag.SortDirection">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -113,7 +205,8 @@
                 @for (int i = 1; i <= ViewBag.TotalPages; i++)
                 {
                     <li class="page-item @(i == currentPage ? "active" : "")">
-                        <a class="page-link" asp-controller="Poslovnice" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize">@i</a>
+                        <a class="page-link" asp-controller="Poslovnice" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize" asp-route-sortBy="@ViewBag.SortBy"
+                           asp-route-sortDirection="@ViewBag.SortDirection">@i</a>
                     </li>
                 }
 
@@ -122,12 +215,15 @@
                        asp-controller="Poslovnice"
                        asp-action="Index"
                        asp-route-pageNumber="@nextPage"
-                       asp-route-pageSize="@ViewBag.PageSize">
+                       asp-route-pageSize="@ViewBag.PageSize"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-sortDirection="@ViewBag.SortDirection">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </nav>
+
     }
 }
 else

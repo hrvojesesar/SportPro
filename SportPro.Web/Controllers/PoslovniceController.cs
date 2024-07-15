@@ -1,8 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
+using Syncfusion.EJ2.HeatMap;
 
 namespace SportPro.Web.Controllers;
 
@@ -18,10 +20,10 @@ public class PoslovniceController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 3, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? naziv, string? grad, string? status, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _poslovniceRepository.CountAsync();
-        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
 
         if (pageNumber > totalPages)
         {
@@ -34,10 +36,27 @@ public class PoslovniceController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
-        var poslovnice = await _poslovniceRepository.GetAllAsync(pageNumber, pageSize);
+        ViewBag.Naziv = naziv;
+        ViewBag.Grad = grad;
+        ViewBag.Status = status;
+
+        var statusList = new List<SelectListItem>
+    {
+        new SelectListItem { Value = "", Text = "Svi" },
+        new SelectListItem { Value = "Aktivni", Text = "Aktivni" },
+        new SelectListItem { Value = "Neaktivni", Text = "Neaktivni" },
+    };
+        ViewBag.StatusList = new SelectList(statusList, "Value", "Text", status);
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
+
+        var poslovnice = await _poslovniceRepository.GetAllAsync(naziv, grad, status, sortBy, sortDirection, pageNumber, pageSize);
         return View(poslovnice);
     }
 

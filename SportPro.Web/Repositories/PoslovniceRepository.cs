@@ -13,10 +13,59 @@ public class PoslovniceRepository : IPoslovniceRepository
         this.applicationDbContext = applicationDbContext;
     }
 
-    public async Task<IEnumerable<Poslovnice>> GetAllAsync(int pageNumber = 3, int pageSize = 100)
+    public async Task<IEnumerable<Poslovnice>> GetAllAsync(string? naziv, string? grad, string? status, string? sortBy, string? sortDirection, int pageNumber = 1, int pageSize = 100)
     {
+        var query = applicationDbContext.Poslovnice.AsQueryable();
+        if (!string.IsNullOrWhiteSpace(naziv))
+        {
+            query = query.Where(p => p.Naziv.Contains(naziv));
+        }
+        if (!string.IsNullOrWhiteSpace(grad))
+        {
+            query = query.Where(p => p.Grad.Contains(grad));
+        }
+        if (!string.IsNullOrWhiteSpace(status) && status != "Svi")
+        {
+            if (status == "Aktivni")
+            {
+                query = query.Where(x => x.Status == "Aktivna");
+            }
+            else
+            {
+                query = query.Where(x => x.Status == "Neaktivna");
+            }
+        }
+
+        if (string.IsNullOrWhiteSpace(sortBy) == false)
+        {
+            var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+            if (string.Equals(sortBy, "Naziv", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(p => p.Naziv) : query.OrderBy(p => p.Naziv);
+            }
+            if (string.Equals(sortBy, "Adresa", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(p => p.Adresa) : query.OrderBy(p => p.Adresa);
+            }
+            if (string.Equals(sortBy, "Telefon", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(p => p.Telefon) : query.OrderBy(p => p.Telefon);
+            }
+            if (string.Equals(sortBy, "Email", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(p => p.Email) : query.OrderBy(p => p.Email);
+            }
+            if (string.Equals(sortBy, "DatumOtvaranja", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(p => p.DatumOtvaranja) : query.OrderBy(p => p.DatumOtvaranja);
+            }
+        }
+
         var skipResults = (pageNumber - 1) * pageSize;
-        return await applicationDbContext.Poslovnice.Skip(skipResults).Take(pageSize).ToListAsync();
+        query = query.Skip(skipResults).Take(pageSize);
+
+        return await query.ToListAsync();
     }
 
     public async Task<Poslovnice> AddAsync(Poslovnice poslovnice)
