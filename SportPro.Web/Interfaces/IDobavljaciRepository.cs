@@ -11,4 +11,5 @@ public interface IDobavljaciRepository
     Task<Dobavljaci>? DeleteAsync(int? id);
     Task<IEnumerable<Dobavljaci>> GetActiveDobavljaci();
     Task<int> CountAsync();
+    Task<IEnumerable<Dobavljaci>> GetAllSecAsync();
 }

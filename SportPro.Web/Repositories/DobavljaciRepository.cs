@@ -118,4 +118,9 @@ public class DobavljaciRepository : IDobavljaciRepository
     {
         return await applicationDbContext.Dobavljaci.CountAsync();
     }
+
+    public async Task<IEnumerable<Dobavljaci>> GetAllSecAsync()
+    {
+        return await applicationDbContext.Dobavljaci.Where(d => d.SuradnjaAktivna == "Da").ToListAsync();
+    }
 }
