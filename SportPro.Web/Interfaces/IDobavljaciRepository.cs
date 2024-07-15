@@ -4,7 +4,7 @@ namespace SportPro.Web.Interfaces;
 
 public interface IDobavljaciRepository
 {
-    Task<IEnumerable<Dobavljaci>> GetAllAsync(int pageNumber = 5, int pageSize = 100);
+    Task<IEnumerable<Dobavljaci>> GetAllAsync(string? naziv = null, string? grad = null, string? aktivnaSuradnja = null, string? sortBy = null, string? sortDirection = null, int pageNumber = 5, int pageSize = 100);
     Task<Dobavljaci> AddAsync(Dobavljaci dobavljac);
     Task<Dobavljaci>? GetAsync(int? id);
     Task<Dobavljaci>? UpdateAsync(Dobavljaci dobavljac);

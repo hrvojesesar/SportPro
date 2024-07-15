@@ -4,6 +4,7 @@ using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
 using SportPro.Web.Repositories;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace SportPro.Web.Controllers;
 
@@ -19,10 +20,10 @@ public class DobavljaciController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 5, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? naziv, string? grad, string? aktivnaSuradnja, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await dobavljaciRepository.CountAsync();
-        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
 
         if (pageNumber > totalPages)
         {
@@ -35,10 +36,22 @@ public class DobavljaciController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
-        var dobavljaci = await dobavljaciRepository.GetAllAsync(pageNumber, pageSize);
+        ViewBag.Naziv = naziv;
+        ViewBag.Grad = grad;
+        ViewBag.AktivnaSuradnja = aktivnaSuradnja;
+
+        var suradnjaList = new List<string> { "Svi", "Aktivna suradnja", "Neaktivna suradnja" };
+
+        ViewBag.AktivnaSuradnjaList = new SelectList(suradnjaList);
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
+        var dobavljaci = await dobavljaciRepository.GetAllAsync(naziv, grad, aktivnaSuradnja, sortBy, sortDirection, pageNumber, pageSize);
         return View(dobavljaci);
     }
 
