@@ -10,4 +10,5 @@ public interface IPoslovniceRepository
     Task<Poslovnice>? UpdateAsync(Poslovnice poslovnice);
     Task<Poslovnice>? DeleteAsync(int? id);
     Task<int> CountAsync();
+    Task<IEnumerable<Poslovnice>> GetAllSecAsync();
 }

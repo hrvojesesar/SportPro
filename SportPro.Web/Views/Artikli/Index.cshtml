@@ -33,44 +33,209 @@
     <p>
         <a asp-action="Add">Dodaj novi artikl</a>
     </p>
+
+    <form method="get" asp-controller="Artikli" asp-action="Index">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="naziv" value="@ViewBag.Naziv" placeholder="Naziv" />
+                </div>
+                <div class="col-md-3">
+                    <label for="range-slider">Cijena (0 - 10000):</label>
+                    <div id="range-slider"></div>
+                    <span id="minValueDisplay">@ViewBag.MinValue</span> - <span id="maxValueDisplay">@ViewBag.MaxValue</span>
+                    <input type="hidden" id="minValue" name="minValue" value="@ViewBag.MinValue" />
+                    <input type="hidden" id="maxValue" name="maxValue" value="@ViewBag.MaxValue" />
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="snizen" asp-items="ViewBag.SnizenList" value="@ViewBag.SnizenList"></select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="naStanju" asp-items="ViewBag.NaStanjuList"></select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="kategorija" asp-items="ViewBag.KategorijeList">
+                        <option value="">Sve kategorije</option>
+                    </select>
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="poslovnica" asp-items="ViewBag.PoslovniceList">
+                        <option value="">Sve poslovnice</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-warning">Pretraži</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
     @if (Model.Count() == 0)
     {
         <h2 align="center">Nema podataka o artiklima!</h2>
     }
     else
     {
-        <table class="table">
+        <table class="table" style="margin-left: -130px;">
             <thead>
                 <tr>
                     <th>
                         Naziv artikla
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Opis
                     </th>
                     <th>
                         Cijena
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Cijena" asp-route-sortDirection="Asc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Cijena" asp-route-sortDirection="Desc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Snižen
                     </th>
                     <th>
                         Snižena cijena
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="SnizenaCijena" asp-route-sortDirection="Asc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="SnizenaCijena" asp-route-sortDirection="Desc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Nabavna količina
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaKolicina" asp-route-sortDirection="Asc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaKolicina" asp-route-sortDirection="Desc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Trenutna količina
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="TrenutnaKolicina" asp-route-sortDirection="Asc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="TrenutnaKolicina" asp-route-sortDirection="Desc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Na stanju
                     </th>
                     <th>
                         Datum nabave
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="DatumNabave" asp-route-sortDirection="Asc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="DatumNabave" asp-route-sortDirection="Desc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Nabavna cijena (po komadu)
+                        <span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaCijena" asp-route-sortDirection="Asc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                            </span>
+                            <span>
+                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaCijena" asp-route-sortDirection="Desc"
+                                   asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
+                                   asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
+                                   asp-route-poslovnica="@ViewBag.Poslovnica">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </span>
+                        </span>
                     </th>
                     <th>
                         Cijena dostave
@@ -229,7 +394,9 @@
                        asp-controller="Artikli"
                        asp-action="Index"
                        asp-route-pageNumber="@prevPage"
-                       asp-route-pageSize="@ViewBag.PageSize">
+                       asp-route-pageSize="@ViewBag.PageSize"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-sortDirection="@ViewBag.SortDirection">
                         <span aria-hidden="true">&laquo;</span>
                     </a>
                 </li>
@@ -237,7 +404,8 @@
                 @for (int i = 1; i <= ViewBag.TotalPages; i++)
                 {
                     <li class="page-item @(i == currentPage ? "active" : "")">
-                        <a class="page-link" asp-controller="Artikli" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize">@i</a>
+                        <a class="page-link" asp-controller="Artikli" asp-action="Index" asp-route-pageNumber="@i" asp-route-pageSize="@ViewBag.PageSize" asp-route-sortBy="@ViewBag.SortBy"
+                           asp-route-sortDirection="@ViewBag.SortDirection">@i</a>
                     </li>
                 }
 
@@ -246,12 +414,15 @@
                        asp-controller="Artikli"
                        asp-action="Index"
                        asp-route-pageNumber="@nextPage"
-                       asp-route-pageSize="@ViewBag.PageSize">
+                       asp-route-pageSize="@ViewBag.PageSize"
+                       asp-route-sortBy="@ViewBag.SortBy"
+                       asp-route-sortDirection="@ViewBag.SortDirection">
                         <span aria-hidden="true">&raquo;</span>
                     </a>
                 </li>
             </ul>
         </nav>
+
     }
 }
 else
@@ -259,4 +430,37 @@ else
     <div class="container my-5">
         <h2 align="center">Nemate pristup ovoj stranici!</h2>
     </div>
+}
+
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
+    <script>
+        var rangeSlider = document.getElementById('range-slider');
+
+        noUiSlider.create(rangeSlider, {
+            start: [@ViewBag.MinValue, @ViewBag.MaxValue],
+            connect: true,
+            range: {
+                'min': 0,
+                'max': 10000
+            }
+        });
+
+        var minValueInput = document.getElementById('minValue');
+        var maxValueInput = document.getElementById('maxValue');
+        var minValueDisplay = document.getElementById('minValueDisplay');
+        var maxValueDisplay = document.getElementById('maxValueDisplay');
+
+        rangeSlider.noUiSlider.on('update', function (values, handle) {
+            var value = Math.round(values[handle]);
+
+            if (handle === 0) {
+                minValueInput.value = value;
+                minValueDisplay.innerText = value;
+            } else {
+                maxValueInput.value = value;
+                maxValueDisplay.innerText = value;
+            }
+        });
+    </script>
 }

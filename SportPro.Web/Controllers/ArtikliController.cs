@@ -33,10 +33,10 @@ public class ArtikliController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 2, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? naziv, int? minValue, int? maxValue, string? snizen, string? naStanju, string? kategorija, string? poslovnica, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1)
     {
         var totalRecords = await artikliRepository.CountAsync();
-        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
 
         if (pageNumber > totalPages)
         {
@@ -49,8 +49,42 @@ public class ArtikliController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
+
+        ViewBag.Naziv = naziv;
+        ViewBag.MinValue = minValue ?? 0;
+        ViewBag.MaxValue = maxValue ?? 10000;
+        ViewBag.Snizen = snizen;
+        ViewBag.NaStanju = naStanju;
+        ViewBag.Kategorija = kategorija;
+        ViewBag.Poslovnica = poslovnica;
+
+        var kategorije = await kategorijeRepository.GetAllSecAsync();
+        var poslovnice = await poslovniceRepository.GetAllSecAsync();
+
+        var snizenList = new List<SelectListItem>
+    {
+        new SelectListItem { Text = "Svi", Value = "" },
+        new SelectListItem { Text = "Sniženi artikli", Value = "1" },
+        new SelectListItem { Text = "Artikli koji nisu sniženi", Value = "0" }
+    };
+        ViewBag.SnizenList = new SelectList(snizenList, "Value", "Text", snizen);
+
+        var naStanjuList = new List<SelectListItem>
+    {
+        new SelectListItem { Text = "Svi", Value = "" },
+        new SelectListItem { Text = "Artikli koji su na stanju", Value = "1" },
+        new SelectListItem { Text = "Artikli koji nisu na stanju", Value = "0" }
+    };
+        ViewBag.NaStanjuList = new SelectList(naStanjuList, "Value", "Text", naStanju);
+
+        ViewBag.KategorijeList = new SelectList(kategorije, "Naziv", "Naziv", kategorija);
+        ViewBag.PoslovniceList = new SelectList(poslovnice, "Naziv", "Naziv", poslovnica);
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
 
 
         var brend = await brendoviRepository.GetAllAsync();
@@ -60,7 +94,7 @@ public class ArtikliController : Controller
         ViewData["Brendovi"] = brend;
         ViewData["Dobavljaci"] = dobavljaci;
 
-        var artikli = await artikliRepository.GetAllAsync(pageNumber, pageSize);
+        var artikli = await artikliRepository.GetAllAsync(naziv, minValue, maxValue, snizen, naStanju, kategorija, poslovnica, sortBy, sortDirection, pageNumber, pageSize);
         return View(artikli);
     }
 

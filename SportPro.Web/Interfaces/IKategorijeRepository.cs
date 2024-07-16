@@ -10,5 +10,5 @@ public interface IKategorijeRepository
     Task<Kategorije>? UpdateAsync(Kategorije kategorija);
     Task<Kategorije>? DeleteAsync(int? id);
     Task<int> CountAsync();
-
+    Task<IEnumerable<Kategorije>> GetAllSecAsync();
 }

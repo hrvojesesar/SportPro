@@ -16,7 +16,7 @@ public class KategorijeRepository : IKategorijeRepository
 
     public async Task<IEnumerable<Kategorije>> GetAllAsync(string? searchQuery, string? sortBy, string? sortDirection, int pageNumber = 1, int pageSize = 100)
     {
-       var query = _context.Kategorije.AsQueryable();
+        var query = _context.Kategorije.AsQueryable();
 
         if (!string.IsNullOrWhiteSpace(searchQuery))
         {
@@ -75,5 +75,10 @@ public class KategorijeRepository : IKategorijeRepository
     public async Task<int> CountAsync()
     {
         return await _context.Kategorije.CountAsync();
+    }
+
+    public async Task<IEnumerable<Kategorije>> GetAllSecAsync()
+    {
+        return await _context.Kategorije.ToListAsync();
     }
 }

@@ -103,4 +103,9 @@ public class PoslovniceRepository : IPoslovniceRepository
     {
         return await applicationDbContext.Poslovnice.CountAsync();
     }
+
+    public async Task<IEnumerable<Poslovnice>> GetAllSecAsync()
+    {
+        return await applicationDbContext.Poslovnice.ToListAsync();
+    }
 }
