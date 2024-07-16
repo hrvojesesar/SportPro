@@ -30,10 +30,10 @@ public class ZaposleniciController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(int pageSize = 3, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? ime, string? prezime, string? grad, string? status, string? poslovnica, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await zaposleniciRepository.CountAsync();
-        var totalPages = Math.Ceiling((double)totalRecords / pageSize);
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
 
         if (pageNumber > totalPages)
         {
@@ -46,15 +46,38 @@ public class ZaposleniciController : Controller
         }
 
         ViewBag.TotalPages = totalPages;
+
         ViewBag.PageSize = pageSize;
         ViewBag.PageNumber = pageNumber;
 
 
-        var zaposlenici = await zaposleniciRepository.GetAllAsync(pageNumber, pageSize);
-        var poslovnice = await poslovniceRepository.GetAllAsync(); // Get the collection of Poslovnice
+        ViewBag.Ime = ime;
+        ViewBag.Prezime = prezime;
+        ViewBag.Grad = grad;
+        ViewBag.Status = status;
+        ViewBag.Poslovnica = poslovnica;
 
-        ViewData["Poslovnice"] = poslovnice; // Pass the Poslovnice collection to the view
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
 
+        var poslovnice = await poslovniceRepository.GetAllAsync();
+        var pozicije = await pozicijeRepository.GetAllAsync();
+
+        var poslovnice2 = await poslovniceRepository.GetAllSecAsync();
+
+        var statusList = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "", Text = "Svi" },
+            new SelectListItem { Value = "Slobodni", Text = "Slobodni" },
+            new SelectListItem { Value = "Zauzeti", Text = "Zauzeti" }
+        };
+        ViewBag.StatusList = new SelectList(statusList, "Value", "Text", status);
+
+        ViewBag.PoslovniceList = new SelectList(poslovnice2, "IDPoslovnica", "Naziv", poslovnica);
+
+        ViewData["Poslovnice"] = poslovnice;
+
+        var zaposlenici = await zaposleniciRepository.GetAllAsync(ime, prezime, grad, status, poslovnica, sortBy, sortDirection, pageNumber, pageSize);
 
         return View(zaposlenici);
     }

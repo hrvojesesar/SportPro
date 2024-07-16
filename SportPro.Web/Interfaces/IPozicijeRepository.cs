@@ -10,4 +10,5 @@ public interface IPozicijeRepository
     Task<Pozicije>? UpdateAsync(Pozicije pozicija);
     Task<Pozicije>? DeleteAsync(int? id);
     Task<int> CountAsync();
+    Task<IEnumerable<Pozicije>> GetAllSecAsync();
 }

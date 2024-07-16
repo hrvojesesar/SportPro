@@ -77,4 +77,9 @@ public class PozicijeRepository : IPozicijeRepository
     {
         return await _context.Pozicije.CountAsync();
     }
+
+    public async Task<IEnumerable<Pozicije>> GetAllSecAsync()
+    {
+        return await _context.Pozicije.ToListAsync();
+    }
 }
