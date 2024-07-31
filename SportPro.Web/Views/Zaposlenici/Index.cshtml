@@ -27,27 +27,25 @@
     <form method="get" asp-controller="Zaposlenici" asp-action="Index">
         <div class="container mt-5">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <input type="text" class="form-control" name="ime" value="@ViewBag.Ime" placeholder="Ime" />
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <input type="text" class="form-control" name="prezime" value="@ViewBag.Prezime" placeholder="Prezime" />
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <input type="text" class="form-control" name="grad" value="@ViewBag.Grad" placeholder="Grad" />
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <select class="form-control" name="status" asp-items="ViewBag.StatusList" value="@ViewBag.Status">
                     </select>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <select class="form-control" name="poslovnica" asp-items="ViewBag.PoslovniceList">
                         <option value="">Sve poslovnice</option>
                     </select>
                 </div>
-            </div>
-            <div class="row mt-3">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <button type="submit" class="btn btn-warning">Pretraži</button>
                 </div>
             </div>
@@ -65,64 +63,58 @@
             <thead>
                 <tr>
                     <th>
-                        Ime
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Ime" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Ime
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Ime" asp-route-sortDirection="Asc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Ime" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Ime" asp-route-sortDirection="Desc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Prezime
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Prezime
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Spol
                     </th>
                     <th>
-                        Adresa
-                         <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Adresa" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Adresa
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Adresa" asp-route-sortDirection="Asc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Adresa" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Adresa" asp-route-sortDirection="Desc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Grad
@@ -131,162 +123,146 @@
                         Država
                     </th>
                     <th>
-                        Telefon
-                         <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Telefon" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Telefon
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Telefon" asp-route-sortDirection="Asc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Telefon" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Telefon" asp-route-sortDirection="Desc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Email
-                         <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Email" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Email
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Email" asp-route-sortDirection="Asc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Email" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Email" asp-route-sortDirection="Desc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Datum zaposlenja
-                         <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="DatumZaposlenja" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Datum zaposlenja
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="DatumZaposlenja" asp-route-sortDirection="Asc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="DatumZaposlenja" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="DatumZaposlenja" asp-route-sortDirection="Desc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Plaća
-                         <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Placa" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Plaća
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Placa" asp-route-sortDirection="Asc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Placa" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Placa" asp-route-sortDirection="Desc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Topli obrok
-                         <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="TopliObrok" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Topli obrok
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="TopliObrok" asp-route-sortDirection="Asc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="TopliObrok" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="TopliObrok" asp-route-sortDirection="Desc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Prijevoz
-                         <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Prijevoz" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Prijevoz
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Prijevoz" asp-route-sortDirection="Asc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Prijevoz" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="Prijevoz" asp-route-sortDirection="Desc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Bonus
                     </th>
                     <th>
-                        Ukupna plaća
-                         <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="UkupnaPlaca" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Ukupna plaća
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="UkupnaPlaca" asp-route-sortDirection="Asc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="UkupnaPlaca" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="UkupnaPlaca" asp-route-sortDirection="Desc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Certifikati
                     </th>
                     <th>
-                        JMBG
-                         <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="JMBG" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            JMBG
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="JMBG" asp-route-sortDirection="Asc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="JMBG" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Zaposlenici" asp-action="Index" asp-route-sortBy="JMBG" asp-route-sortDirection="Desc"
                                    asp-route-ime="@ViewBag.Ime" asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad"
                                    asp-route-status="@ViewBag.Status" asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Broj bankovnog računa

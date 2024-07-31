@@ -72,6 +72,8 @@
         </div>
     </form>
 
+    <br />
+
     @if (Model.Count() == 0)
     {
         <h2 align="center">Nema podataka o artiklima!</h2>
@@ -82,160 +84,149 @@
             <thead>
                 <tr>
                     <th>
-                        Naziv artikla
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Naziv artikla
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Opis
                     </th>
                     <th>
-                        Cijena
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Cijena" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Cijena
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Cijena" asp-route-sortDirection="Asc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Cijena" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="Cijena" asp-route-sortDirection="Desc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Snižen
                     </th>
                     <th>
-                        Snižena cijena
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="SnizenaCijena" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Snižena cijena
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="SnizenaCijena" asp-route-sortDirection="Asc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="SnizenaCijena" asp-route-sortDirection="Desc"
+
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="SnizenaCijena" asp-route-sortDirection="Desc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Nabavna količina
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaKolicina" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Nabavna količina
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaKolicina" asp-route-sortDirection="Asc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaKolicina" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaKolicina" asp-route-sortDirection="Desc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Trenutna količina
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="TrenutnaKolicina" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Trenutna količina
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="TrenutnaKolicina" asp-route-sortDirection="Asc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="TrenutnaKolicina" asp-route-sortDirection="Desc"
+
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="TrenutnaKolicina" asp-route-sortDirection="Desc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Na stanju
                     </th>
                     <th>
-                        Datum nabave
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="DatumNabave" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Datum nabave
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="DatumNabave" asp-route-sortDirection="Asc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="DatumNabave" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="DatumNabave" asp-route-sortDirection="Desc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Nabavna cijena (po komadu)
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaCijena" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Nabavna cijena (po komadu)
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaCijena" asp-route-sortDirection="Asc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaCijena" asp-route-sortDirection="Desc"
+
+                                <a class="btn btn-light sort-button p-0" asp-controller="Artikli" asp-action="Index" asp-route-sortBy="NabavnaCijena" asp-route-sortDirection="Desc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue"
                                    asp-route-snizen="@ViewBag.Snizen" asp-route-naStanju="@ViewBag.NaStanju" asp-route-kategorija="@ViewBag.Kategorija"
                                    asp-route-poslovnica="@ViewBag.Poslovnica">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Cijena dostave
@@ -431,6 +422,20 @@ else
         <h2 align="center">Nemate pristup ovoj stranici!</h2>
     </div>
 }
+
+<style>
+    .sort-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sort-button {
+        padding: 0;
+        margin: 0;
+    }
+
+</style>
 
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
