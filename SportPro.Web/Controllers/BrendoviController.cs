@@ -19,7 +19,7 @@ public class BrendoviController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(string? nazivBrenda, string? vrsta, string? status, string? sortBy, string? sortDirection, int pageSize = 4, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? nazivBrenda, string? vrsta, string? status, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await brendoviRepository.CountAsync();
         var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);

@@ -7,6 +7,7 @@
     int prevPage = Convert.ToInt32(ViewBag.PageNumber) - 1;
     int currentPage = Convert.ToInt32(ViewBag.PageNumber);
 }
+
 @if (User.IsInRole("Menadzer"))
 {
     <p>
@@ -16,47 +17,35 @@
     <form method="get" asp-controller="Natjecaji" asp-action="Index">
         <div class="container mt-5">
             <div class="row">
-                <div class="col-md-3">
+                <div class="col-md-2">
                     <input type="text" class="form-control" name="searchQuery" value="@ViewBag.SearchQuery" placeholder="Pretraži po nazivu" />
                 </div>
-                <div class="col-md-3">
-                    <select class="form-control" name="searchQuery2" asp-items="@ViewBag.AktivanList" value="@ViewBag.AktivanList" placeholder="Pretraži po aktivnosti"></select>
-                </div>
                 <div class="col-md-2">
-                    <button type="submit" class="btn btn-warning">Pretraži</button>
+                    <select class="form-control" name="searchQuery2" asp-items="@ViewBag.AktivanList" value="@ViewBag.AktivanList"></select>
                 </div>
-            </div>
-        </div>
-    </form>
-
-    <form method="get" asp-controller="Natjecaji" asp-action="Index">
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-5">
+                <div class="col-md-3">
                     <label for="range-slider">Procijenjena vrijednost (0 - 10000):</label>
                     <div id="range-slider"></div>
                     <span id="minValueDisplay">@ViewBag.MinValue</span> - <span id="maxValueDisplay">@ViewBag.MaxValue</span>
                     <input type="hidden" id="minValue" name="minValue" value="@ViewBag.MinValue" />
                     <input type="hidden" id="maxValue" name="maxValue" value="@ViewBag.MaxValue" />
                 </div>
-                <div class="col-md-2 d-flex align-items-end justify-content-center">
-                    <button type="submit" class="btn btn-warning">Pretraži</button>
+                <div class="col-md-2">
+                    <label for="startDate">Datum od:</label>
+                    <input type="date" class="form-control" id="startDate" name="startDate" value="@ViewBag.StartDate" />
                 </div>
-                <div class="col-md-5">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <label for="startDate">Datum od:</label>
-                            <input type="date" class="form-control" id="startDate" name="startDate" value="@ViewBag.StartDate" />
-                        </div>
-                        <div class="col-md-6">
-                            <label for="endDate">Datum do:</label>
-                            <input type="date" class="form-control" id="endDate" name="endDate" value="@ViewBag.EndDate" />
-                        </div>
-                    </div>
+                <div class="col-md-2">
+                    <label for="endDate">Datum do:</label>
+                    <input type="date" class="form-control" id="endDate" name="endDate" value="@ViewBag.EndDate" />
+                </div>
+                <div class="col-md-1 d-flex align-items-end justify-content-center">
+                    <button type="submit" class="btn btn-warning">Pretraži</button>
                 </div>
             </div>
         </div>
     </form>
+
+    <br/>
 
     @if (Model.Count() == 0)
     {
@@ -68,126 +57,110 @@
             <thead>
                 <tr>
                     <th>
-                        Naziv
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                        <div class="d-flex align-items-center">
+                            <span>Naziv</span>
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
+                    <th>Opis</th>
                     <th>
-                        Opis
-                    </th>
-                    <th>
-                        Vrijednost
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="ProcijenjenaVrijednost" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                        <div class="d-flex align-items-center">
+                            <span>Vrijednost</span>
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="ProcijenjenaVrijednost" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="ProcijenjenaVrijednost" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="ProcijenjenaVrijednost" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Trajanje od
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="TrajanjeOd" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                        <div class="d-flex align-items-center">
+                            <span>Trajanje od</span>
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="TrajanjeOd" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="TrajanjeOd" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="TrajanjeOd" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Trajanje do
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="TrajanjeDo" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                        <div class="d-flex align-items-center">
+                            <span>Trajanje do</span>
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="TrajanjeDo" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="TrajanjeDo" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="TrajanjeDo" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Datum objavljivanja
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="DatumObjave" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                        <div class="d-flex align-items-center">
+                            Datum objavljivanja
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="DatumObjave" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="DatumObjave" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="DatumObjave" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Aktivan
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Aktivan" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                        <div class="d-flex align-items-center">
+                            <span>Aktivan</span>
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Aktivan" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Aktivan" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Aktivan" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Dobitnik
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Dobitnik" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                        <div class="d-flex align-items-center">
+                            <span>Dobitnik</span>
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Dobitnik" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Dobitnik" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Natjecaji" asp-action="Index" asp-route-sortBy="Dobitnik" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery"
                                    asp-route-searchQuery2="@ViewBag.AktivanList" asp-route-minValue="@ViewBag.MinValue" asp-route-maxValue="@ViewBag.MaxValue" asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th></th>
                 </tr>
@@ -196,9 +169,7 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Naziv)
-                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Naziv)</td>
                         <td>
                             <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDNatjecaj">Prikaži opis</a>
                             <div class="modal fade" id="opisModal_@item.IDNatjecaj" tabindex="-1" aria-labelledby="opisModalLabel_@item.IDNatjecaj" aria-hidden="true">
@@ -218,18 +189,10 @@
                                 </div>
                             </div>
                         </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProcijenjenaVrijednost) KM
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TrajanjeOd)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.TrajanjeDo)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DatumObjave)
-                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.ProcijenjenaVrijednost) KM</td>
+                        <td>@Html.DisplayFor(modelItem => item.TrajanjeOd)</td>
+                        <td>@Html.DisplayFor(modelItem => item.TrajanjeDo)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DatumObjave)</td>
                         <td>
                             @if (item.Aktivan)
                             {
@@ -241,7 +204,6 @@
                             }
                         </td>
                         <td>
-                            @*  @Html.DisplayFor(modelItem => item.Dobitnik) *@
                             @if (item.Dobitnik != null)
                             {
                                 <text>@item.Dobitnik</text>
@@ -259,7 +221,6 @@
                 }
             </tbody>
         </table>
-
 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
@@ -305,6 +266,18 @@ else
     </div>
 }
 
+<style>
+    .sort-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sort-button {
+        padding: 0;
+        margin: 0;
+    }
+</style>
 
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>

@@ -17,6 +17,7 @@
     int prevPage = Convert.ToInt32(ViewBag.PageNumber) - 1;
     int currentPage = Convert.ToInt32(ViewBag.PageNumber);
 }
+
 @if (User.IsInRole("Uposlenik"))
 {
     <p>
@@ -42,6 +43,8 @@
         </div>
     </form>
 
+    <br />
+
     @if (Model.Count() == 0)
     {
         <h2 align="center">Nema podataka o promocijama!</h2>
@@ -52,71 +55,55 @@
             <thead>
                 <tr>
                     <th>
-                        Naziv
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            Naziv
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
+                    <th>Tip promocije</th>
+                    <th>Opis</th>
                     <th>
-                        Tip promocije
-                    </th>
-                    <th>
-                        Opis
-                    </th>
-                    <th>
-                        Datum početka
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumPocetka" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            <span>Datum početka</span>
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumPocetka" asp-route-sortDirection="Asc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumPocetka" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumPocetka" asp-route-sortDirection="Desc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Datum završetka
-                        <span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumZavrsetka" asp-route-sortDirection="Asc"
+                        <div class="d-flex align-items-center">
+                            <span>Datum završetka</span>
+                            <div class="d-flex">
+                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumZavrsetka" asp-route-sortDirection="Asc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumZavrsetka" asp-route-sortDirection="Desc"
+                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumZavrsetka" asp-route-sortDirection="Desc"
                                    asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
-                    <th>
-                        Aktivna
-                    </th>
-                    <th>
-                        Dodatni uvjeti
-                    </th>
-                    <th>
-                        Slika
-                    </th>
+                    <th>Aktivna</th>
+                    <th>Dodatni uvjeti</th>
+                    <th>Slika</th>
                     <th></th>
                 </tr>
             </thead>
@@ -124,37 +111,13 @@
                 @foreach (var item in Model)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Naziv)
-                        </td>
-                        <td>
-                            @{
-                                var tipPromocije = GetTipPromocijeName(item.TipoviPromocijaIDTipPromocije, ViewData["TipoviPromocija"] as IEnumerable<SportPro.Web.Models.Domains.TipoviPromocija>);
-                                @tipPromocije
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Opis)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DatumPocetka)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DatumZavrsetka)
-                        </td>
-                        <td>
-                            @if (item.Aktivna == true)
-                            {
-                                <text>Da</text>
-                            }
-                            else
-                            {
-                                <text>Ne</text>
-                            }
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.DodatniUvjeti)
-                        </td>
+                        <td>@Html.DisplayFor(modelItem => item.Naziv)</td>
+                        <td>@GetTipPromocijeName(item.TipoviPromocijaIDTipPromocije, ViewData["TipoviPromocija"] as IEnumerable<SportPro.Web.Models.Domains.TipoviPromocija>)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Opis)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DatumPocetka)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DatumZavrsetka)</td>
+                        <td>@(item.Aktivna ? "Da" : "Ne")</td>
+                        <td>@Html.DisplayFor(modelItem => item.DodatniUvjeti)</td>
                         <td>
                             @if (!string.IsNullOrEmpty(item.Slika))
                             {
@@ -172,7 +135,6 @@
                 }
             </tbody>
         </table>
-
 
         <nav aria-label="Page navigation example">
             <ul class="pagination justify-content-center">
@@ -217,3 +179,17 @@ else
         <h2 align="center">Nemate pravo pristupa ovoj stranici!</h2>
     </div>
 }
+
+<style>
+    .sort-buttons {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .sort-button {
+        padding: 0;
+        margin: 0;
+        font-size: 0.8rem; /* Adjusts the size of the sort icons */
+    }
+</style>
