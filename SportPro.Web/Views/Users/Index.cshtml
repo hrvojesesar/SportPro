@@ -92,10 +92,10 @@
                                     @string.Join(", ", item.Roles.ToList())
                                 </td>
                                 <td>
-                                    <a asp-action="Manage" asp-route-userId="@item.UserId" class="btn btn-primary">Uredi uloge</a>
-                                    <a asp-controller="Users" asp-action="Add">Dodaj novog korisnika</a>
-                                    <a asp-action="Edit" asp-route-userId="@item.UserId">Uredi</a>
-                                    <a asp-action="Delete" asp-route-userId="@item.UserId">Izbriši</a>
+                                    <a asp-action="Manage" asp-route-userId="@item.UserId" class="btn btn-secondary">Uredi uloge</a>
+                                    <a asp-controller="Users" asp-action="Add" class="btn btn-primary">Dodaj novog korisnika</a>
+                                    <a asp-action="Edit" asp-route-userId="@item.UserId" class="btn btn-success">Uredi</a>
+                                    <a asp-action="Delete" asp-route-userId="@item.UserId" class="btn btn-danger">Izbriši</a>
 
                                 </td>
                             </tr>

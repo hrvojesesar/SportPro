@@ -8,7 +8,6 @@
 {
     <h3>Jeste sigurni da želite izbrisati veličinu?</h3>
     <div>
-        <h4>Velicine</h4>
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
@@ -21,8 +20,8 @@
 
         <form asp-action="Delete">
             <input type="hidden" asp-for="IDVelicina" />
-            <input type="submit" value="Izbriši" class="btn btn-danger" /> |
-            <a asp-action="Index">Vrati se na popis</a>
+            <input type="submit" value="Izbriši" class="btn btn-danger" /> 
+            <a asp-action="Index" class="btn btn-dark">Vrati se na popis</a>
         </form>
     </div>
 }

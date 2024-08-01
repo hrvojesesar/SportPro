@@ -11,7 +11,7 @@
 @if (User.IsInRole("Uposlenik"))
 {
     <p>
-        <a asp-controller="Velicine" asp-action="Add">Dodaj novu veličinu</a>
+        <a asp-controller="Velicine" asp-action="Add" class="btn btn-primary ms-3">Dodaj novu veličinu</a>
     </p>
 
     <form method="get"
@@ -64,8 +64,8 @@
                             @Html.DisplayFor(modelItem => item.Velicina)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.IDVelicina">Uredi</a> |
-                            <a asp-action="Delete" asp-route-id="@item.IDVelicina">Izbriši</a>
+                            <a asp-action="Edit" asp-route-id="@item.IDVelicina" class="btn btn-success">Uredi</a> 
+                            <a asp-action="Delete" asp-route-id="@item.IDVelicina" class="btn btn-danger">Izbriši</a>
                         </td>
                     </tr>
                 }
