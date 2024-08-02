@@ -6,7 +6,7 @@
 
 @if (User.IsInRole("Menadzer"))
 {
-    <h3>Jesi siguran da želiš izbrisati kandidata?</h3>
+    <h3>Jesi siguran da želite izbrisati kandidata?</h3>
     <div>
         <hr />
         <dl class="row">
@@ -85,8 +85,8 @@
 
         <form asp-action="Delete">
             <input type="hidden" asp-for="IDKandidat" />
-            <input type="submit" value="Izbriši" class="btn btn-danger" /> |
-            <a asp-action="Index">Vrati se na popis</a>
+            <input type="submit" value="Izbriši" class="btn btn-danger" /> 
+            <a asp-action="Index" class="btn btn-dark">Vrati se na popis</a>
         </form>
     </div>
 }

@@ -11,7 +11,7 @@
 @if (User.IsInRole("Uposlenik"))
 {
     <p>
-        <a asp-controller="TipoviPromocija" asp-action="Add">Dodaj novi tip promocije</a>
+        <a asp-controller="TipoviPromocija" asp-action="Add" class="btn btn-primary ms-3">Dodaj novi tip promocije</a>
     </p>
 
     <form method="get"
@@ -71,8 +71,8 @@
                             @Html.DisplayFor(modelItem => item.Opis)
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.IDTipPromocije">Uredi</a> |
-                            <a asp-action="Delete" asp-route-id="@item.IDTipPromocije">Izbriši</a>
+                            <a asp-action="Edit" asp-route-id="@item.IDTipPromocije" class="btn btn-success">Uredi</a> 
+                            <a asp-action="Delete" asp-route-id="@item.IDTipPromocije" class="btn btn-danger">Izbriši</a>
                         </td>
                     </tr>
                 }

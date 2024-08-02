@@ -31,7 +31,7 @@
 @if (User.IsInRole("Uposlenik"))
 {
     <p>
-        <a asp-action="Add">Dodaj novi artikl</a>
+        <a asp-action="Add" class="btn btn-primary ms-3">Dodaj novi artikl</a>
     </p>
 
     <form method="get" asp-controller="Artikli" asp-action="Index">
@@ -72,7 +72,6 @@
         </div>
     </form>
 
-    <br />
 
     @if (Model.Count() == 0)
     {
@@ -266,7 +265,7 @@
                             @Html.DisplayFor(modelItem => item.Naziv)
                         </td>
                         <td>
-                            <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDArtikal">Prikaži opis</a>
+                            <a href="#" class="opis-link btn btn-secondary" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDArtikal">Prikaži opis</a>
                             <div class="modal fade" id="opisModal_@item.IDArtikal" tabindex="-1" aria-labelledby="opisModalLabel_@item.IDArtikal" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -368,10 +367,10 @@
                             }
                         </td>
 
-                        <td>
+                        <td class="d-flex justify-content-between">
 
-                            <a asp-action="Edit" asp-route-id="@item.IDArtikal">Uredi</a> |
-                            <a asp-action="Delete" asp-route-id="@item.IDArtikal">Izbriši</a>
+                            <a asp-action="Edit" asp-route-id="@item.IDArtikal" class="btn btn-success">Uredi</a> &nbsp; 
+                            <a asp-action="Delete" asp-route-id="@item.IDArtikal" class="btn btn-danger">Izbriši</a>
                         </td>
                     </tr>
                 }

@@ -20,7 +20,7 @@
                 Opis
             </dt>
             <dd class="col-sm-10">
-                <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@Model.IDPravilnik">Prikaži opis</a>
+                <a href="#" class="opis-link btn btn-secondary" data-bs-toggle="modal" data-bs-target="#opisModal_@Model.IDPravilnik">Prikaži opis</a>
                 <div class="modal fade" id="opisModal_@Model.IDPravilnik" tabindex="-1" aria-labelledby="opisModalLabel_@Model.IDPravilnik" aria-hidden="true">
                     <div class="modal-dialog">
                         <div class="modal-content">
@@ -61,8 +61,8 @@
 
         <form asp-action="Delete">
             <input type="hidden" asp-for="IDPravilnik" />
-            <input type="submit" value="Izbriši" class="btn btn-danger" /> |
-            <a asp-action="Index">Vrati se na popis</a>
+            <input type="submit" value="Izbriši" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-dark">Vrati se na popis</a>
         </form>
     </div>
 }

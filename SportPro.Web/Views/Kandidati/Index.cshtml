@@ -12,7 +12,7 @@
 @if (User.IsInRole("Menadzer"))
 {
     <p>
-        <a asp-action="Add">Dodaj novog kandidata</a>
+        <a asp-action="Add" class="btn btn-primary ms-3">Dodaj novog kandidata</a>
     </p>
 
     <form method="get" asp-controller="Kandidati" asp-action="Index">
@@ -99,21 +99,19 @@
                         </div>
                     </th>
                     <th>
-                        Država
-                        <span>
-                            <span>
+                        <div class="d-flex align-items-center">
+                            Država
+                            <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Drzava" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Drzava" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Poštanski broj
@@ -153,39 +151,23 @@
                         </span>
                     </th>
                     <th>
-                        Datum prijave
-                        <span>
-                            <span>
+                        <div class="d-flex align-items-center">
+                            Datum prijave
+                            <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="DatumPrijave" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="DatumPrijave" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>Napomene</th>
                     <th>
                         Natječaj
-                        <span>
-                            <span>
-                                <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Natjecaj" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
-                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
-                                    <i class="bi bi-arrow-up"></i>
-                                </a>
-                            </span>
-                            <span>
-                                <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Natjecaj" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
-                                   asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
-                                    <i class="bi bi-arrow-down"></i>
-                                </a>
-                            </span>
-                        </span>
                     </th>
                     <th></th>
                 </tr>
@@ -210,9 +192,9 @@
                                 <span>@natjecaj.Naziv</span>
                             }
                         </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.IDKandidat">Uredi</a> |
-                            <a asp-action="Delete" asp-route-id="@item.IDKandidat">Izbriši</a>
+                        <td class="d-flex justify-content-between">
+                            <a asp-action="Edit" asp-route-id="@item.IDKandidat" class="btn btn-success">Uredi</a> &nbsp;
+                            <a asp-action="Delete" asp-route-id="@item.IDKandidat" class="btn btn-danger">Izbriši</a>
                         </td>
                     </tr>
                 }

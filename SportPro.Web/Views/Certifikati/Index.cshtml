@@ -11,7 +11,7 @@
 @if (User.IsInRole("Uposlenik"))
 {
     <p>
-        <a asp-action="Add">Dodaj novi certifikat</a>
+        <a asp-action="Add" class="btn btn-primary ms-3">Dodaj novi certifikat</a>
     </p>
 
     <form method="get"
@@ -28,7 +28,7 @@
         </div>
     </form>
 
-    <br/>
+    <br />
 
     @if (Model.Count() == 0)
     {
@@ -101,7 +101,7 @@
                             @Html.DisplayFor(modelItem => item.Naziv)
                         </td>
                         <td>
-                            <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDCertifikat">Prikaži opis</a>
+                            <a href="#" class="opis-link btn btn-secondary" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDCertifikat">Prikaži opis</a>
                             <div class="modal fade" id="opisModal_@item.IDCertifikat" tabindex="-1" aria-labelledby="opisModalLabel_@item.IDCertifikat" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -136,8 +136,7 @@
                             }
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.IDCertifikat">Uredi</a> |
-                            <a asp-action="Delete" asp-route-id="@item.IDCertifikat">Izbriši</a>
+                            <a asp-action="Edit" asp-route-id="@item.IDCertifikat" class="btn btn-success">Uredi</a>
                         </td>
                     </tr>
                 }

@@ -7,148 +7,168 @@
 
 @if (User.IsInRole("Vlasnik") || User.IsInRole("Menadzer"))
 {
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Add">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Ime" class="control-label">Ime</label>
-                    <input asp-for="Ime" class="form-control" required maxlength="20" />
-                    <span asp-validation-for="Ime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Prezime" class="control-label">Prezime</label>
-                    <input asp-for="Prezime" class="form-control" required maxlength="20" />
-                    <span asp-validation-for="Prezime" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Spol" class="control-label">Spol</label>
-                    <select asp-for="Spol" class="form-control" name="Spol">
-                        <option>M</option>
-                        <option>Ž</option>
+    <div class="container">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Ime" class="control-label">Ime</label>
+                        <input asp-for="Ime" class="form-control" required maxlength="20" />
+                        <span asp-validation-for="Ime" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Prezime" class="control-label">Prezime</label>
+                        <input asp-for="Prezime" class="form-control" required maxlength="20" />
+                        <span asp-validation-for="Prezime" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Spol" class="control-label">Spol</label>
+                        <select asp-for="Spol" class="form-control" name="Spol">
+                            <option>M</option>
+                            <option>Ž</option>
+                        </select>
                         <span asp-validation-for="Spol" class="text-danger"></span>
-                    </select>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Adresa" class="control-label">Adresa</label>
+                        <input asp-for="Adresa" class="form-control" required maxlength="50" />
+                        <span asp-validation-for="Adresa" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Grad" class="control-label">Grad</label>
+                        <input asp-for="Grad" class="form-control" required maxlength="50" />
+                        <span asp-validation-for="Grad" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Drzava" class="control-label">Država</label>
+                        <input asp-for="Drzava" class="form-control" required maxlength="50" />
+                        <span asp-validation-for="Drzava" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Telefon" class="control-label">Telefon</label>
+                        <input asp-for="Telefon" class="form-control" required maxlength="50" />
+                        <span asp-validation-for="Telefon" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Email" class="control-label">Email</label>
+                        <input asp-for="Email" class="form-control" maxlength="50" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Adresa" class="control-label">Adresa</label>
-                    <input asp-for="Adresa" class="form-control" required maxlength="50" />
-                    <span asp-validation-for="Adresa" class="text-danger"></span>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="DatumZaposlenja" class="control-label">Datum zaposlenja</label>
+                        <input asp-for="DatumZaposlenja" class="form-control" required />
+                        <span asp-validation-for="DatumZaposlenja" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Placa" class="control-label">Plaća</label>
+                        <input asp-for="Placa" class="form-control" required />
+                        <span asp-validation-for="Placa" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="TopliObrok" class="control-label">Topli obrok</label>
+                        <input asp-for="TopliObrok" class="form-control" required />
+                        <span asp-validation-for="TopliObrok" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Prijevoz" class="control-label">Prijevoz</label>
+                        <input asp-for="Prijevoz" class="form-control" required />
+                        <span asp-validation-for="Prijevoz" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Bonus" class="control-label">Bonus</label>
+                        <input asp-for="Bonus" class="form-control" />
+                        <span asp-validation-for="Bonus" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Certifikati" class="control-label">Certifikati</label>
+                        <input asp-for="Certifikati" class="form-control" />
+                        <span asp-validation-for="Certifikati" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="JMBG" class="control-label">JMBG</label>
+                        <input asp-for="JMBG" class="form-control" required maxlength="20" />
+                        <span asp-validation-for="JMBG" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="BrojBankovnogRacuna" class="control-label">Broj bankovnog računa</label>
+                        <input asp-for="BrojBankovnogRacuna" class="form-control" required maxlength="20" />
+                        <span asp-validation-for="BrojBankovnogRacuna" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Grad" class="control-label">Grad</label>
-                    <input asp-for="Grad" class="form-control" required maxlength="50" />
-                    <span asp-validation-for="Grad" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Drzava" class="control-label">Država</label>
-                    <input asp-for="Drzava" class="form-control" required maxlength="50" />
-                    <span asp-validation-for="Drzava" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Telefon" class="control-label">Telefon</label>
-                    <input asp-for="Telefon" class="form-control" required maxlength="50" />
-                    <span asp-validation-for="Telefon" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label">Email</label>
-                    <input asp-for="Email" class="form-control" maxlength="50" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DatumZaposlenja" class="control-label">Datum zaposlenja</label>
-                    <input asp-for="DatumZaposlenja" class="form-control" required />
-                    <span asp-validation-for="DatumZaposlenja" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Placa" class="control-label">Plaća</label>
-                    <input asp-for="Placa" class="form-control" required />
-                    <span asp-validation-for="Placa" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="TopliObrok" class="control-label">Topli obroK</label>
-                    <input asp-for="TopliObrok" class="form-control" required />
-                    <span asp-validation-for="TopliObrok" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Prijevoz" class="control-label">Prijevoz</label>
-                    <input asp-for="Prijevoz" class="form-control" required />
-                    <span asp-validation-for="Prijevoz" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Bonus" class="control-label">Bonus</label>
-                    <input asp-for="Bonus" class="form-control" />
-                    <span asp-validation-for="Bonus" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Certifikati" class="control-label">Certifikati</label>
-                    <input asp-for="Certifikati" class="form-control" />
-                    <span asp-validation-for="Certifikati" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="JMBG" class="control-label">JMBG</label>
-                    <input asp-for="JMBG" class="form-control" required maxlength="20" />
-                    <span asp-validation-for="JMBG" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="BrojBankovnogRacuna" class="control-label">Broj bankovnog računa</label>
-                    <input asp-for="BrojBankovnogRacuna" class="form-control" required maxlength="20" />
-                    <span asp-validation-for="BrojBankovnogRacuna" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Kvalifikacija" class="control-label">Kvalifikacija</label>
-                    <select asp-for="Kvalifikacija" class="form-control" name="Kvalifikacija">
-                        <option>Srednja stručna sprema</option>
-                        <option>Visoka stručna sprema</option>
-                        <option>Viša stručna sprema</option>
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label asp-for="Kvalifikacija" class="control-label">Kvalifikacija</label>
+                        <select asp-for="Kvalifikacija" class="form-control" name="Kvalifikacija">
+                            <option>Srednja stručna sprema</option>
+                            <option>Visoka stručna sprema</option>
+                            <option>Viša stručna sprema</option>
+                        </select>
                         <span asp-validation-for="Kvalifikacija" class="text-danger"></span>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Status" class="control-label">Status</label>
-                    <select asp-for="Status" class="form-control" name="Status">
-                        <option>Slobodan</option>
-                        <option>Zauzet</option>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label">Status</label>
+                        <select asp-for="Status" class="form-control" name="Status">
+                            <option>Slobodan</option>
+                            <option>Zauzet</option>
+                        </select>
                         <span asp-validation-for="Status" class="text-danger"></span>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DatumZavrsetkaRadnogOdnosa" class="control-label">Datum završetka radnog odnosa</label>
-                    <input asp-for="DatumZavrsetkaRadnogOdnosa" class="form-control" />
-                    <span asp-validation-for="DatumZavrsetkaRadnogOdnosa" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label for="PoslovnicaID" class="control-label">Poslovnica</label>
-                    <select id="PoslovnicaID" name="PoslovnicaID" class="form-control">
-                        <option></option>
-                        @foreach (var poslovnica in Model.Poslovnices)
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="DatumZavrsetkaRadnogOdnosa" class="control-label">Datum završetka radnog odnosa</label>
+                        <input asp-for="DatumZavrsetkaRadnogOdnosa" class="form-control" />
+                        <span asp-validation-for="DatumZavrsetkaRadnogOdnosa" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label for="PoslovnicaID" class="control-label">Poslovnica</label>
+                        <select id="PoslovnicaID" name="PoslovnicaID" class="form-control">
+                            <option></option>
+                            @foreach (var poslovnica in Model.Poslovnices)
+                            {
+                                <option value="@poslovnica.IDPoslovnica">@poslovnica.Naziv</option>
+                            }
+                        </select>
+                        <span asp-validation-for="PoslovnicaID" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="mb-3">
+                        <label class="form-label">Pozicija</label>
+                        @foreach (var pozicija in Model.Pozicije)
                         {
-                            <option value="@poslovnica.IDPoslovnica">@poslovnica.Naziv</option>
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="@($"pozicija_{pozicija.Value}")" name="SelectedPozicije" value="@pozicija.Value" @(Model.SelectedPozicije.Contains(pozicija.Value) ? "checked" : "")>
+                                <label class="form-check-label" for="@($"pozicija_{pozicija.Value}")">@pozicija.Text</label>
+                            </div>
                         }
-                    </select>
-                    <span asp-validation-for="PoslovnicaID" class="text-danger"></span>
+                        <span asp-validation-for="SelectedPozicije" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="mb-3">
-                    <label class="form-label">Pozicija</label>
-                    @foreach (var pozicija in Model.Pozicije)
-                    {
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" id="@($"pozicija_{pozicija.Value}")" name="SelectedPozicije" value="@pozicija.Value" @(Model.SelectedPozicije.Contains(pozicija.Value) ? "checked" : "")>
-                            <label class="form-check-label" for="@($"pozicija_{pozicija.Value}")">@pozicija.Text</label>
-                        </div>
-                    }
-                    <span asp-validation-for="SelectedPozicije" class="text-danger"></span>
-                </div>
-
-                <div class="form-group">
-                    <input type="submit" value="Dodaj" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div>
-        <a asp-action="Index">Back to List</a>
+            </div>
+            <br />
+            <div class="form-group d-flex justify-content-between">
+                <input type="submit" value="Dodaj" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-danger">Odustani</a>
+            </div>
+        </form>
     </div>
 
     @section Scripts {

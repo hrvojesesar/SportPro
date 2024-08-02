@@ -151,23 +151,24 @@
                     @poslovnicaName
                 }
             </dd>
-            <dt class="col-sm-10">
-                Pozicija
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Pozicije)
             </dt>
             <dd class="col-sm-10">
                 @foreach (var item in Model.Pozicije)
                 {
-                    <span>@item.Naziv</span>
+                    <span>@item.Naziv</span> @if (item != Model.Pozicije.Last())
+                    {
+                        <span>, </span>
+                    }
                 }
-
-
             </dd>
         </dl>
 
         <form asp-action="Delete">
             <input type="hidden" asp-for="IDZaposlenik" />
-            <input type="submit" value="Izbriši" class="btn btn-danger" /> |
-            <a asp-action="Index">Vrati se na popis</a>
+            <input type="submit" value="Izbriši" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-dark">Vrati se na popis</a>
         </form>
     </div>
 }

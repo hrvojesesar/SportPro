@@ -16,6 +16,10 @@
             <h1 class="d-flex justify-content-center py-3 fw-bold">KORISNICI</h1>
         </div>
 
+        <p>
+            <a asp-controller="Users" asp-action="Add" class="btn btn-primary">Dodaj novog korisnika</a>
+        </p>
+
         <form method="get"
               asp-controller="Users" ,
               asp-action="Index">
@@ -93,7 +97,6 @@
                                 </td>
                                 <td>
                                     <a asp-action="Manage" asp-route-userId="@item.UserId" class="btn btn-secondary">Uredi uloge</a>
-                                    <a asp-controller="Users" asp-action="Add" class="btn btn-primary">Dodaj novog korisnika</a>
                                     <a asp-action="Edit" asp-route-userId="@item.UserId" class="btn btn-success">Uredi</a>
                                     <a asp-action="Delete" asp-route-userId="@item.UserId" class="btn btn-danger">Izbriši</a>
 

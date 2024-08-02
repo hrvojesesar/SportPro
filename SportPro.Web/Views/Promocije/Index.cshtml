@@ -21,7 +21,7 @@
 @if (User.IsInRole("Uposlenik"))
 {
     <p>
-        <a asp-action="Add">Dodaj novu promociju</a>
+        <a asp-action="Add" class="btn btn-primary ms-3">Dodaj novu promociju</a>
     </p>
 
     <form method="get" asp-controller="Promocije" asp-action="Index">
@@ -129,7 +129,7 @@
                             }
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.IDPromocije">Uredi</a>
+                            <a asp-action="Edit" asp-route-id="@item.IDPromocije" class="btn btn-success">Uredi</a>
                         </td>
                     </tr>
                 }

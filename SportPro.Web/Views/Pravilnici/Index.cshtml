@@ -12,7 +12,7 @@
 @if (User.IsInRole("Uposlenik"))
 {
     <p>
-        <a asp-asp-controller="Pravilnici" asp-action="Add">Dodaj novi pravilnik</a>
+        <a asp-asp-controller="Pravilnici" asp-action="Add" class="btn btn-primary ms-3">Dodaj novi pravilnik</a>
     </p>
 
     <form method="get" asp-controller="Pravilnici" asp-action="Index">
@@ -117,7 +117,7 @@
                             @Html.DisplayFor(modelItem => item.Naziv)
                         </td>
                         <td>
-                            <a href="#" class="opis-link" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDPravilnik">Prikaži opis</a>
+                            <a href="#" class="opis-link btn btn-secondary" data-bs-toggle="modal" data-bs-target="#opisModal_@item.IDPravilnik">Prikaži opis</a>
                             <div class="modal fade" id="opisModal_@item.IDPravilnik" tabindex="-1" aria-labelledby="opisModalLabel_@item.IDPravilnik" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -149,8 +149,8 @@
                             }
                         </td>
                         <td>
-                            <a asp-action="Edit" asp-route-id="@item.IDPravilnik">Uredi</a> |
-                            <a asp-action="Delete" asp-route-id="@item.IDPravilnik">Izbriši</a>
+                            <a asp-action="Edit" asp-route-id="@item.IDPravilnik" class="btn btn-success">Uredi</a>
+                            <a asp-action="Delete" asp-route-id="@item.IDPravilnik" class="btn btn-danger">Izbriši</a>
                         </td>
                     </tr>
                 }

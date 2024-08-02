@@ -21,7 +21,7 @@
 @if (User.IsInRole("Vlasnik") || User.IsInRole("Menadzer"))
 {
     <p>
-        <a asp-controller="Zaposlenici" asp-action="Add">Dodaj novog zaposlenika</a>
+        <a asp-controller="Zaposlenici" asp-action="Add" class="btn btn-primary ms-3">Dodaj novog zaposlenika</a>
     </p>
 
     <form method="get" asp-controller="Zaposlenici" asp-action="Index">
@@ -368,10 +368,10 @@
                                 <span>@pozicija.Naziv</span>
                             }
 
-                        <td>
+                        <td class="d-flex justify-content-between">
 
-                            <a asp-action="Edit" asp-route-id="@item.IDZaposlenik">Uredi</a> |
-                            <a asp-action="Delete" asp-route-id="@item.IDZaposlenik">Izbriši</a>
+                            <a asp-action="Edit" asp-route-id="@item.IDZaposlenik" class="btn btn-success">Uredi</a> &nbsp;
+                            <a asp-action="Delete" asp-route-id="@item.IDZaposlenik" class="btn btn-danger">Izbriši</a>
                         </td>
                     </tr>
                 }

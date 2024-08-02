@@ -7,8 +7,7 @@
 
 @if (User.IsInRole("Uposlenik"))
 {
-    <hr />
-    <div class="row">
+    <div class="row d-flex justify-content-center">
         <div class="col-md-4">
             <form asp-action="Edit">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -18,45 +17,49 @@
                     <input asp-for="NazivBrenda" class="form-control" />
                     <span asp-validation-for="NazivBrenda" class="text-danger"></span>
                 </div>
+                <br />
                 <div class="form-group">
                     <label asp-for="Vrsta" class="control-label">Vrsta</label>
                     <input asp-for="Vrsta" class="form-control" />
                     <span asp-validation-for="Vrsta" class="text-danger"></span>
                 </div>
+                <br />
                 <div class="form-group">
                     <label asp-for="Osnivac" class="control-label">Osnivač</label>
                     <input asp-for="Osnivac" class="form-control" />
                     <span asp-validation-for="Osnivac" class="text-danger"></span>
                 </div>
+                <br />
                 <div class="form-group">
                     <label asp-for="GodinaOsnivanja" class="control-label">Godina osnivanja</label>
                     <input asp-for="GodinaOsnivanja" class="form-control" />
                     <span asp-validation-for="GodinaOsnivanja" class="text-danger"></span>
                 </div>
+                <br />
                 <div class="form-group">
                     <label asp-for="Sjediste" class="control-label">Sjedište</label>
                     <input asp-for="Sjediste" class="form-control" />
                     <span asp-validation-for="Sjediste" class="text-danger"></span>
                 </div>
+                <br />
                 <div class="form-group">
                     <label asp-for="Predsjednik" class="control-label">Predsjednik</label>
                     <input asp-for="Predsjednik" class="form-control" />
                     <span asp-validation-for="Predsjednik" class="text-danger"></span>
                 </div>
+                <br />
                 <div class="form-group">
                     <label asp-for="Status" class="control-label">Status</label>
                     <input asp-for="Status" class="form-control" />
                     <span asp-validation-for="Status" class="text-danger"></span>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Spremi" class="btn btn-primary" />
+                <br />
+                <div class="form-group d-flex justify-content-between">
+                    <input type="submit" value="Spremi" class="btn btn-success" />
+                    <a asp-action="Index" class="btn btn-danger">Odustani</a>
                 </div>
             </form>
         </div>
-    </div>
-
-    <div>
-        <a asp-action="Index">Vrati se na popis</a>
     </div>
 
     @section Scripts {

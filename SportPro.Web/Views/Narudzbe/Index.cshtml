@@ -21,7 +21,7 @@
 @if (User.IsInRole("Uposlenik"))
 {
     <p>
-        <a asp-action="Add">Dodaj novu narudžbu</a>
+        <a asp-action="Add" class="btn btn-primary ms-3">Dodaj novu narudžbu</a>
     </p>
 
     <form method="get" asp-controller="Narudzbe" asp-action="Index">
@@ -275,9 +275,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Napomene)
                         </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.IDNarudzba">Uredi</a> |
-                            <a asp-action="Delete" asp-route-id="@item.IDNarudzba">Izbriši</a>
+                        <td class="d-flex justify-content-between">
+                            <a asp-action="Edit" asp-route-id="@item.IDNarudzba" class="btn btn-success">Uredi</a> &nbsp;
+                            <a asp-action="Delete" asp-route-id="@item.IDNarudzba" class="btn btn-danger">Izbriši</a>
                         </td>
                     </tr>
                 }

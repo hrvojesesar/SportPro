@@ -11,7 +11,7 @@
 @if (User.IsInRole("Uposlenik"))
 {
     <p>
-        <a asp-controller="Dobavljaci" asp-action="Add">Create New</a>
+        <a asp-controller="Dobavljaci" asp-action="Add" class="btn btn-primary ms-3">Dodaj novog dobavljača</a>
     </p>
 
     <form method="get" asp-controller="Dobavljaci" asp-action="Index">
@@ -58,17 +58,19 @@
                         </span>
                     </th>
                     <th>
-                        Adresa
-                        <span>
-                            <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="Adresa" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
-                               asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
-                                <i class="bi bi-arrow-up"></i>
-                            </a>
-                            <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="Adresa" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
-                               asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
-                                <i class="bi bi-arrow-down"></i>
-                            </a>
-                        </span>
+                        <div class="d-flex align-items-center justify-content-between">
+                            Adresa
+                            <div class="d-flex">
+                                <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="Adresa" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                                <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="Adresa" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Grad
@@ -103,30 +105,34 @@
                         </span>
                     </th>
                     <th>
-                        Datum početka suradnje
-                        <span>
-                            <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="PocetakSuradnje" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
-                               asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
-                                <i class="bi bi-arrow-up"></i>
-                            </a>
-                            <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="PocetakSuradnje" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
-                               asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
-                                <i class="bi bi-arrow-down"></i>
-                            </a>
-                        </span>
+                        <div class="d-flex align-items-center justify-content-between">
+                            Datum početka suradnje
+                            <div class="d-flex">
+                                <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="PocetakSuradnje" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                                <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="PocetakSuradnje" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Datum kraja suradnje
-                        <span>
-                            <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="KrajSuradnje" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
-                               asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
-                                <i class="bi bi-arrow-up"></i>
-                            </a>
-                            <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="KrajSuradnje" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
-                               asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
-                                <i class="bi bi-arrow-down"></i>
-                            </a>
-                        </span>
+                        <div class="d-flex align-items-center justify-content-between">
+                            Datum kraja suradnje
+                            <div class="d-flex">
+                                <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="KrajSuradnje" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
+                                    <i class="bi bi-arrow-up"></i>
+                                </a>
+                                <a class="btn btn-light p-0" asp-controller="Dobavljaci" asp-action="Index" asp-route-sortBy="KrajSuradnje" asp-route-sortDirection="Desc" asp-route-naziv="@ViewBag.Naziv"
+                                   asp-route-grad="@ViewBag.Grad" asp-route-aktivnaSuradnja="@ViewBag.AktivnaSuradnja">
+                                    <i class="bi bi-arrow-down"></i>
+                                </a>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Aktivna suradnja
@@ -165,9 +171,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.SuradnjaAktivna)
                         </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.IDDobavljac">Uredi</a> |
-                            <a asp-action="Delete" asp-route-id="@item.IDDobavljac">Izbriši</a>
+                        <td class="d-flex justify-content-between">
+                            <a asp-action="Edit" asp-route-id="@item.IDDobavljac" class="btn btn-success">Uredi</a> &nbsp;
+                            <a asp-action="Delete" asp-route-id="@item.IDDobavljac" class="btn btn-danger">Izbriši</a>
                         </td>
                     </tr>
                 }

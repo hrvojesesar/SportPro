@@ -6,12 +6,9 @@
 <div class="container mx-auto">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-6">
-            <h1 class="mt-3 mb-3 h3">
-                Prijava
-            </h1>
             <form method="post">
                 <div class="mb-3">
-                    <label class="form-label">Korisničko Ime</label>
+                    <label class="form-label">Korisničko ime</label>
                     <input type="text" id="username" class="form-control" asp-for="Username" required />
                 </div>             
                 <div class="mb-3">
@@ -19,7 +16,7 @@
                     <input type="password" id="password" class="form-control" asp-for="Password" required minlength="6" />
                 </div>
 
-                <div class="mb-3">
+                <div class="d-flex justify-content-center mb-3">
                     <button type="submit" class="btn btn-dark">Prijavi se</button>
                 </div>
             </form>

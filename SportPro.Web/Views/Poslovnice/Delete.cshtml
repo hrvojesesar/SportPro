@@ -8,7 +8,6 @@
 {
     <h3>Jeste sigurni da želite izbrisati poslovnicu?</h3>
     <div>
-        <h4>Poslovnice</h4>
         <hr />
         <dl class="row">
             <dt class="col-sm-2">
@@ -75,8 +74,8 @@
 
         <form asp-action="Delete">
             <input type="hidden" asp-for="IDPoslovnica" />
-            <input type="submit" value="Izbriši" class="btn btn-danger" /> |
-            <a asp-action="Index">Back to List</a>
+            <input type="submit" value="Izbriši" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-dark">Vrati se na popis</a>
         </form>
     </div>
 }

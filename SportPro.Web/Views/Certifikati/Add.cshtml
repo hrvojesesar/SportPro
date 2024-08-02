@@ -6,51 +6,54 @@
 
 @if (User.IsInRole("Uposlenik"))
 {
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Add">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Naziv" class="control-label">Naziv</label>
-                    <input asp-for="Naziv" class="form-control" required />
-                    <span asp-validation-for="Naziv" class="text-danger"></span>
+    <div class="container mt-5">
+        <form asp-action="Add">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Naziv" class="control-label">Naziv</label>
+                        <input asp-for="Naziv" class="form-control" required />
+                        <span asp-validation-for="Naziv" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="DatumDodjele" class="control-label">Datum dodjele</label>
+                        <input asp-for="DatumDodjele" class="form-control" required />
+                        <span asp-validation-for="DatumDodjele" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Organizacija" class="control-label">Organizacija</label>
+                        <input asp-for="Organizacija" class="form-control" required />
+                        <span asp-validation-for="Organizacija" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label class="form-label">Učitaj sliku</label>
+                        <input type="file" id="featuredImageUpload" class="form-control" />
+                        <img src="" id="featuredImageDisplay" style="display:none;width: 100px;" />
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Slika" class="control-label">URL slike</label>
+                        <input type="text" id="featuredImageUrl" asp-for="Slika" class="form-control" readonly />
+                        <span asp-validation-for="Slika" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Opis" class="control-label">Opis</label>
-                    <textarea asp-for="Opis" class="form-control" id="opis"></textarea>
-                    <span asp-validation-for="Opis" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Opis" class="control-label">Opis</label>
+                        <textarea asp-for="Opis" class="form-control" id="opis" required></textarea>
+                        <span asp-validation-for="Opis" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="DatumDodjele" class="control-label">Datum dodjele</label>
-                    <input asp-for="DatumDodjele" class="form-control" required />
-                    <span asp-validation-for="DatumDodjele" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Organizacija" class="control-label">Organizacija</label>
-                    <input asp-for="Organizacija" class="form-control" required />
-                    <span asp-validation-for="Organizacija" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Učitaj sliku</label>
-                    <input type="file" id="featuredImageUpload" class="form-control" />
-
-                    <img src="" id="featuredImageDisplay" style="display:none;width: 300px;" />
-                </div>
-                <div class="form-group">
-                    <label asp-for="Slika" class="control-label">URL slike</label>
-                    <input type="text" id="featuredImageUrl" asp-for="Slika" class="form-control" />
-                    <span asp-validation-for="Slika" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Dodaj" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div>
-        <a asp-action="Index">Vrati se na popis</a>
+            </div>
+            <div class="form-group d-flex justify-content-between mt-4">
+                <input type="submit" value="Dodaj" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-danger">Odustani</a>
+            </div>
+        </form>
     </div>
 
     @section Scripts {
@@ -59,7 +62,9 @@
         }
 
         <script>
-            var editor = new FroalaEditor('#opis');
+            var editor = new FroalaEditor('#opis', {
+                height: 100
+            });
 
             const imageUploadElement = document.getElementById('featuredImageUpload');
             const imageUrlElement = document.getElementById('featuredImageUrl');

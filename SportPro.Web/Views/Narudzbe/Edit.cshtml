@@ -6,87 +6,96 @@
 
 @if (User.IsInRole("Uposlenik"))
 {
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="IDNarudzba" />
-                <div class="form-group">
-                    <label asp-for="NazivArtikla" class="control-label">Naziv artikla</label>
-                    <input asp-for="NazivArtikla" class="form-control" />
-                    <span asp-validation-for="NazivArtikla" class="text-danger"></span>
+    <div class="container mt-5">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="IDNarudzba" />
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="NazivArtikla" class="control-label">Naziv artikla</label>
+                        <input asp-for="NazivArtikla" class="form-control" />
+                        <span asp-validation-for="NazivArtikla" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="DatumNabave" class="control-label">Datum nabave</label>
+                        <input asp-for="DatumNabave" class="form-control" />
+                        <span asp-validation-for="DatumNabave" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="DatumIsporuke" class="control-label">Datum isporuke</label>
+                        <input asp-for="DatumIsporuke" class="form-control" />
+                        <span asp-validation-for="DatumIsporuke" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Kolicina" class="control-label">Količina</label>
+                        <input asp-for="Kolicina" class="form-control" />
+                        <span asp-validation-for="Kolicina" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="CijenaPoKomadu" class="control-label">Cijena po komadu</label>
+                        <input asp-for="CijenaPoKomadu" class="form-control" />
+                        <span asp-validation-for="CijenaPoKomadu" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="CijenaDostave" class="control-label">Cijena dostave</label>
+                        <input asp-for="CijenaDostave" class="form-control" />
+                        <span asp-validation-for="CijenaDostave" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="DatumNabave" class="control-label">Datum nabave</label>
-                    <input asp-for="DatumNabave" class="form-control" />
-                    <span asp-validation-for="DatumNabave" class="text-danger"></span>
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label asp-for="Porez" class="control-label">Porez</label>
+                        <input asp-for="Porez" class="form-control" />
+                        <span asp-validation-for="Porez" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="DodatneNaknade" class="control-label">Dodatne naknade</label>
+                        <input asp-for="DodatneNaknade" class="form-control" />
+                        <span asp-validation-for="DodatneNaknade" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Status" class="control-label">Status</label>
+                        <select asp-for="Status" class="form-control" name="Status">
+                            <option></option>
+                            <option>Na čekanju</option>
+                            <option>U obradi</option>
+                            <option>Odbijeno</option>
+                            <option>Završeno</option>
+                        </select>
+                        <span asp-validation-for="Status" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="Napomene" class="control-label">Napomene</label>
+                        <input asp-for="Napomene" class="form-control" />
+                        <span asp-validation-for="Napomene" class="text-danger"></span>
+                    </div>
+                    <br />
+                    <div class="form-group">
+                        <label asp-for="DobavljacIDDobavljac" class="control-label">Dobavljač</label>
+                        <select id="DobavljacIDDobavljac" name="DobavljacIDDobavljac" class="form-control">
+                            @foreach (var item in Model.Dobavljacis)
+                            {
+                                <option value="@item.IDDobavljac">@item.Naziv</option>
+                            }
+                        </select>
+                        <span asp-validation-for="DobavljacIDDobavljac" class="text-danger"></span>
+                    </div>
                 </div>
-                <div class="form-group">
-                    <label asp-for="DatumIsporuke" class="control-label">Datum isporuke</label>
-                    <input asp-for="DatumIsporuke" class="form-control" />
-                    <span asp-validation-for="DatumIsporuke" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Kolicina" class="control-label">Količina</label>
-                    <input asp-for="Kolicina" class="form-control" />
-                    <span asp-validation-for="Kolicina" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CijenaPoKomadu" class="control-label">Cijena po komadu</label>
-                    <input asp-for="CijenaPoKomadu" class="form-control" />
-                    <span asp-validation-for="CijenaPoKomadu" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="CijenaDostave" class="control-label">Cijena dostave</label>
-                    <input asp-for="CijenaDostave" class="form-control" />
-                    <span asp-validation-for="CijenaDostave" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Porez" class="control-label">Porez</label>
-                    <input asp-for="Porez" class="form-control" />
-                    <span asp-validation-for="Porez" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DodatneNaknade" class="control-label">Dodatne naknade</label>
-                    <input asp-for="DodatneNaknade" class="form-control" />
-                    <span asp-validation-for="DodatneNaknade" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Status" class="control-label">Status</label>
-                    <select asp-for="Status" class="form-control" name="Status">
-                        <option></option>
-                        <option>Na čekanju</option>
-                        <option>U obradi</option>
-                        <option>Odbijeno</option>
-                        <option>Završeno</option>
-                    </select>
-                    <span asp-validation-for="Status" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Napomene" class="control-label">Napomene</label>
-                    <input asp-for="Napomene" class="form-control" />
-                    <span asp-validation-for="Napomene" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="DobavljacIDDobavljac" class="control-label">Dobavljač</label>
-                    <select id="DobavljacIDDobavljac" name="DobavljacIDDobavljac" class="form-control">
-                        @foreach (var item in Model.Dobavljacis)
-                        {
-                            <option value="@item.IDDobavljac">@item.Naziv</option>
-                        }
-                    </select>
-
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Spremi" class="btn btn-primary" />
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <div>
-        <a asp-action="Index">Vrati se na popis</a>
+            </div>
+            <div class="form-group d-flex justify-content-between mt-4">
+                <input type="submit" value="Spremi" class="btn btn-success" />
+                <a asp-action="Index" class="btn btn-danger">Odustani</a>
+            </div>
+        </form>
     </div>
 
     @section Scripts {
