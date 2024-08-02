@@ -178,11 +178,16 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container" align="center">
-            &copy; 2024 - SportPro - BackOffice
-        </div>
-    </footer>
+  
+    @if ((ViewContext.RouteData.Values["controller"].ToString() == "Home" && ViewContext.RouteData.Values["action"].ToString() == "Index") ||
+    (ViewContext.RouteData.Values["controller"].ToString() == "Account" && ViewContext.RouteData.Values["action"].ToString() == "Login"))
+    {
+        <footer class="border-top footer text-muted">
+            <div class="container" align="center">
+                &copy; 2024 - SportPro - BackOffice
+            </div>
+        </footer>
+    }
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
    @*  <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script> *@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
