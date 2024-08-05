@@ -21,7 +21,6 @@ body {
     margin-bottom: 60px;
 }
 
-
 .navbar .nav-link {
     transition: background-color 0.3s, color 0.3s;
 }
@@ -31,26 +30,19 @@ body {
         color: #ffffff !important;
     }
 
-.navbar .dropdown-menu .nav-link:hover {
-    background-color: #0056b3;
-    color: #ffffff !important;
-}
-
-
 .navbar .dropdown-menu {
     background-color: #007bff;
     color: #ffffff;
 }
 
-    .navbar .dropdown-menu .nav-link {
+    .navbar .dropdown-menu .dropdown-item {
         color: #ffffff !important;
     }
 
-        .navbar .dropdown-menu .nav-link:hover {
+        .navbar .dropdown-menu .dropdown-item:hover {
             background-color: #0056b3;
             color: #ffffff !important;
         }
-
 
 /* Ensure buttons are displayed in a row and not stacked */
 .table .btn {

@@ -31,108 +31,108 @@
                         @if (signInManager.IsSignedIn(User))
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Home" asp-action="Index">Početna</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Home" asp-action="Index">Početna</a>
                             </li>
                             @if (User.IsInRole("Admin"))
                             {
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Administracija
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Users" asp-action="Index">Korisnici</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Roles" asp-action="Index">Uloge</a></li>
+                                        <li><a class="dropdown-item text-white" asp-area="" asp-controller="Users" asp-action="Index">Korisnici</a></li>
+                                        <li><a class="dropdown-item text-white" asp-area="" asp-controller="Roles" asp-action="Index">Uloge</a></li>
                                     </ul>
                                 </li>
                             }
                             @if (User.IsInRole("Menadzer"))
                             {
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Natječaji
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Natjecaji" asp-action="Index">Natječaji</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Kandidati" asp-action="Index">Kandidati</a></li>
+                                        <li><a class="dropdown-item text-white" asp-area="" asp-controller="Natjecaji" asp-action="Index">Natječaji</a></li>
+                                        <li><a class="dropdown-item text-white" asp-area="" asp-controller="Kandidati" asp-action="Index">Kandidati</a></li>
                                     </ul>
                                 </li>
                             }
                             @if (User.IsInRole("Uposlenik"))
                             {
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Artikli
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Artikli" asp-action="Index">Artikli</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Kategorije" asp-action="Index">Kategorije</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Boje" asp-action="Index">Boje</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Velicine" asp-action="Index">Veličine</a></li>
+                                        <li><a class="dropdown-item text-white" asp-area="" asp-controller="Artikli" asp-action="Index">Artikli</a></li>
+                                        <li><a class="dropdown-item text-white" asp-area="" asp-controller="Kategorije" asp-action="Index">Kategorije</a></li>
+                                        <li><a class="dropdown-item text-white" asp-area="" asp-controller="Boje" asp-action="Index">Boje</a></li>
+                                        <li><a class="dropdown-item text-white" asp-area="" asp-controller="Velicine" asp-action="Index">Veličine</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Pozicije" asp-action="Index">Pozicije</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Pozicije" asp-action="Index">Pozicije</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Poslovnice" asp-action="Index">Poslovnice</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Poslovnice" asp-action="Index">Poslovnice</a>
                                 </li>
                             }
                             @if (User.IsInRole("Vlasnik") || User.IsInRole("Menadzer"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Zaposlenici" asp-action="Index">Zaposlenici</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Zaposlenici" asp-action="Index">Zaposlenici</a>
                                 </li>
                             }
                             @if (User.IsInRole("Uposlenik"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Pravilnici" asp-action="Index">Pravilnici</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Pravilnici" asp-action="Index">Pravilnici</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Brendovi" asp-action="Index">Brendovi</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Brendovi" asp-action="Index">Brendovi</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Dobavljaci" asp-action="Index">Dobavljači</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Dobavljaci" asp-action="Index">Dobavljači</a>
                                 </li>
                                 <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                         Promocije
                                     </a>
                                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="Promocije" asp-action="Index">Promocije</a></li>
-                                        <li><a class="dropdown-item" asp-area="" asp-controller="TipoviPromocija" asp-action="Index">Tipovi promocija</a></li>
+                                        <li><a class="dropdown-item text-white" asp-area="" asp-controller="Promocije" asp-action="Index">Promocije</a></li>
+                                        <li><a class="dropdown-item text-white" asp-area="" asp-controller="TipoviPromocija" asp-action="Index">Tipovi promocija</a></li>
                                     </ul>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Certifikati" asp-action="Index">Certifikati</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Certifikati" asp-action="Index">Certifikati</a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Narudzbe" asp-action="Index">Narudžbe</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Narudzbe" asp-action="Index">Narudžbe</a>
                                 </li>
                             }
                             @if (User.IsInRole("Vlasnik"))
                             {
                                 <li class="nav-item">
-                                    <a class="nav-link text-light" asp-area="" asp-controller="Dashboard" asp-action="Index">Izvještaj</a>
+                                    <a class="nav-link text-white" asp-area="" asp-controller="Dashboard" asp-action="Index">Izvještaj</a>
                                 </li>
                             }
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle text-light" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle text-white" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                                     Postavke
                                 </a>
                                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="Logout">Odjava</a></li>
-                                    <li><a class="dropdown-item" asp-area="" asp-controller="Account" asp-action="ChangePassword">Promijeni lozinku</a></li>
+                                    <li><a class="dropdown-item text-white" asp-area="" asp-controller="Account" asp-action="Logout">Odjava</a></li>
+                                    <li><a class="dropdown-item text-white" asp-area="" asp-controller="Account" asp-action="ChangePassword">Promijeni lozinku</a></li>
                                 </ul>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link text-light">Dobrodošli, @User.Identity?.Name</a>
+                                <a class="nav-link text-white">Dobrodošli, @User.Identity?.Name</a>
                             </li>
                         }
                         else
                         {
                             <li class="nav-item">
-                                <a class="nav-link text-light" asp-area="" asp-controller="Account" asp-action="Login">Prijava</a>
+                                <a class="nav-link text-white" asp-area="" asp-controller="Account" asp-action="Login">Prijava</a>
                             </li>
                         }
                     </ul>
