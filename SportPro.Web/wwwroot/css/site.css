@@ -60,3 +60,29 @@ body {
 .table td:last-child {
     text-align: center;
 }
+
+/* Promijenite boju pozadine za aktivan dropdown meni */
+.navbar .dropdown-menu {
+    background-color: #007bff; /* ista plava boja kao navigacijska traka */
+}
+
+    .navbar .dropdown-menu .nav-link {
+        color: white; /* Bijela boja za tekst u dropdown meniju */
+    }
+
+        .navbar .dropdown-menu .nav-link:hover {
+            background-color: #0056b3; /* Tamnija plava za hover efekt */
+            color: white;
+        }
+
+/* Active state for the main nav item */
+.navbar .nav-link.active {
+    background-color: #0056b3;
+    color: #ffffff !important;
+}
+
+/* Active state for the dropdown item */
+.navbar .dropdown-menu .dropdown-item.active {
+    background-color: #0056b3;
+    color: white !important;
+}
