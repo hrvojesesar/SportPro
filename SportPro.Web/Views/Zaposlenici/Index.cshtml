@@ -59,9 +59,9 @@
     }
     else
     {
-        <table class="table">
+        <table class="table table-hover table-bordered border-secondary mt-4" style="margin-left: -311px;">
             <thead>
-                <tr>
+                <tr class="table-primary">
                     <th>
                         <div class="d-flex align-items-center">
                             Ime
@@ -368,7 +368,7 @@
                                 <span>@pozicija.Naziv</span>
                             }
 
-                        <td class="d-flex justify-content-between">
+                        <td class="text-center">
 
                             <a asp-action="Edit" asp-route-id="@item.IDZaposlenik" class="btn btn-success">Uredi</a> &nbsp;
                             <a asp-action="Delete" asp-route-id="@item.IDZaposlenik" class="btn btn-danger">Izbriši</a>

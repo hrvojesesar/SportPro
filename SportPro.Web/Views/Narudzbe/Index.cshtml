@@ -16,7 +16,6 @@
     int nextPage = Convert.ToInt32(ViewBag.PageNumber) + 1;
     int prevPage = Convert.ToInt32(ViewBag.PageNumber) - 1;
     int currentPage = Convert.ToInt32(ViewBag.PageNumber);
-
 }
 @if (User.IsInRole("Uposlenik"))
 {
@@ -56,9 +55,9 @@
     }
     else
     {
-        <table class="table">
+        <table class="table table-hover table-bordered border-secondary mt-4">
             <thead>
-                <tr>
+                <tr class="table-primary">
                     <th>
                         <div class="d-flex align-items-center">
                             Naziv artikla
@@ -275,9 +274,9 @@
                         <td>
                             @Html.DisplayFor(modelItem => item.Napomene)
                         </td>
-                        <td class="d-flex justify-content-between">
-                            <a asp-action="Edit" asp-route-id="@item.IDNarudzba" class="btn btn-success">Uredi</a> &nbsp;
-                            <a asp-action="Delete" asp-route-id="@item.IDNarudzba" class="btn btn-danger">Izbriši</a>
+                        <td class="text-center justify-content-between">
+                            <a asp-action="Edit" asp-route-id="@item.IDNarudzba" class="btn btn-success">Uredi</a>
+                            <a asp-action="Delete" asp-route-id="@item.IDNarudzba" class="btn btn-danger ms-1">Izbriši</a>
                         </td>
                     </tr>
                 }
@@ -328,7 +327,6 @@ else
     </div>
 }
 
-
 <style>
     .sort-buttons {
         display: flex;
@@ -342,4 +340,3 @@ else
         font-size: 0.8rem; /* Adjusts the size of the sort icons */
     }
 </style>
-

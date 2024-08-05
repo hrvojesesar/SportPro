@@ -50,3 +50,21 @@ body {
             background-color: #0056b3;
             color: #ffffff !important;
         }
+
+
+/* Ensure buttons are displayed in a row and not stacked */
+.table .btn {
+    display: inline-block;
+    margin: 0 5px; /* Adjust the margin as needed for better spacing */
+}
+
+/* Optional: Adjust button size to ensure consistent appearance */
+.table .btn-success, .table .btn-danger {
+    padding: 5px 10px; /* Adjust padding as needed */
+    font-size: 14px; /* Adjust font size as needed */
+}
+
+/* Optional: Center align buttons within the cell */
+.table td:last-child {
+    text-align: center;
+}

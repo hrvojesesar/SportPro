@@ -49,62 +49,56 @@
     }
     else
     {
-        <table class="table">
+        <table class="table table-hover table-bordered border-secondary mt-4">
             <thead>
-                <tr>
+                <tr class="table-primary">
                     <th>
-                        Naziv
-                        <span>
-                            <span>
+                        <div class="d-flex align-items-center">
+                            Naziv
+                            <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Pravilnici" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery" asp-route-aktivanList="ViewBag.AktivanList"
                                    asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
                                 <a class="btn btn-light p-0" asp-controller="Pravilnici" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery" asp-route-aktivanList="ViewBag.AktivanList"
                                    asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Opis
                     </th>
                     <th>
-                        Datum objave
-                        <span>
-                            <span>
+                        <div class="d-flex align-items-center">
+                            Datum objave
+                            <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Pravilnici" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery" asp-route-aktivanList="ViewBag.AktivanList"
                                    asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
                                 <a class="btn btn-light p-0" asp-controller="Pravilnici" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery" asp-route-aktivanList="ViewBag.AktivanList"
                                    asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Aktivan
-                        <span>
-                            <span>
+                        <div class="d-flex align-items-center">
+                            Aktivan
+                            <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Pravilnici" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery" asp-route-aktivanList="ViewBag.AktivanList"
                                    asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
                                 <a class="btn btn-light p-0" asp-controller="Pravilnici" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery" asp-route-aktivanList="ViewBag.AktivanList"
                                    asp-route-startDate="@ViewBag.StartDate" asp-route-endDate="@ViewBag.EndDate">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th></th>
                 </tr>

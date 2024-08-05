@@ -8,7 +8,6 @@
     int currentPage = Convert.ToInt32(ViewBag.PageNumber);
 }
 
-
 @if (User.IsInRole("Menadzer"))
 {
     <p>
@@ -45,18 +44,17 @@
     }
     else
     {
-        <table class="table">
+        <table class="table table-hover table-bordered border-secondary mt-4">
             <thead>
-                <tr>
+                <tr class="table-primary">
                     <th>
-                        <div class="d-flex align-items-center">
-                            Ime
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span>Ime</span>
                             <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Ime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Ime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-down"></i>
@@ -65,14 +63,13 @@
                         </div>
                     </th>
                     <th>
-                        <div class="d-flex align-items-center">
-                            Prezime
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span>Prezime</span>
                             <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Prezime" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-down"></i>
@@ -80,12 +77,10 @@
                             </div>
                         </div>
                     </th>
+                    <th>Adresa</th>
                     <th>
-                        Adresa
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            Grad
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span>Grad</span>
                             <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Grad" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
@@ -99,8 +94,8 @@
                         </div>
                     </th>
                     <th>
-                        <div class="d-flex align-items-center">
-                            Država
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span>Država</span>
                             <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Drzava" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
@@ -113,46 +108,40 @@
                             </div>
                         </div>
                     </th>
+                    <th>Poštanski broj</th>
                     <th>
-                        Poštanski broj
-                    </th>
-                    <th>
-                        Email
-                        <span>
-                            <span>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span>Email</span>
+                            <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Email" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Email" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Telefon
-                        <span>
-                            <span>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span>Telefon</span>
+                            <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Telefon" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="Telefon" asp-route-sortDirection="Desc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        <div class="d-flex align-items-center">
-                            Datum prijave
+                        <div class="d-flex align-items-center justify-content-between">
+                            <span>Datum prijave</span>
                             <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Kandidati" asp-action="Index" asp-route-sortBy="DatumPrijave" asp-route-sortDirection="Asc" asp-route-ime="@ViewBag.Ime"
                                    asp-route-prezime="@ViewBag.Prezime" asp-route-grad="@ViewBag.Grad" asp-route-natjecaj="@ViewBag.Natjecaj">
@@ -166,10 +155,8 @@
                         </div>
                     </th>
                     <th>Napomene</th>
-                    <th>
-                        Natječaj
-                    </th>
-                    <th></th>
+                    <th>Natječaj</th>
+                    <th>Akcije</th>
                 </tr>
             </thead>
             <tbody>
@@ -192,9 +179,9 @@
                                 <span>@natjecaj.Naziv</span>
                             }
                         </td>
-                        <td class="d-flex justify-content-between">
-                            <a asp-action="Edit" asp-route-id="@item.IDKandidat" class="btn btn-success">Uredi</a> &nbsp;
-                            <a asp-action="Delete" asp-route-id="@item.IDKandidat" class="btn btn-danger">Izbriši</a>
+                        <td class="justify-content-between">
+                            <a asp-action="Edit" asp-route-id="@item.IDKandidat" class="btn btn-success btn-sm mb-1">Uredi</a>
+                            <a asp-action="Delete" asp-route-id="@item.IDKandidat" class="btn btn-danger btn-sm">Izbriši</a>
                         </td>
                     </tr>
                 }
@@ -256,5 +243,38 @@ else
         padding: 0;
         margin: 0;
         font-size: 0.8rem; /* Adjusts the size of the sort icons */
+    }
+
+    .table thead th, .table tbody td {
+        border-width: 1px;
+        border-style: solid;
+        border-color: #dee2e6;
+        vertical-align: middle;
+        text-align: center;
+    }
+
+        .table tbody td .btn {
+            padding: 0.25rem 0.5rem;
+            font-size: 0.875rem;
+            line-height: 1.5;
+            border-radius: 0.2rem;
+        }
+
+    .table tbody td {
+        padding: 0.5rem;
+    }
+
+    .d-flex.justify-content-between {
+        justify-content: center !important;
+    }
+
+    .pagination .page-item.disabled .page-link {
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .pagination .page-item.active .page-link {
+        background-color: #007bff;
+        border-color: #007bff;
     }
 </style>

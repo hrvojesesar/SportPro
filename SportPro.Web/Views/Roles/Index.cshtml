@@ -5,18 +5,18 @@
 }
 @if (User.IsInRole("Admin"))
 {
-    <h1 class="d-flex justify-content-center py-3 fw-bold">UPRAVLJANJE ULOGAMA</h1>
+    <br/>
     <form method="post" asp-action="AddRole" asp-controller="Roles">
         <div class="input-group" style="display:block">
             <input name="roleName" class="form-control-2" placeholder="Unesite naziv uloge...">
             <span class="input-group-btn">
-                <button action="submit" class="btn btn-primary ms-2 mb-1 px-3 fw-bold">Dodaj Novu Ulogu</button>
+                <button action="submit" class="btn btn-primary ms-2 mb-1 px-3">Dodaj Novu Ulogu</button>
             </span>
         </div>
     </form>
     <table class="table table-hover table-bordered border-secondary mt-4">
-        <thead style=" background-color: #45526e; color: white;">
-            <tr>
+        <thead>
+            <tr class="table-primary">
                 <th>Id</th>
                 <th>Uloga</th>
             </tr>

@@ -42,13 +42,13 @@
     }
     else
     {
-        <table class="table">
+        <table class="table table-hover table-bordered border-secondary mt-4">
             <thead>
-                <tr>
+                <tr class="table-primary">
                     <th>
-                        <div class="d-flex align-items-center">
+                        <div class="d-flex align-items-center text-center">
                             Naziv
-                            <div class="ml-2">
+                            <div class="d-flex">
                                 <a class="btn btn-light sort-button p-0" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
                                    asp-route-grad="@ViewBag.Grad" asp-route-status="@ViewBag.Status">
                                     <i class="bi bi-arrow-up"></i>
@@ -81,7 +81,7 @@
                     <th>
                         <div class="d-flex align-items-center">
                             Telefon
-                            <div class="ml-2">
+                            <div class="d-flex">
                                 <a class="btn btn-light sort-button p-0" asp-controller="Poslovnice" asp-action="Index" asp-route-sortBy="Telefon" asp-route-sortDirection="Asc" asp-route-naziv="@ViewBag.Naziv"
                                    asp-route-grad="@ViewBag.Grad" asp-route-status="@ViewBag.Status">
                                     <i class="bi bi-arrow-up"></i>
@@ -144,9 +144,11 @@
                         <td>@Html.DisplayFor(modelItem => item.RadnoVrijemeDo)</td>
                         <td>@Html.DisplayFor(modelItem => item.DatumOtvaranja)</td>
                         <td>@Html.DisplayFor(modelItem => item.Status)</td>
-                        <td class="d-flex justify-content-between">
-                            <a asp-action="Edit" asp-route-id="@item.IDPoslovnica" class="btn btn-success">Uredi</a> &nbsp;
-                            <a asp-action="Delete" asp-route-id="@item.IDPoslovnica" class="btn btn-danger">Izbriši</a>
+                        <td class="text-center">
+                            <div class="d-flex justify-content-between">
+                                <a asp-action="Edit" asp-route-id="@item.IDPoslovnica" class="btn btn-success">Uredi</a>
+                                <a asp-action="Delete" asp-route-id="@item.IDPoslovnica" class="btn btn-danger">Izbriši</a>
+                            </div>
                         </td>
                     </tr>
                 }
@@ -208,5 +210,14 @@ else
         padding: 0;
         margin: 0;
     }
+
+    .d-grid .btn {
+        width: 100%;
+        margin-bottom: 5px;
+    }
+
+        .d-grid .btn:last-child {
+            margin-bottom: 0;
+        }
 
 </style>

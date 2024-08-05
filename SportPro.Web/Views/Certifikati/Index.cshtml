@@ -36,56 +36,50 @@
     }
     else
     {
-        <table class="table">
+        <table class="table table-hover table-bordered border-secondary mt-4">
             <thead>
-                <tr>
+                <tr class="table-primary">
                     <th>
-                        Naziv
-                        <span>
-                            <span>
+                        <div class="d-flex align-items-center">
+                            Naziv
+                            <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Certifikati" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
                                 <a class="btn btn-light p-0" asp-controller="Certifikati" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Opis
                     </th>
                     <th>
-                        Datum dodjele
-                        <span>
-                            <span>
+                        <div class="d-flex align-items-center">
+                            Datum dodjele
+                            <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Certifikati" asp-action="Index" asp-route-sortBy="DatumDodjele" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
                                 <a class="btn btn-light p-0" asp-controller="Certifikati" asp-action="Index" asp-route-sortBy="DatumDodjele" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
-                        Organizacija
-                        <span>
-                            <span>
+                        <div class="d-flex align-items-center">
+                            Organizacija
+                            <div class="d-flex">
                                 <a class="btn btn-light p-0" asp-controller="Certifikati" asp-action="Index" asp-route-sortBy="Organizacija" asp-route-sortDirection="Asc" asp-route-searchQuery="@ViewBag.SearchQuery">
                                     <i class="bi bi-arrow-up"></i>
                                 </a>
-                            </span>
-                            <span>
                                 <a class="btn btn-light p-0" asp-controller="Certifikati" asp-action="Index" asp-route-sortBy="Organizacija" asp-route-sortDirection="Desc" asp-route-searchQuery="@ViewBag.SearchQuery">
                                     <i class="bi bi-arrow-down"></i>
                                 </a>
-                            </span>
-                        </span>
+                            </div>
+                        </div>
                     </th>
                     <th>
                         Slika
