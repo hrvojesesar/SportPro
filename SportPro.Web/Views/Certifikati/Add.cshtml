@@ -33,6 +33,9 @@
                         <label class="form-label">Učitaj sliku</label>
                         <input type="file" id="featuredImageUpload" class="form-control" />
                         <img src="" id="featuredImageDisplay" style="display:none;width: 100px;" />
+                        <div class="progress mt-2">
+                            <div id="uploadProgressBar" class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%;"></div>
+                        </div>
                     </div>
                     <br />
                     <div class="form-group">
@@ -69,30 +72,40 @@
             const imageUploadElement = document.getElementById('featuredImageUpload');
             const imageUrlElement = document.getElementById('featuredImageUrl');
             const featuredImageDisplayElement = document.getElementById('featuredImageDisplay');
+            const uploadProgressBar = document.getElementById('uploadProgressBar');
 
-            async function uploadFeaturedImage(e) {
+            function uploadFeaturedImage(e) {
                 console.log(e.target.files[0]);
 
                 let data = new FormData();
                 data.append('files', e.target.files[0]);
 
-                try {
-                    const response = await fetch('/Images/Upload', {
-                        method: 'POST',
-                        body: data
-                    });
+                const xhr = new XMLHttpRequest();
 
-                    if (!response.ok) {
-                        throw new Error('Error uploading image');
+                xhr.upload.addEventListener('progress', function (e) {
+                    if (e.lengthComputable) {
+                        let percentCompleted = Math.round((e.loaded * 100) / e.total);
+                        uploadProgressBar.style.width = percentCompleted + '%';
+                        uploadProgressBar.setAttribute('aria-valuenow', percentCompleted);
                     }
+                });
 
-                    const result = await response.json();
-                    imageUrlElement.value = result.link;
-                    featuredImageDisplayElement.src = result.link;
-                    featuredImageDisplayElement.style.display = 'block';
-                } catch (error) {
-                    console.error('Error:', error);
-                }
+                xhr.onreadystatechange = function () {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            const result = JSON.parse(xhr.responseText);
+                            imageUrlElement.value = result.link;
+                            featuredImageDisplayElement.src = result.link;
+                            featuredImageDisplayElement.style.display = 'block';
+                            uploadProgressBar.style.width = '0%';
+                        } else {
+                            console.error('Error uploading image');
+                        }
+                    }
+                };
+
+                xhr.open('POST', '/Images/Upload', true);
+                xhr.send(data);
             }
 
             imageUploadElement.addEventListener('change', uploadFeaturedImage);
