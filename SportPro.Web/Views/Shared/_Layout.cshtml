@@ -17,6 +17,22 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/14.6.3/nouislider.min.js"></script>
     <script type='text/javascript' src='https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js'></script>
+    <style>
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        body {
+            padding-top: 56px; /* Adjust this value if your navbar height is different */
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -144,9 +160,15 @@
             </div>
         </nav>
     </header>
+    <br/>
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()
+            <div class="table-container">
+                <table class="table">
+                    <!-- Your table content here -->
+                </table>
+            </div>
         </main>
     </div>
     @if ((controllerName == "Home" && actionName == "Index") || (controllerName == "Account" && actionName == "Login"))

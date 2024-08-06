@@ -86,3 +86,18 @@ body {
     background-color: #0056b3;
     color: white !important;
 }
+
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000; /* Ensures the navbar is always on top */
+}
+
+body {
+    padding-top: 56px; /* Adjust this value if your navbar height is different */
+}
+
+.table-container {
+    overflow-x: auto;
+}
