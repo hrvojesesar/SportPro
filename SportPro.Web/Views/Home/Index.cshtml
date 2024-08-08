@@ -2,7 +2,33 @@
     ViewData["Title"] = "Početna";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="container mt-5">
+    <div class="row mb-5">
+        <div class="col-md-6 text-center">
+            <a asp-controller="Users" asp-action="Index">
+                <img src="~/assets/users-management.jpg" style="width: 300px" class="img-fluid" alt="Upravljanje Korisnicima" />
+                <h2 class="text-primary">Upravljanje Korisnicima</h2>
+            </a>
+        </div>
+        <div class="col-md-6 text-center">
+            <a asp-controller="Zaposlenici" asp-action="Index">
+                <img src="~/assets/employees-management.jpg" style="width: 419px" class="img-fluid" alt="Upravljanje Zaposlenicima" />
+                <h2 class="text-primary">Upravljanje Zaposlenicima</h2>
+            </a>
+        </div>
+    </div>
+    <div class="row mb-5">
+        <div class="col-md-6 text-center">
+            <a asp-controller="Artikli" asp-action="Index">
+                <img src="~/assets/articles-management.png" class="img-fluid" alt="Upravljanje Artiklima" />
+                <h2 class="text-primary">Upravljanje Artiklima</h2>
+            </a>
+        </div>
+        <div class="col-md-6 text-center">
+            <a asp-controller="Promocije" asp-action="Index">
+                <img src="~/assets/promotions-management.jpg" style="width: 221px" class="img-fluid" alt="Upravljanje Promocijama" />
+                <h2 class="text-primary">Upravljanje Promocijama</h2>
+            </a>
+        </div>
+    </div>
 </div>
