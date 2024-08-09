@@ -24,24 +24,27 @@
         <a asp-action="Add" class="btn btn-primary ms-3">Dodaj novu promociju</a>
     </p>
 
-    <form method="get" asp-controller="Promocije" asp-action="Index">
-        <div class="container mt-5">
-            <div class="row">
-                <div class="col-md-3">
-                    <input type="text" class="form-control" name="naziv" value="@ViewBag.Naziv" placeholder="Pretraži po nazivu" />
-                </div>
-                <div class="col-md-3">
-                    <select class="form-control" name="tipPromocije" asp-items="@ViewBag.TipPromocijeList"></select>
-                </div>
-                <div class="col-md-3">
-                    <select class="form-control" name="aktivan" asp-items="@ViewBag.AktivanList"></select>
-                </div>
-                <div class="col-md-3 d-flex align-items-end">
-                    <button type="submit" class="btn btn-warning">Pretraži</button>
+    @if (Model.Count() != 0)
+    {
+        <form method="get" asp-controller="Promocije" asp-action="Index">
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-3">
+                        <input type="text" class="form-control" name="naziv" value="@ViewBag.Naziv" placeholder="Pretraži po nazivu" />
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" name="tipPromocije" asp-items="@ViewBag.TipPromocijeList"></select>
+                    </div>
+                    <div class="col-md-3">
+                        <select class="form-control" name="aktivan" asp-items="@ViewBag.AktivanList"></select>
+                    </div>
+                    <div class="col-md-3 d-flex align-items-end">
+                        <button type="submit" class="btn btn-warning">Pretraži</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </form>
+        </form>
+    }
 
     <br />
 
