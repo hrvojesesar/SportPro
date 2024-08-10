@@ -57,22 +57,22 @@
                     </div>
                     <br />
                     <div class="form-group">
-                        <label asp-for="Dobitnik" class="control-label">Dobitnik</label>
-                        <select asp-for="Dobitnik" class="form-control">
-                            <option value=""></option>
-                            @if (kandidatiList.Items != null)
+                        <label class="control-label">Dobitnici</label>
+                        @if (kandidatiList.Items != null)
+                        {
+                            @foreach (var kandidat in kandidatiList.Items)
                             {
-                                foreach (var item in kandidatiList.Items)
-                                {
-                                    <option value="@item">@item</option>
-                                }
+                                bool isChecked = Model.SelectedDobitnici.Contains(kandidat.ToString());
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" name="SelectedDobitnici" value="@kandidat" @(isChecked ? "checked" : "") />
+                                    <label class="form-check-label">@kandidat</label>
+                                </div>
                             }
-                            else
-                            {
-                                <option value="">Nema prijavljenih kandidata na ovom natječaju!</option>
-                            }
-                        </select>
-                        <span asp-validation-for="Dobitnik" class="text-danger"></span>
+                        }
+                        else
+                        {
+                            <p>Nema prijavljenih kandidata na ovom natječaju!</p>
+                        }
                     </div>
                 </div>
             </div>

@@ -21,7 +21,7 @@ public class NatjecajiController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(string? searchQuery, string? searchQuery2, int? minValue, int? maxValue, DateTime? startDate, DateTime? endDate, string? sortBy, string? sortDirection, int pageSize=5, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? searchQuery, string? searchQuery2, int? minValue, int? maxValue, DateTime? startDate, DateTime? endDate, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await natjecajiRepository.CountAsync();
         var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
@@ -106,11 +106,19 @@ public class NatjecajiController : Controller
         }
 
         var natjecaj = await natjecajiRepository.GetAsync(id);
-        var kandidati = await kandidatiRepository.GetByNatjecajAsync(id);
-
         if (natjecaj == null)
         {
             return NotFound();
+        }
+
+        var kandidati = await kandidatiRepository.GetByNatjecajAsync(id);
+        if (kandidati == null || !kandidati.Any())
+        {
+            ViewData["Kandidati"] = new SelectList(Enumerable.Empty<SelectListItem>());
+        }
+        else
+        {
+            ViewData["Kandidati"] = new SelectList(kandidati, "IDKandidat", "ImePrezime");
         }
 
         var editNatjecajRequest = new EditNatjecajRequest
@@ -123,14 +131,14 @@ public class NatjecajiController : Controller
             TrajanjeDo = natjecaj.TrajanjeDo,
             DatumObjave = natjecaj.DatumObjave,
             Aktivan = natjecaj.Aktivan,
-            Dobitnik = natjecaj.Dobitnik
+            SelectedDobitnici = natjecaj.Dobitnik?.Split(',').Select(d => d.Trim()).ToList() ?? new List<string>()
         };
-
-        ViewData["Kandidati"] = new SelectList(kandidati, "IDKandidat", "ImePrezime");
-
 
         return View(editNatjecajRequest);
     }
+
+
+
 
 
     [HttpPost]
@@ -146,7 +154,7 @@ public class NatjecajiController : Controller
             TrajanjeDo = editNatjecajRequest.TrajanjeDo,
             DatumObjave = editNatjecajRequest.DatumObjave,
             Aktivan = editNatjecajRequest.Aktivan,
-            Dobitnik = editNatjecajRequest.Dobitnik
+            Dobitnik = string.Join(", ", editNatjecajRequest.SelectedDobitnici) // Store as a comma-separated string
         };
 
         ValidateNatjecajForEdit(natjecaj);
@@ -158,9 +166,8 @@ public class NatjecajiController : Controller
 
         await natjecajiRepository.UpdateAsync(natjecaj);
         return RedirectToAction("Index", new { id = editNatjecajRequest.IDNatjecaj });
-
-
     }
+
 
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)

@@ -12,5 +12,5 @@ public class EditNatjecajRequest
     public DateTime TrajanjeDo { get; set; }
     public DateTime? DatumObjave { get; set; }
     public bool Aktivan { get; set; }
-    public string? Dobitnik { get; set; } = null;
+    public List<string>? SelectedDobitnici { get; set; } = new List<string>();
 }
