@@ -57,53 +57,11 @@
         <table class="table table-hover table-bordered border-secondary mt-4">
             <thead>
                 <tr class="table-primary">
-                    <th>
-                        <div class="d-flex align-items-center">
-                            Naziv
-                            <div class="d-flex">
-                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Asc"
-                                   asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
-                                    <i class="bi bi-arrow-up"></i>
-                                </a>
-                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="Naziv" asp-route-sortDirection="Desc"
-                                   asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
-                                    <i class="bi bi-arrow-down"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </th>
+                    <th>Naziv</th>
                     <th>Tip promocije</th>
                     <th>Opis</th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            Datum početka
-                            <div class="d-flex">
-                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumPocetka" asp-route-sortDirection="Asc"
-                                   asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
-                                    <i class="bi bi-arrow-up"></i>
-                                </a>
-                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumPocetka" asp-route-sortDirection="Desc"
-                                   asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
-                                    <i class="bi bi-arrow-down"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </th>
-                    <th>
-                        <div class="d-flex align-items-center">
-                            Datum završetka
-                            <div class="d-flex">
-                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumZavrsetka" asp-route-sortDirection="Asc"
-                                   asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
-                                    <i class="bi bi-arrow-up"></i>
-                                </a>
-                                <a class="btn btn-light sort-button p-0" asp-controller="Promocije" asp-action="Index" asp-route-sortBy="DatumZavrsetka" asp-route-sortDirection="Desc"
-                                   asp-route-naziv="@ViewBag.Naziv" asp-route-tipPromocije="@ViewBag.TipPromocije" asp-route-aktivan="@ViewBag.Aktivan">
-                                    <i class="bi bi-arrow-down"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </th>
+                    <th>Datum početka</th>
+                    <th>Datum završetka</th>
                     <th>Aktivna</th>
                     <th>Dodatni uvjeti</th>
                     <th>Slika</th>
@@ -124,7 +82,27 @@
                         <td>
                             @if (!string.IsNullOrEmpty(item.Slika))
                             {
-                                <img src="@item.Slika" alt="Slika" style="max-width: 200px; max-height: 200px;" />
+                                <button type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#modal-@item.IDPromocije">
+                                    Prikaži sliku
+                                </button>
+
+                                <!-- Modal -->
+                                <div class="modal fade" id="modal-@item.IDPromocije" tabindex="-1" aria-labelledby="modalLabel-@item.IDPromocije" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-custom">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalLabel-@item.IDPromocije">Slika - @item.Naziv</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body text-center">
+                                                <img src="@item.Slika" alt="Slika" style="max-width: 100%; height: auto;" />
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zatvori</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             }
                             else
                             {
@@ -194,5 +172,10 @@ else
         padding: 0;
         margin: 0;
         font-size: 0.8rem; /* Adjusts the size of the sort icons */
+    }
+
+    .modal-dialog-custom {
+        max-width: 90%;
+        max-height: 90%;
     }
 </style>
