@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using SportPro.Web.Data;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
@@ -23,11 +24,46 @@ public class TroskoviController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index()
+    public async Task<IActionResult> Index(string? naziv, string? kategorijaTroska, int? minValue, int? maxValue, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
+        var totalRecords = await _troskoviRepository.CountAsync();
+        var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);
+
+        if (pageNumber > totalPages)
+        {
+            pageNumber--;
+        }
+
+        if (pageNumber < 1)
+        {
+            pageNumber++;
+        }
+
+        ViewBag.TotalPages = totalPages;
+
+        ViewBag.Naziv = naziv;
+        ViewBag.KategorijaTroska = kategorijaTroska;
+        ViewBag.MinValue = minValue ?? 0;
+        ViewBag.MaxValue = maxValue ?? 10000;
+
+        ViewBag.SortBy = sortBy;
+        ViewBag.SortDirection = sortDirection;
+
+        ViewBag.PageSize = pageSize;
+        ViewBag.PageNumber = pageNumber;
+
         var kategorijeTroskova = await _kategorijeTroskovaRepository.GetAllSecAsync();
 
-        var troskovi = await _troskoviRepository.GetAllAsync();
+        var kategorijeTroskovaList = new List<SelectListItem>
+        {
+            new SelectListItem { Value = "", Text = "Svi" }
+        };
+
+        kategorijeTroskovaList.AddRange(kategorijeTroskova.Select(x => new SelectListItem { Value = x.IDKategorijaTroska.ToString(), Text = x.Naziv }));
+
+        ViewBag.KategorijeTroskovaList = new SelectList(kategorijeTroskovaList, "Value", "Text", kategorijaTroska);
+
+        var troskovi = await _troskoviRepository.GetAllAsync(naziv, kategorijaTroska, minValue, maxValue, sortBy, sortDirection, pageNumber, pageSize);
 
         ViewData["KategorijeTroskova"] = kategorijeTroskova;
 

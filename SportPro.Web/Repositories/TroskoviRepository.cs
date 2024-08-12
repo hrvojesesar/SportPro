@@ -13,9 +13,52 @@ public class TroskoviRepository : ITroskoviRepository
         _context = context;
     }
 
-    public async Task<IEnumerable<Troskovi>> GetAllAsync()
+    public async Task<IEnumerable<Troskovi>> GetAllAsync(string? naziv, string? kategorijaTroska, int? minValue, int? maxValue, string? sortBy, string? sortDirection, int pageNumber = 1, int pageSize = 100)
     {
-        return await _context.Troskovi.ToListAsync();
+        var query = _context.Troskovi.AsQueryable();
+
+        if (!string.IsNullOrWhiteSpace(naziv))
+        {
+            query = query.Where(x => x.Naziv.Contains(naziv));
+        }
+
+        if (!string.IsNullOrWhiteSpace(kategorijaTroska))
+        {
+            query = query.Where(x => x.KategorijeTroskovaIDKategorijaTroska.ToString() == kategorijaTroska);
+        }
+
+        if (minValue.HasValue)
+        {
+            query = query.Where(x => x.Iznos >= minValue);
+        }
+        if (maxValue.HasValue)
+        {
+            query = query.Where(x => x.Iznos <= maxValue);
+        }
+
+        if (string.IsNullOrWhiteSpace(sortBy) == false)
+        {
+            var isDesc = string.Equals(sortDirection, "Desc", StringComparison.OrdinalIgnoreCase);
+
+            if (string.Equals(sortBy, "Naziv", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(x => x.Naziv) : query.OrderBy(x => x.Naziv);
+            }
+            if (string.Equals(sortBy, "Datum", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(x => x.Datum) : query.OrderBy(x => x.Datum);
+            }
+            if (string.Equals(sortBy, "Iznos", StringComparison.OrdinalIgnoreCase))
+            {
+                query = isDesc ? query.OrderByDescending(x => x.Iznos) : query.OrderBy(x => x.Iznos);
+            }
+        }
+
+        var skipResults = (pageNumber - 1) * pageSize;
+        query = query.Skip(skipResults).Take(pageSize);
+
+
+        return await query.ToListAsync();
     }
 
     public async Task<Troskovi> AddAsync(Troskovi troskovi)
