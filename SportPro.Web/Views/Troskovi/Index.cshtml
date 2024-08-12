@@ -1,0 +1,102 @@
+﻿@model IEnumerable<SportPro.Web.Models.Domains.Troskovi>
+
+@{
+    ViewData["Title"] = "Troškovi";
+
+    string GetKategorijaTroskaName(int? id, IEnumerable<SportPro.Web.Models.Domains.KategorijeTroskova> kategorijeTroskova)
+    {
+        if (id == null)
+        {
+            return string.Empty;
+        }
+
+        var kategorijaTroska = kategorijeTroskova.FirstOrDefault(x => x.IDKategorijaTroska == id);
+        if (kategorijaTroska != null)
+        {
+            return kategorijaTroska.Naziv;
+        }
+        return "";
+    }
+}
+
+
+@if (User.IsInRole("Uposlenik"))
+{
+    <p>
+        <a asp-controller="Troskovi" asp-action="Add" class="btn btn-primary ms-3">Dodaj novi trošak</a>
+    </p>
+
+    @if (Model.Count() == 0)
+    {
+        <h2 align="center">Nema podataka o troškovima!</h2>
+    }
+    else
+    {
+        <table class="table table-hover table-bordered border-secondary mt-4">
+            <thead>
+                <tr class="table-primary">
+                    <th>
+                        Naziv
+                    </th>
+                    <th>
+                        Kategorija troška
+                    </th>
+                    <th>
+                        Opis
+                    </th>
+                    <th>
+                        Datum nastanka
+                    </th>
+                    <th>
+                        Iznos
+                    </th>
+                    <th>
+                        Mjesec
+                    </th>
+                    <th>
+                        Godina
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Naziv)
+                        </td>
+                        <td>
+                            @GetKategorijaTroskaName(item.KategorijeTroskovaIDKategorijaTroska, ViewData["KategorijeTroskova"] as IEnumerable<SportPro.Web.Models.Domains.KategorijeTroskova>)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Opis)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Datum)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Iznos) KM
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Mjesec)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Godina)
+                        </td>
+                        <td>
+                            <a asp-action="Edit" asp-route-id="@item.IDTrosak" class="btn btn-success">Uredi</a>
+                            <a asp-action="Delete" asp-route-id="@item.IDTrosak" class="btn btn-danger">Izbriši</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">Nemate pravo pristupa ovoj stranici!</h2>
+    </div>
+}

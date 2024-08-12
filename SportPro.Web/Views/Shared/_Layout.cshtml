@@ -129,6 +129,12 @@
                                 <li class="nav-item">
                                     <a class="nav-link text-white @(controllerName == "Narudzbe" ? "active" : "")" asp-area="" asp-controller="Narudzbe" asp-action="Index">Narudžbe</a>
                                 </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white @(controllerName == "KategorijeTroskova" ? "active" : "")" asp-area="" asp-controller="KategorijeTroskova" asp-action="Index">Kategorije troškova</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link text-white @(controllerName == "Troskovi" ? "active" : "")" asp-area="" asp-controller="Troskovi" asp-action="Index">Troškovi</a>
+                                </li>
                             }
                             @if (User.IsInRole("Vlasnik"))
                             {
@@ -148,13 +154,13 @@
                             <li class="nav-item">
                                 <a class="nav-link text-white">Dobrodošli, @User.Identity?.Name</a>
                             </li>
-                        }         
+                        }
                     </ul>
                 </div>
             </div>
         </nav>
     </header>
-    <br/>
+    <br />
     <div class="container">
         <main role="main" class="pb-3">
             @RenderBody()

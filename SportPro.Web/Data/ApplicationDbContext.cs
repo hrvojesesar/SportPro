@@ -29,6 +29,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Kandidati> Kandidati { get; set; }
     public DbSet<Narudzbe> Narudzbe { get; set; }
     public DbSet<Dashboard> Dashboard { get; set; }
+    public DbSet<Troskovi> Troskovi { get; set; }
+    public DbSet<KategorijeTroskova> KategorijeTroskova { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {

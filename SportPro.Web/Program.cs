@@ -74,6 +74,8 @@ builder.Services.AddScoped<IArtikliRepository, ArtikliRepository>();
 builder.Services.AddScoped<ICertifikatiRepository, CertifikatiRepository>();
 builder.Services.AddScoped<IKandidatiRepository, KandidatiRepository>();
 builder.Services.AddScoped<INarudzbeRepository, NarudzbeRepository>();
+builder.Services.AddScoped<IKategorijeTroskovaRepository, KategorijeTroskovaRepository>();
+builder.Services.AddScoped<ITroskoviRepository, TroskoviRepository>();
 
 builder.Services.AddSwaggerGen(c =>
 {
