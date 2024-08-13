@@ -14,27 +14,27 @@
         <a asp-controller="Dobavljaci" asp-action="Add" class="btn btn-primary ms-3">Dodaj novog dobavljača</a>
     </p>
 
-    @if (Model.Count() != 0)
-    {
-        <form method="get" asp-controller="Dobavljaci" asp-action="Index">
-            <div class="container mt-5">
-                <div class="row">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="naziv" value="@ViewBag.Naziv" placeholder="Naziv" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="grad" value="@ViewBag.Grad" placeholder="Grad" />
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-control" name="aktivnaSuradnja" asp-items="@ViewBag.AktivnaSuradnjaList"></select>
-                    </div>
-                    <div class="col-md-3 d-flex align-items-end">
-                        <button type="submit" class="btn btn-warning">Pretraži</button>
-                    </div>
+
+    <form method="get" asp-controller="Dobavljaci" asp-action="Index">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="naziv" value="@ViewBag.Naziv" placeholder="Naziv" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="grad" value="@ViewBag.Grad" placeholder="Grad" />
+                </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="aktivnaSuradnja" asp-items="@ViewBag.AktivnaSuradnjaList"></select>
+                </div>
+                <div class="col-md-3 d-flex align-items-end">
+                    <button type="submit" class="btn btn-warning">Pretraži</button>
                 </div>
             </div>
-        </form>
-    }
+        </div>
+    </form>
+
+
 
     <br />
 

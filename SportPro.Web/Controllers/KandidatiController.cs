@@ -21,7 +21,7 @@ public class KandidatiController : Controller
     }
 
     [HttpGet]
-    public async Task<IActionResult> Index(string? ime, string? prezime, string? grad, string? natjecaj, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1)
+    public async Task<IActionResult> Index(string? ime, string? prezime, string? grad, string? natjecaj, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _kandidatiRepository.CountAsync();
         var totalPages = Math.Ceiling((decimal)totalRecords / pageSize);

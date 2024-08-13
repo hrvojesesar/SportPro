@@ -14,32 +14,31 @@
         <a asp-action="Add" class="btn btn-primary ms-3">Dodaj novog kandidata</a>
     </p>
 
-    @if (Model.Count() != 0)
-    {
-        <form method="get" asp-controller="Kandidati" asp-action="Index">
-            <div class="container mt-5">
-                <div class="row">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="ime" value="@ViewBag.Ime" placeholder="Ime" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="prezime" value="@ViewBag.Prezime" placeholder="Prezime" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="grad" value="@ViewBag.Grad" placeholder="Grad" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="natjecaj" value="@ViewBag.Natjecaj" placeholder="Natječaj" />
-                    </div>
+
+    <form method="get" asp-controller="Kandidati" asp-action="Index">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="ime" value="@ViewBag.Ime" placeholder="Ime" />
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-3">
-                        <button type="submit" class="btn btn-warning">Pretraži</button>
-                    </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="prezime" value="@ViewBag.Prezime" placeholder="Prezime" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="grad" value="@ViewBag.Grad" placeholder="Grad" />
+                </div>
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="natjecaj" value="@ViewBag.Natjecaj" placeholder="Natječaj" />
                 </div>
             </div>
-        </form>
-    }
+            <div class="row mt-3">
+                <div class="col-md-3">
+                    <button type="submit" class="btn btn-warning">Pretraži</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
 
     @if (Model.Count() == 0)
     {

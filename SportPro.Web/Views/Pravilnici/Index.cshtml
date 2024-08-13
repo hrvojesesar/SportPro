@@ -15,32 +15,31 @@
         <a asp-asp-controller="Pravilnici" asp-action="Add" class="btn btn-primary ms-3">Dodaj novi pravilnik</a>
     </p>
 
-    @if (Model.Count() != 0)
-    {
-        <form method="get" asp-controller="Pravilnici" asp-action="Index">
-            <div class="container mt-5">
-                <div class="row">
-                    <div class="col-md-3">
-                        <input type="text" class="form-control" name="searchQuery" value="@ViewBag.SearchQuery" placeholder="Pretraži po nazivu" />
-                    </div>
-                    <div class="col-md-3">
-                        <select class="form-control" name="searchQuery2" asp-items="ViewBag.AktivanList"></select>
-                    </div>
-                    <div class="col-md-3">
-                        <input type="date" class="form-control" id="startDate" name="startDate" value="@ViewBag.StartDate" />
-                    </div>
-                    <div class="col-md-3">
-                        <input type="date" class="form-control" id="endDate" name="endDate" value="@ViewBag.EndDate" />
-                    </div>
+
+    <form method="get" asp-controller="Pravilnici" asp-action="Index">
+        <div class="container mt-5">
+            <div class="row">
+                <div class="col-md-3">
+                    <input type="text" class="form-control" name="searchQuery" value="@ViewBag.SearchQuery" placeholder="Pretraži po nazivu" />
                 </div>
-                <div class="row mt-3">
-                    <div class="col-md-12 d-flex">
-                        <button type="submit" class="btn btn-warning">Pretraži</button>
-                    </div>
+                <div class="col-md-3">
+                    <select class="form-control" name="searchQuery2" asp-items="ViewBag.AktivanList"></select>
+                </div>
+                <div class="col-md-3">
+                    <input type="date" class="form-control" id="startDate" name="startDate" value="@ViewBag.StartDate" />
+                </div>
+                <div class="col-md-3">
+                    <input type="date" class="form-control" id="endDate" name="endDate" value="@ViewBag.EndDate" />
                 </div>
             </div>
-        </form>
-    }
+            <div class="row mt-3">
+                <div class="col-md-12 d-flex">
+                    <button type="submit" class="btn btn-warning">Pretraži</button>
+                </div>
+            </div>
+        </div>
+    </form>
+
 
 
     <br />
