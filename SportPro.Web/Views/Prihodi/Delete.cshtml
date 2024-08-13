@@ -1,0 +1,70 @@
+﻿@model SportPro.Web.Models.Domains.Prihodi
+
+@{
+    ViewData["Title"] = "Brisanje prihoda";
+}
+
+@if (User.IsInRole("Uposlenik"))
+{
+
+    <h3>Jeste sigurni da želite izbrisati prihod?</h3>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">
+                Naziv
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Naziv)
+            </dd>
+            <dt class="col-sm-2">
+                Kategorija prihoda
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.KategorijaPrihodaNaziv)
+            </dd>
+            <dt class="col-sm-2">
+                Opis
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Opis)
+            </dd>
+            <dt class="col-sm-2">
+                Datum nastanka
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Datum)
+            </dd>
+            <dt class="col-sm-2">
+                Iznos
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Iznos)
+            </dd>
+            <dt class="col-sm-2">
+                Mjesec
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Mjesec)
+            </dd>
+            <dt class="col-sm-2">
+                Godina
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Godina)
+            </dd>
+        </dl>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="IDPrihod" />
+            <input type="submit" value="Izbriši" class="btn btn-danger" />
+            <a asp-action="Index" class="btn btn-dark">Vrati se na popis</a>
+        </form>
+    </div>
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">Nemate pravo pristupa ovoj stranici!</h2>
+    </div>
+}

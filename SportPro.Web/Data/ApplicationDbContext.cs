@@ -31,6 +31,8 @@ public class ApplicationDbContext : IdentityDbContext
     public DbSet<Dashboard> Dashboard { get; set; }
     public DbSet<Troskovi> Troskovi { get; set; }
     public DbSet<KategorijeTroskova> KategorijeTroskova { get; set; }
+    public DbSet<Prihodi> Prihodi { get; set; }
+    public DbSet<KategorijePrihoda> KategorijePrihoda { get; set; }
 
     protected override void OnModelCreating(ModelBuilder builder)
     {
