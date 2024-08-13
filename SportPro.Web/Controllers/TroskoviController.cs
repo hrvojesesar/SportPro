@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using SportPro.Web.Data;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Models.Domains;
@@ -83,6 +84,8 @@ public class TroskoviController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(AddTrosakRequest addTrosakRequest)
     {
+        ValidateTrosakForAdd(addTrosakRequest);
+
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
@@ -137,11 +140,6 @@ public class TroskoviController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(EditTrosakRequest editTrosakRequest)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         var trosak = new Troskovi
         {
             IDTrosak = editTrosakRequest.IDTrosak,
@@ -153,6 +151,13 @@ public class TroskoviController : Controller
             Godina = editTrosakRequest.Godina,
             KategorijeTroskovaIDKategorijaTroska = editTrosakRequest.KategorijeTroskovaIDKategorijaTroska
         };
+
+        ValidateTrosakForEdit(trosak);
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
         await _troskoviRepository.UpdateAsync(trosak);
         return RedirectToAction("Index", new { id = trosak.IDTrosak });
@@ -194,6 +199,36 @@ public class TroskoviController : Controller
 
     }
 
-}
+    private void ValidateTrosakForAdd(AddTrosakRequest addTrosakRequest)
+    {
+        if (addTrosakRequest.Iznos < 0)
+        {
+            ModelState.AddModelError("Iznos", "Iznos mora biti veći od 0");
+        }
 
+        if (addTrosakRequest.Mjesec != null)
+        {
+            if (addTrosakRequest.Mjesec > 12 || addTrosakRequest.Mjesec < 1)
+            {
+                ModelState.AddModelError("Mjesec", "Mjesec mora biti između 1 i 12");
+            }
+        }
+    }
+
+    private void ValidateTrosakForEdit(Troskovi troskovi)
+    {
+        if (troskovi.Iznos < 0)
+        {
+            ModelState.AddModelError("Iznos", "Iznos mora biti veći od 0");
+        }
+
+        if (troskovi.Mjesec != null)
+        {
+            if (troskovi.Mjesec > 12 || troskovi.Mjesec < 1)
+            {
+                ModelState.AddModelError("Mjesec", "Mjesec mora biti između 1 i 12");
+            }
+        }
+    }
+}
 

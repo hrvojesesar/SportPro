@@ -86,6 +86,8 @@ public class PrihodiController : Controller
     [HttpPost]
     public async Task<IActionResult> Add(AddPrihodRequest addPrihodRequest)
     {
+        ValidatePrihodForAdd(addPrihodRequest);
+
         if (!ModelState.IsValid)
         {
             return BadRequest(ModelState);
@@ -141,11 +143,6 @@ public class PrihodiController : Controller
     [HttpPost]
     public async Task<IActionResult> Edit(EditPrihodRequest editPrihodRequest)
     {
-        if (!ModelState.IsValid)
-        {
-            return BadRequest(ModelState);
-        }
-
         var prihod = new Prihodi
         {
             IDPrihod = editPrihodRequest.IDPrihod,
@@ -157,6 +154,13 @@ public class PrihodiController : Controller
             Godina = editPrihodRequest.Godina,
             KategorijePrihodaIDKategorijePrihoda = editPrihodRequest.KategorijePrihodaIDKategorijePrihoda
         };
+
+        ValidatePrihodForEdit(prihod);
+
+        if (!ModelState.IsValid)
+        {
+            return BadRequest(ModelState);
+        }
 
         var updatedPrihod = await _prihodiRepository.UpdateAsync(prihod);
 
@@ -199,5 +203,37 @@ public class PrihodiController : Controller
         }
 
         return RedirectToAction("Index", new { id = editPrihodRequest.IDPrihod });
+    }
+
+    private void ValidatePrihodForAdd(AddPrihodRequest addPrihodRequest)
+    {
+        if (addPrihodRequest.Iznos < 0)
+        {
+            ModelState.AddModelError("Iznos", "Iznos ne može biti manji od 0.");
+        }
+
+        if (addPrihodRequest.Mjesec != null)
+        {
+            if (addPrihodRequest.Mjesec < 1 || addPrihodRequest.Mjesec > 12)
+            {
+                ModelState.AddModelError("Mjesec", "Mjesec mora biti između 1 i 12.");
+            }
+        }
+    }
+
+    private void ValidatePrihodForEdit(Prihodi prihodi)
+    {
+        if (prihodi.Iznos < 0)
+        {
+            ModelState.AddModelError("Iznos", "Iznos ne može biti manji od 0.");
+        }
+
+        if (prihodi.Mjesec != null)
+        {
+            if (prihodi.Mjesec < 1 || prihodi.Mjesec > 12)
+            {
+                ModelState.AddModelError("Mjesec", "Mjesec mora biti između 1 i 12.");
+            }
+        }
     }
 }
