@@ -24,7 +24,7 @@
                     <select class="form-control" name="searchQuery2" asp-items="@ViewBag.AktivanList" value="@ViewBag.AktivanList"></select>
                 </div>
                 <div class="col-md-3">
-                    <label for="range-slider">Procijenjena vrijednost (0 - 10000):</label>
+                    <label for="range-slider">Procijenjena vrijednost (0 - 500000):</label>
                     <div id="range-slider"></div>
                     <span id="minValueDisplay">@ViewBag.MinValue</span> - <span id="maxValueDisplay">@ViewBag.MaxValue</span>
                     <input type="hidden" id="minValue" name="minValue" value="@ViewBag.MinValue" />
@@ -312,7 +312,7 @@ else
             connect: true,
             range: {
                 'min': 0,
-                'max': 10000
+                'max': 500000
             }
         });
 

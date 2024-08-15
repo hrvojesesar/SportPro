@@ -41,7 +41,7 @@ public class NatjecajiController : Controller
         ViewBag.SearchQuery = searchQuery;
         ViewBag.SearchQuery2 = searchQuery2;
         ViewBag.MinValue = minValue ?? 0; // Default to 0 if not provided
-        ViewBag.MaxValue = maxValue ?? 10000; // Default to 10000 if not provided
+        ViewBag.MaxValue = maxValue ?? 500000; // Default to 10000 if not provided
         ViewBag.StartDate = startDate?.ToString("yyyy-MM-dd");
         ViewBag.EndDate = endDate?.ToString("yyyy-MM-dd");
         ViewBag.SortBy = sortBy;
