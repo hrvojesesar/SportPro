@@ -18,13 +18,13 @@ public class Artikli
     public double NabavnaCijena { get; set; }
     public double CijenaDostave { get; set; }
     public double UkupniTrosak { get; set; }
-    public double? UkupnaZarada { get; set; }
+    public double? UkupnaZarada { get; set; } 
     public int DobavljacIDDobavljac { get; set; }
     public int BrendIDBrend { get; set; }
     public ICollection<Kategorije> Kategorije { get; set; }
     public Dobavljaci Dobavljac { get; set; }
     public Brendovi Brend { get; set; }
     public ICollection<Boje> Boje { get; set; }
-    public ICollection<Velicine> Velicine { get; set; }
+    public ICollection<Velicine>? Velicine { get; set; }
     public ICollection<Poslovnice> Poslovnice { get; set; }
 }

@@ -30,7 +30,7 @@ public class AddArtiklRequest
     [Required]
     public double CijenaDostave { get; set; }
     public double UkupniTrosak { get; set; } = 0;
-    public double? UkupnaZarada { get; set; }
+    public double? UkupnaZarada { get; set; } = 0;
     public int DobavljacIDDobavljac { get; set; }
     public int BrendIDBrend { get; set; }
     public IEnumerable<Dobavljaci> Dobavljacis { get; set; }
