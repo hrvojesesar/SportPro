@@ -11,6 +11,17 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
+builder.Services.Configure<Microsoft.AspNetCore.Http.Features.FormOptions>(x => x.BufferBody = true);
+builder.Services.AddControllersWithViews().AddMvcOptions(options =>
+{
+    options.RespectBrowserAcceptHeader = true; // Enable respect for UTF-8
+}).AddJsonOptions(options =>
+{
+    options.JsonSerializerOptions.PropertyNamingPolicy = null;
+    options.JsonSerializerOptions.DictionaryKeyPolicy = null;
+});
+
+
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 

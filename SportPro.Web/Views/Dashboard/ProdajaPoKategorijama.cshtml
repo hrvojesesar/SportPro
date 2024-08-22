@@ -1,0 +1,75 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Prodaja po Kategorijama";
+    var prodajaPoKategorijama = ViewBag.ProdajaPoKategorijama as IEnumerable<dynamic>;
+    var najpopularnijaKategorija = ViewBag.NajpopularnijaKategorija;
+    var najmanjePopularnaKategorija = ViewBag.NajmanjePopularnaKategorija;
+    var currentSortDirection = ViewBag.SortDirection as string ?? "asc";
+}
+<h2 align="center">Dosadašnja prodaja artikala po kategorijama</h2>
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-6">
+            <h4 class="text-success">Najpopularnija kategorija: @najpopularnijaKategorija?.Kategorija (@najpopularnijaKategorija?.UkupnoProdano prodanih artikala)</h4>
+        </div>
+        <div class="col-md-6">
+            <h4 class="text-danger">Najmanje popularna kategorija: @najmanjePopularnaKategorija?.Kategorija (@najmanjePopularnaKategorija?.UkupnoProdano prodanih artikala)</h4>
+        </div>
+    </div>
+
+    <table class="table table-hover table-bordered border-secondary mt-4">
+        <thead>
+            <tr class="table-primary">
+                <th>Kategorija</th>
+                <th class="text-center">
+                    Ukupno Prodano
+                    <a asp-action="ProdajaPoKategorijama" asp-route-sortDirection="asc">
+                        <i class="bi bi-arrow-up @(currentSortDirection == "asc" ? "text-primary" : "")"></i>
+                    </a>
+                    <a asp-action="ProdajaPoKategorijama" asp-route-sortDirection="desc">
+                        <i class="bi bi-arrow-down @(currentSortDirection == "desc" ? "text-primary" : "")"></i>
+                    </a>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in prodajaPoKategorijama)
+            {
+                <tr>
+                    <td>@item.Kategorija</td>
+                    <td>@item.UkupnoProdano</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <canvas id="prodajaPoKategorijamaChart" width="400" height="200"></canvas>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('prodajaPoKategorijamaChart').getContext('2d');
+    var labels = @Html.Raw(Json.Serialize(prodajaPoKategorijama.Select(p => p.Kategorija)));
+    var data = @Html.Raw(Json.Serialize(prodajaPoKategorijama.Select(p => p.UkupnoProdano)));
+
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Prodaja po Kategorijama',
+                data: data,
+                backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>
