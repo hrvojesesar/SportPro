@@ -1,0 +1,78 @@
+﻿@{
+    ViewData["Title"] = "Mjesečni Profiti";
+    var profitiData = ViewBag.ProfitiData as decimal[];
+    var ukupniProfitGodina = ViewBag.UkupniProfitGodina;
+    var prosjecniProfit = ViewBag.ProsjecniProfit;
+    var godina = ViewBag.Godina;
+}
+
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+    @using System.Text
+    @Html.Raw("<meta charset=\"utf-8\">")
+    <title>@ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <h2 align="center">Mjesečni Profiti za @godina. godinu</h2>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Ukupni Profit: @ukupniProfitGodina KM</h4>
+            </div>
+            <div class="col-md-4">
+                <h4>Prosječni Profit po Mjesecu: @prosjecniProfit KM</h4>
+            </div>
+            <div class="col-md-4">
+                <form method="get" asp-action="MjesecniProfiti">
+                    <select name="godina" class="form-control" onchange="this.form.submit()">
+                        @foreach (var year in new[] { 2022, 2023, 2024 })
+                        {
+                            if (godina == year)
+                            {
+                                <option value="@year" selected>@year</option>
+                            }
+                            else
+                            {
+                                <option value="@year">@year</option>
+                            }
+                        }
+                    </select>
+                </form>
+            </div>
+        </div>
+
+        <canvas id="mjesecniProfitiChart" width="400" height="200"></canvas>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('mjesecniProfitiChart').getContext('2d');
+        var data = @Html.Raw(Json.Serialize(profitiData));
+
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Siječanj', 'Veljača', 'Ožujak', 'Travanj', 'Svibanj', 'Lipanj', 'Srpanj', 'Kolovoz', 'Rujan', 'Listopad', 'Studeni', 'Prosinac'],
+                datasets: [{
+                    label: 'Mjesečni Profit',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>

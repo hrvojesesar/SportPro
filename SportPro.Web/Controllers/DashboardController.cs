@@ -180,4 +180,59 @@ public class DashboardController : Controller
         return View();
     }
 
+    [HttpGet]
+    public async Task<IActionResult> MjesecniProfiti(int? godina)
+    {
+        var trenutnaGodina = godina ?? DateTime.Now.Year;
+
+        // Grupiraj prihode po mjesecima
+        var prihodiPoMjesecima = await _context.Prihodi
+            .Where(p => p.Godina == trenutnaGodina)
+            .GroupBy(p => p.Mjesec)
+            .Select(g => new
+            {
+                Mjesec = g.Key,
+                UkupniPrihod = g.Sum(p => p.Iznos)
+            })
+            .ToListAsync();
+
+        // Grupiraj troškove po mjesecima
+        var troskoviPoMjesecima = await _context.Troskovi
+            .Where(t => t.Godina == trenutnaGodina)
+            .GroupBy(t => t.Mjesec)
+            .Select(g => new
+            {
+                Mjesec = g.Key,
+                UkupniTrosak = g.Sum(t => t.Iznos)
+            })
+            .ToListAsync();
+
+        // Pripremi podatke za prikaz profita
+        var profitiPoMjesecima = new decimal[12];
+
+        for (int i = 1; i <= 12; i++)
+        {
+            var prihod = (decimal)(prihodiPoMjesecima.FirstOrDefault(p => p.Mjesec == i)?.UkupniPrihod ?? 0);
+            var trosak = (decimal)(troskoviPoMjesecima.FirstOrDefault(t => t.Mjesec == i)?.UkupniTrosak ?? 0);
+
+            profitiPoMjesecima[i - 1] = prihod - trosak;  // Profit je razlika između prihoda i troškova
+        }
+
+
+        // Ukupni profit za godinu
+        var ukupniProfitGodina = profitiPoMjesecima.Sum();
+
+        // Prosječni profit po mjesecu
+        var prosjecniProfit = ukupniProfitGodina / 12;
+
+        // Prosleđivanje podataka na View
+        ViewBag.ProfitiData = profitiPoMjesecima;
+        ViewBag.UkupniProfitGodina = ukupniProfitGodina;
+        ViewBag.ProsjecniProfit = prosjecniProfit;
+        ViewBag.Godina = trenutnaGodina;
+
+        return View();
+    }
+
+
 }
