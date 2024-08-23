@@ -1,0 +1,56 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Najmanje Prodavani Artikli";
+    var najmanjeProdavaniArtikli = ViewBag.NajmanjeProdavaniArtikli as IEnumerable<dynamic>;
+}
+
+<h2 align="center">Najmanje Prodavani Artikli</h2>
+
+<table class="table table-hover table-bordered border-secondary mt-4">
+    <thead>
+        <tr class="table-primary">
+            <th>Naziv Artikla</th>
+            <th>Prodano</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var artikal in najmanjeProdavaniArtikli)
+        {
+            <tr>
+                <td>@artikal.Naziv</td>
+                <td>@artikal.Prodano</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<canvas id="najmanjeProdavaniArtikliChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('najmanjeProdavaniArtikliChart').getContext('2d');
+    var labels = @Html.Raw(Json.Serialize(najmanjeProdavaniArtikli.Select(a => a.Naziv)));
+    var data = @Html.Raw(Json.Serialize(najmanjeProdavaniArtikli.Select(a => a.Prodano)));
+
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Najmanje Prodavani Artikli',
+                data: data,
+                backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                borderColor: 'rgba(255, 99, 132, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

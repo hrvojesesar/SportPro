@@ -1,0 +1,60 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Izvještaj o Zalihama";
+    var inventoryReport = ViewBag.InventoryReport as IEnumerable<dynamic>;
+}
+
+<h2 align="center">Izvještaj o Zalihama</h2>
+
+<table class="table table-hover table-bordered border-secondary mt-4">
+    <thead>
+        <tr class="table-primary">
+            <th>Naziv Artikla</th>
+            <th>Početna Količina</th>
+            <th>Trenutna Količina</th>
+            <th>Minimalna Količina</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var artikal in inventoryReport)
+        {
+            <tr>
+                <td>@artikal.Naziv</td>
+                <td>@artikal.PocetnaKolicina</td>
+                <td>@artikal.TrenutnaKolicina</td>
+                <td>@artikal.MinimalnaKolicina</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<canvas id="inventoryChart" width="400" height="200"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    var ctx = document.getElementById('inventoryChart').getContext('2d');
+    var labels = @Html.Raw(Json.Serialize(inventoryReport.Select(a => a.Naziv)));
+    var data = @Html.Raw(Json.Serialize(inventoryReport.Select(a => a.TrenutnaKolicina)));
+
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: 'Trenutna Količina',
+                data: data,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    });
+</script>

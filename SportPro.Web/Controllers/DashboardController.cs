@@ -22,7 +22,7 @@ public class DashboardController : Controller
     {
         var trenutnaGodina = godina ?? DateTime.Now.Year;
 
-        // Grupiraj prihode po mjesecima
+        // Grupiranje prihode po mjesecima
         var prihodiPoMjesecima = await _context.Prihodi
             .Where(p => p.Godina == trenutnaGodina)
             .GroupBy(p => new { p.Mjesec, p.KategorijePrihoda.Naziv })
@@ -40,7 +40,7 @@ public class DashboardController : Controller
         // Prosječni prihod po mjesecu
         var prosjecniPrihod = ukupniPrihodGodina / 12;
 
-        // Pripremi podatke za prikaz
+        // Priprema podataka za prikaz
         var prihodiData = new decimal[12];
         var prihodiPoKategorijama = new Dictionary<string, decimal[]>();
 
@@ -60,7 +60,7 @@ public class DashboardController : Controller
             }
         }
 
-        // Prosleđivanje podataka na View
+        // Prosljeđivanje podataka na View
         ViewBag.PrihodiData = prihodiData;
         ViewBag.PrihodiPoKategorijama = prihodiPoKategorijama;
         ViewBag.UkupniPrihodGodina = ukupniPrihodGodina;
@@ -76,7 +76,7 @@ public class DashboardController : Controller
     {
         var trenutnaGodina = godina ?? DateTime.Now.Year;
 
-        // Grupiraj troškove po mjesecima
+        // Grupiranje troškove po mjesecima
         var troskoviPoMjesecima = await _context.Troskovi
             .Where(t => t.Godina == trenutnaGodina)
             .GroupBy(t => new { t.Mjesec, t.KategorijeTroskova.Naziv })
@@ -94,7 +94,7 @@ public class DashboardController : Controller
         // Prosječni trošak po mjesecu
         var prosjecniTrosak = ukupniTrosakGodina / 12;
 
-        // Pripremi podatke za prikaz
+        // Priprema podataka za prikaz
         var troskoviData = new decimal[12];
         var troskoviPoKategorijama = new Dictionary<string, decimal[]>();
 
@@ -114,7 +114,7 @@ public class DashboardController : Controller
             }
         }
 
-        // Prosleđivanje podataka na View
+        // Prosljeđivanje podataka na View
         ViewBag.TroskoviData = troskoviData;
         ViewBag.TroskoviPoKategorijama = troskoviPoKategorijama;
         ViewBag.UkupniTrosakGodina = ukupniTrosakGodina;
@@ -162,7 +162,7 @@ public class DashboardController : Controller
     [HttpGet]
     public async Task<IActionResult> NajprodavanijiArtikli()
     {
-        // Dohvati artikle i njihove prodaje te ih sortiraj po prodaji (smanjujuće)
+        // Dohvaćanje artikala i njihove prodaje te ih se sortira po prodaji (smanjujuće)
         var najprodavanijiArtikli = await _context.Artikli
             .OrderByDescending(a => a.NabavnaKolicina - a.TrenutnaKolicina)  // Pretpostavljamo da je prodano = NabavnaKolicina - TrenutnaKolicina
             .Take(10)  // Uzimamo top 10 artikala
@@ -185,7 +185,7 @@ public class DashboardController : Controller
     {
         var trenutnaGodina = godina ?? DateTime.Now.Year;
 
-        // Grupiraj prihode po mjesecima
+        // Grupiranje prihoda po mjesecima
         var prihodiPoMjesecima = await _context.Prihodi
             .Where(p => p.Godina == trenutnaGodina)
             .GroupBy(p => p.Mjesec)
@@ -196,7 +196,7 @@ public class DashboardController : Controller
             })
             .ToListAsync();
 
-        // Grupiraj troškove po mjesecima
+        // Grupiranje troškova po mjesecima
         var troskoviPoMjesecima = await _context.Troskovi
             .Where(t => t.Godina == trenutnaGodina)
             .GroupBy(t => t.Mjesec)
@@ -207,7 +207,7 @@ public class DashboardController : Controller
             })
             .ToListAsync();
 
-        // Pripremi podatke za prikaz profita
+        // Priprema podataka za prikaz profita
         var profitiPoMjesecima = new decimal[12];
 
         for (int i = 1; i <= 12; i++)
@@ -225,7 +225,7 @@ public class DashboardController : Controller
         // Prosječni profit po mjesecu
         var prosjecniProfit = ukupniProfitGodina / 12;
 
-        // Prosleđivanje podataka na View
+        // Prosljeđivanje podataka na View
         ViewBag.ProfitiData = profitiPoMjesecima;
         ViewBag.UkupniProfitGodina = ukupniProfitGodina;
         ViewBag.ProsjecniProfit = prosjecniProfit;
@@ -234,5 +234,64 @@ public class DashboardController : Controller
         return View();
     }
 
+    [HttpGet]
+    public async Task<IActionResult> NajprodavanijiArtikliPoKategoriji()
+    {
+        var najprodavanijiArtikliPoKategoriji = await _context.Kategorije
+            .Select(k => new
+            {
+                Kategorija = k.Naziv,
+                TopArtikli = k.Artikli
+                    .OrderByDescending(a => a.NabavnaKolicina - a.TrenutnaKolicina)
+                    .Take(10)
+                    .Select(a => new
+                    {
+                        a.Naziv,
+                        Prodano = a.NabavnaKolicina - a.TrenutnaKolicina
+                    })
+                    .ToList()
+            })
+            .ToListAsync();
 
+        ViewBag.NajprodavanijiArtikliPoKategoriji = najprodavanijiArtikliPoKategoriji;
+
+        return View();
+    }
+
+    [HttpGet]
+    public async Task<IActionResult> NajmanjeProdavaniArtikli()
+    {
+        var najmanjeProdavaniArtikli = await _context.Artikli
+            .OrderBy(a => a.NabavnaKolicina - a.TrenutnaKolicina)
+            .Take(10)
+            .Select(a => new
+            {
+                a.Naziv,
+                Prodano = a.NabavnaKolicina - a.TrenutnaKolicina
+            })
+            .ToListAsync();
+
+        ViewBag.NajmanjeProdavaniArtikli = najmanjeProdavaniArtikli;
+
+        return View();
+    }
+
+
+    [HttpGet]
+    public async Task<IActionResult> IzvjestajZaliha()
+    {
+        var inventoryReport = await _context.Artikli
+            .Select(a => new
+            {
+                a.Naziv,
+                PocetnaKolicina = a.NabavnaKolicina,
+                TrenutnaKolicina = a.TrenutnaKolicina,
+                MinimalnaKolicina = a.NabavnaKolicina * 0.2,
+            })
+            .ToListAsync();
+
+        ViewBag.InventoryReport = inventoryReport;
+
+        return View();
+    }
 }

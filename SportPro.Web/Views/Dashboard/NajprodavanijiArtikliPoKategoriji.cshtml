@@ -1,0 +1,37 @@
+﻿@model IEnumerable<dynamic>
+
+@{
+    ViewData["Title"] = "Najprodavaniji Artikli po Kategoriji";
+    var najprodavanijiArtikliPoKategoriji = ViewBag.NajprodavanijiArtikliPoKategoriji as IEnumerable<dynamic>;
+}
+
+<h2 align="center">Najprodavaniji Artikli po Kategoriji</h2>
+<br />
+
+@foreach (var kategorija in najprodavanijiArtikliPoKategoriji)
+{
+    <h3>@kategorija.Kategorija</h3>
+    <table class="table table-hover table-bordered border-secondary mt-4">
+        <thead>
+            <tr class="table-primary">
+                <th>Naziv Artikla</th>
+                <th class="text-center">Prodano</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var artikal in kategorija.TopArtikli)
+            {
+                <tr>
+                    <td>@artikal.Naziv</td>
+                    <td>@artikal.Prodano</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <br />
+}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    // You can add a chart here for visual representation if needed
+</script>
