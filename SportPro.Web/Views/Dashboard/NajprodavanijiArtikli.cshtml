@@ -4,51 +4,60 @@
     var artikliProdaja = ViewBag.ArtikliProdaja as int[];
 }
 
-<!DOCTYPE html>
-<html lang="hr">
-<head>
+@if (User.IsInRole("Admin"))
+{
+    <!DOCTYPE html>
+    <html lang="hr">
+    <head>
     @using System.Text
-    @Html.Raw("<meta charset=\"utf-8\">")
-    <title>@ViewData["Title"]</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-</head>
-<body>
-    <h2 align="center">Najprodavaniji Artikli</h2>
+        @Html.Raw("<meta charset=\"utf-8\">")
+        <title>@ViewData["Title"]</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    </head>
+    <body>
+        <h2 align="center">Najprodavaniji Artikli</h2>
 
-    <div class="container mt-4">
-        <canvas id="najprodavanijiArtikliChart" width="400" height="200"></canvas>
-    </div>
+        <div class="container mt-4">
+            <canvas id="najprodavanijiArtikliChart" width="400" height="200"></canvas>
+        </div>
 
-    <script>
-        var ctx = document.getElementById('najprodavanijiArtikliChart').getContext('2d');
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: @Html.Raw(Json.Serialize(artikliNazivi)),
-                datasets: [{
-                    label: 'Prodaja artikala',
-                    data: @Html.Raw(Json.Serialize(artikliProdaja)),
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
+        <script>
+            var ctx = document.getElementById('najprodavanijiArtikliChart').getContext('2d');
+            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: @Html.Raw(Json.Serialize(artikliNazivi)),
+                    datasets: [{
+                        label: 'Prodaja artikala',
+                        data: @Html.Raw(Json.Serialize(artikliProdaja)),
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    }]
                 },
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'top'
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    },
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'top'
+                        }
                     }
                 }
-            }
-        });
-    </script>
-</body>
-</html>
+            });
+        </script>
+    </body>
+    </html>
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">Nemate pravo pristupa ovoj stranici!</h2>
+    </div>
+}

@@ -7,87 +7,98 @@
     var godina = ViewBag.Godina;
 }
 
-<!DOCTYPE html>
-<html lang="hr">
-<head>
+@if (User.IsInRole("Admin"))
+{
+    <!DOCTYPE html>
+    <html lang="hr">
+    <head>
     @using System.Text
-    @Html.Raw("<meta charset=\"utf-8\">")
-    <title>@ViewData["Title"]</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta charset="utf-8" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        @Html.Raw("<meta charset=\"utf-8\">")
+        <title>@ViewData["Title"]</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta charset="utf-8" />
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-</head>
-<body>
-    <h2 align="center">Mjesečni Prihodi za @godina. godinu</h2>
+    </head>
 
-    <div class="container mt-4">
-        <div class="row">
-            <div class="col-md-4">
-                <h4>Ukupni Prihod: @ukupniPrihodGodina KM</h4>
-            </div>
-            <div class="col-md-5">
-                <h4>Prosječni Prihod po Mjesecu: @prosjecniPrihod KM</h4>
-            </div>
-            <div class="col-md-3">
-                <form method="get" asp-action="MjesecniPrihodi">
-                    <select name="godina" class="form-control" onchange="this.form.submit()">
-                        @foreach (var year in new[] { 2022, 2023, 2024 })
-                        {
-                            if (godina == year)
+
+    <body>
+        <h2 align="center">Mjesečni Prihodi za @godina. godinu</h2>
+
+        <div class="container mt-4">
+            <div class="row">
+                <div class="col-md-4">
+                    <h4>Ukupni Prihod: @ukupniPrihodGodina KM</h4>
+                </div>
+                <div class="col-md-5">
+                    <h4>Prosječni Prihod po Mjesecu: @prosjecniPrihod KM</h4>
+                </div>
+                <div class="col-md-3">
+                    <form method="get" asp-action="MjesecniPrihodi">
+                        <select name="godina" class="form-control" onchange="this.form.submit()">
+                            @foreach (var year in new[] { 2022, 2023, 2024 })
                             {
-                                <option value="@year" selected>@year</option>
+                                if (godina == year)
+                                {
+                                    <option value="@year" selected>@year</option>
+                                }
+                                else
+                                {
+                                    <option value="@year">@year</option>
+                                }
                             }
-                            else
-                            {
-                                <option value="@year">@year</option>
-                            }
-                        }
-                    </select>
-                </form>
+                        </select>
+                    </form>
+                </div>
             </div>
+
+            <canvas id="mjesecniPrihodiChart" width="400" height="200"></canvas>
         </div>
 
-        <canvas id="mjesecniPrihodiChart" width="400" height="200"></canvas>
-    </div>
+        <script>
+            var ctx = document.getElementById('mjesecniPrihodiChart').getContext('2d');
+            var datasets = [{
+                label: 'Ukupni Prihodi',
+                data: @Html.Raw(Json.Serialize(prihodiData)),
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1
+            }];
 
-    <script>
-        var ctx = document.getElementById('mjesecniPrihodiChart').getContext('2d');
-        var datasets = [{
-            label: 'Ukupni Prihodi',
-            data: @Html.Raw(Json.Serialize(prihodiData)),
-            backgroundColor: 'rgba(54, 162, 235, 0.5)',
-            borderColor: 'rgba(54, 162, 235, 1)',
-            borderWidth: 1
-        }];
+            @foreach (var kategorija in prihodiPoKategorijama)
+            {
+                <text>
+                    datasets.push({
+                        label: '@Html.Raw(kategorija.Key)',
+                        data: @Html.Raw(Json.Serialize(kategorija.Value)),
+                        backgroundColor: 'rgba(75, 192, 192, 0.5)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
+                    });
+                </text>
+            }
 
-        @foreach (var kategorija in prihodiPoKategorijama)
-        {
-            <text>
-                datasets.push({
-                    label: '@Html.Raw(kategorija.Key)',
-                    data: @Html.Raw(Json.Serialize(kategorija.Value)),
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                    borderWidth: 1
-                });
-            </text>
-        }
-
-                                var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Siječanj', 'Veljača', 'Ožujak', 'Travanj', 'Svibanj', 'Lipanj', 'Srpanj', 'Kolovoz', 'Rujan', 'Listopad', 'Studeni', 'Prosinac'],
-                datasets: datasets
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+                                            var chart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Siječanj', 'Veljača', 'Ožujak', 'Travanj', 'Svibanj', 'Lipanj', 'Srpanj', 'Kolovoz', 'Rujan', 'Listopad', 'Studeni', 'Prosinac'],
+                    datasets: datasets
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
                     }
                 }
-            }
-        });
-    </script>
-</body>
-</html>
+            });
+        </script>
+    </body>
+    </html>
+}
+else
+{
+    <div class="container my-5">
+        <h2 align="center">Nemate pravo pristupa ovoj stranici!</h2>
+    </div>
+}
