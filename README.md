@@ -48,8 +48,7 @@
   `Debug->Start Debugging`
 6. Za prijavu u aplikaciju, koristiti jednu od sljedećih vjerodajnica: <br>
    Korisničko ime: vlasnik, Lozinka: Vlasnik12! <br>
-   Korisničko ime: admin, Lozinka: Admin12! <br>
-   Korisničko ime: hrvoje.sesar, Lozinka: Hrvoje12! 
+   Korisničko ime: admin, Lozinka: Admin12!
    
 &nbsp;
 
