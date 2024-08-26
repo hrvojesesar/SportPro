@@ -12,7 +12,7 @@
 <div style="display: flex; justify-content: space-around; padding: 10px; margin: 10px; border: 1px solid #ccc; border-radius: 5px;">
   <a href="https://dotnet.microsoft.com/en-us/languages/csharp"><img src="https://upload.wikimedia.org/wikipedia/commons/f/ff/C-Sharp_Logo.svg" style="width: auto; height: 80px;"></a>
   <a href="https://dotnet.microsoft.com/en-us/learn/dotnet/what-is-dotnet"><img src="https://upload.wikimedia.org/wikipedia/commons/e/ee/.NET_Core_Logo.svg" style="width: auto; height: 80px;"></a>
-  <a href="https://learn.microsoft.com/en-us/sql/sql-server/what-is-sql-server?view=sql-server-ver16"><img src="https://upload.wikimedia.org/wikipedia/commons/9/99/Logo_M_SQL_Server.png" style="width: auto; height: 80px;"></a>
+  <a href="https://learn.microsoft.com/en-us/sql/sql-server/what-is-sql-server?view=sql-server-ver16"><img src="https://upload.wikimedia.org/wikipedia/commons/6/69/Microsoft_SQL_Server_Logo.png" style="width: auto; height: 80px;"></a>
   <a href="https://azure.microsoft.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Microsoft_Azure.svg/200px-Microsoft_Azure.svg.png" style="width: auto; height: 80px;"></a>
 </div>
 
@@ -53,4 +53,32 @@
    
 &nbsp;
 
-##Demo aplikacije
+## Demo aplikacije
+
+<p>
+   <img src="SportPro.Web/wwwroot/assets/image-1.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-2.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-3.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-4.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-5.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-6.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-7.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-8.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-9.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-10.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-11.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-12.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-13.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-14.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-15.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-16.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-17.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-18.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-19.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-20.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-21.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-22.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-23.png" width="800px">
+   <img src="SportPro.Web/wwwroot/assets/image-24.png" width="800px">
+<p>
+
