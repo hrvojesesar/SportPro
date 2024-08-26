@@ -34,7 +34,7 @@
 2. Instaliran <a href="https://dotnet.microsoft.com/en-us/download/visual-studio-sdks">.NET SDK (.NET 8.0)</a>
 3. Instaliran <a href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads">Microsoft SQL SERVER</a>
 
-### Intalacija
+### Instalacija
 1. Klonirajte repozitorij na svoje računalo:
    ```sh
    git clone https://github.com/hrvojesesar/SportPro.git
@@ -46,10 +46,10 @@
   `Build->Build Solution`
 5. Pokrenuti samu aplikaciju odabirom opcije u gornjem izborniku: <br>
   `Debug->Start Debugging`
-6. Za prijavu u aplikaciju, koristiti jednu od sljedećih vjerodajnica: <br/>
-   Korisničko ime: vlasnik, Lozinka: Vlasnik12!
-   Korisničko ime: admin, Lozinka: Admin12!
-   Korisničko ime: hrvoje.sesar, Lozinka: Hrvoje12!
+6. Za prijavu u aplikaciju, koristiti jednu od sljedećih vjerodajnica: <br>
+   Korisničko ime: vlasnik, Lozinka: Vlasnik12! <br>
+   Korisničko ime: admin, Lozinka: Admin12! <br>
+   Korisničko ime: hrvoje.sesar, Lozinka: Hrvoje12! 
    
 &nbsp;
 
