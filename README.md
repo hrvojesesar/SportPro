@@ -56,7 +56,7 @@
 ## Demo aplikacije
 
 <p>
-   <img src="SportPro\SportPro.Web\wwwroot\assets\image-1.png" width="800px">
+   <img src="wwwroot\assets\image-1.png" width="800px">
    <img src="SportPro\SportPro.Web\wwwroot\assets\image-2.png" width="800px">
    <img src="SportPro\SportPro.Web\wwwroot\assets\image-3.png" width="800px">
    <img src="SportPro\SportPro.Web\wwwroot\assets\image-4.png" width="800px">
