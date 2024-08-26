@@ -24,3 +24,29 @@
   <a href="https://getbootstrap.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg" style="width: auto; height: 80px;"></a>
   <a href="https://www.javascript.com/"><img src="https://upload.wikimedia.org/wikipedia/commons/d/d4/Javascript-shield.svg" style="width: auto; height: 80px;"></a>
 </div>
+
+&nbsp;
+
+## Upute za pokretanje
+
+### Preduvjeti
+1. Instaliran <a href="https://visualstudio.microsoft.com/vs/community/">Visual Studio Community 2022</a>
+2. Instaliran <a href="https://dotnet.microsoft.com/en-us/download/visual-studio-sdks">.NET SDK (.NET 8.0)</a>
+3. Instaliran <a href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads">Microsoft SQL SERVER</a>
+
+### Upute za pokretanje
+1. Klonirajte repozitorij na svoje računalo:
+   ```sh
+   git clone https://github.com/hrvojesesar/SportPro.git
+   ```
+2. Korištenjem editora poput Visual Studio 2022, otvorite projekt.
+3. Unutar Package Manager Console, potrebno je pokrenuti sljedeću naredbu za pokretanje migracija na bazu podataka: <br>
+   `Update-Database`
+4. O gornjem izborniku, odabrati opciju: <br>
+  `Build->Build Solution`
+5. Pokrenuti samu aplikaciju odabirom opcije u gornjem izborniku: <br>
+  `Debug->Start Debugging`
+
+&nbsp;
+
+##Demo aplikacije
