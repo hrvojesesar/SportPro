@@ -46,7 +46,11 @@
   `Build->Build Solution`
 5. Pokrenuti samu aplikaciju odabirom opcije u gornjem izborniku: <br>
   `Debug->Start Debugging`
-
+6. Za prijavu u aplikaciju, koristiti jednu od sljedećih vjerodajnica: <br/>
+   Korisničko ime: vlasnik, Lozinka: Vlasnik12!
+   Korisničko ime: admin, Lozinka: Admin12!
+   Korisničko ime: hrvoje.sesar, Lozinka: Hrvoje12!
+   
 &nbsp;
 
 ##Demo aplikacije
