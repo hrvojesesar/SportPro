@@ -34,7 +34,7 @@
 2. Instaliran <a href="https://dotnet.microsoft.com/en-us/download/visual-studio-sdks">.NET SDK (.NET 8.0)</a>
 3. Instaliran <a href="https://www.microsoft.com/en-us/sql-server/sql-server-downloads">Microsoft SQL SERVER</a>
 
-### Upute za pokretanje
+### Intalacija
 1. Klonirajte repozitorij na svoje računalo:
    ```sh
    git clone https://github.com/hrvojesesar/SportPro.git
