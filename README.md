@@ -4,6 +4,9 @@
 
 **SportPro Backoffice** je backoffice aplikacija koja na jednostavan, brz i efikasan način omogućuje vlasnicima malih i srednjih trgovina sportske opremee učinkovito upravljanje ljudima, resursima i poslovima. Glavni fokus aplikacije jest optimizacija poslovnih procesa kako bi se povećala produktivnost, transparentnost i konkurentnost tvrtki, uz osiguranje skalabilnosti i sigurnosti podataka.
 
+
+&nbsp;
+
 ## Tehnologije
 
 ### Backend tehnologije
