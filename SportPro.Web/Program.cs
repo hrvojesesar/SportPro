@@ -5,6 +5,7 @@ using SportPro.Web;
 using SportPro.Web.Data;
 using SportPro.Web.Interfaces;
 using SportPro.Web.Repositories;
+using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -95,6 +96,10 @@ builder.Services.AddSwaggerGen(c =>
 {
     c.SwaggerDoc("v1", new Microsoft.OpenApi.Models.OpenApiInfo { Title = "My API", Version = "v1" });
 
+    var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+    c.IncludeXmlComments(xmlPath);
+
     //Add JWT Authentication
     c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
@@ -116,7 +121,7 @@ builder.Services.AddSwaggerGen(c =>
            Id = "Bearer"
           }
         },
-        new string[] { }
+       Array.Empty<string>()
       }
     });
 });

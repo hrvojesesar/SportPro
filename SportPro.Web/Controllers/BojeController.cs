@@ -16,9 +16,20 @@ public class BojeController : Controller
     {
         this.bojeRepository = bojeRepository;
     }
-
-
+   
+    /// <summary>
+    /// Prikaz svih boja
+    /// </summary>
+    /// <param name="searchQuery"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Boje>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Index(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await bojeRepository.CountAsync();
@@ -45,17 +56,34 @@ public class BojeController : Controller
         ViewBag.PageNumber = pageNumber;
 
         var boje = await bojeRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(boje);
+        }
+
         return View(boje);
     }
 
-
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje nove boje
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
         return View();
     }
 
+    /// <summary>
+    /// Dodavanje nove boje
+    /// </summary>
+    /// <param name="addBojaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Boje), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(AddBojaRequest addBojaRequest)
     {
         ValidateBojaForAdd(addBojaRequest);
@@ -71,10 +99,21 @@ public class BojeController : Controller
         };
 
         await bojeRepository.AddAsync(boja);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(boja);
+        }
+
         return RedirectToAction("Index", new { id = addBojaRequest.IDBoja });
     }
 
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje boje
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -99,7 +138,15 @@ public class BojeController : Controller
         return View(editBojaRequest);
     }
 
+    /// <summary>
+    /// Uređivanje boje
+    /// </summary>
+    /// <param name="editBojaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Boje), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Edit(EditBojaRequest editBojaRequest)
     {
         var boja = new Boje
@@ -116,9 +163,20 @@ public class BojeController : Controller
         }
 
         await bojeRepository.UpdateAsync(boja);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(boja);
+        }
+
         return RedirectToAction("Index", new { id = editBojaRequest.IDBoja });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje boje
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -137,8 +195,15 @@ public class BojeController : Controller
         return View(boja);
     }
 
-
+    /// <summary>
+    /// Brisanje boje
+    /// </summary>
+    /// <param name="editBojaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Boje), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(EditBojaRequest editBojaRequest)
     {
         var boja = await bojeRepository.DeleteAsync(editBojaRequest.IDBoja);
@@ -146,6 +211,11 @@ public class BojeController : Controller
         if (boja == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Boja je uspješno uklonjena!");
         }
 
         return RedirectToAction("Index", new { id = editBojaRequest.IDBoja });
