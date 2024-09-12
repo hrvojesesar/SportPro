@@ -1,9 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.IdentityModel.Tokens;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Shared;
 using SportPro.Web.Models.Domains;
 using SportPro.Web.Models.ViewModels;
+using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
+using System.Text;
 
 namespace SportPro.Web.Controllers;
 
@@ -13,12 +17,14 @@ public class AccountController : Controller
     private readonly UserManager<IdentityUser> _userManager;
     private readonly SignInManager<IdentityUser> _signInManager;
     private readonly ILogger<AccountController> _logger;
+    private readonly IConfiguration _configuration;
 
-    public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ILogger<AccountController> logger)
+    public AccountController(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, ILogger<AccountController> logger, IConfiguration configuration)
     {
         _userManager = userManager;
         _signInManager = signInManager;
         _logger = logger;
+        _configuration = configuration;
     }
 
 
@@ -58,6 +64,25 @@ public class AccountController : Controller
 
     }
 
+    [HttpPost]
+    private string GenerateJwtToken(IdentityUser user)
+    {
+        var tokenHandler = new JwtSecurityTokenHandler();
+        var key = Encoding.ASCII.GetBytes(_configuration["Jwt:Key"]);
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
+            Subject = new ClaimsIdentity(new Claim[]
+            {
+                new Claim(ClaimTypes.Name, user.UserName),
+                new Claim(ClaimTypes.NameIdentifier, user.Id)
+            }),
+            Expires = DateTime.UtcNow.AddHours(1),
+            SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
+        };
+        var token = tokenHandler.CreateToken(tokenDescriptor);
+        return tokenHandler.WriteToken(token);
+    }
+
     [HttpGet]
     public async Task<IActionResult> Login()
     {
@@ -71,13 +96,14 @@ public class AccountController : Controller
 
         if (signInResult != null && signInResult.Succeeded)
         {
-            // Show success notification
-            return RedirectToAction("Index", "Home");
+            var user = await _userManager.FindByNameAsync(loginViewModel.Username);
+            var token = GenerateJwtToken(user);
+            // Return the token to the client
+            return Json(new { token, success = true });
         }
 
         // Show error notification
-        return View();
-
+        return Json(new { success = false, message = "Login failed" });
     }
 
     [HttpGet]

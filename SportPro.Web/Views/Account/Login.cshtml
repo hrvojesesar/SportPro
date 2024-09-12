@@ -3,11 +3,10 @@
     ViewData["Title"] = "Prijava";
 }
 
-
 <div class="container mx-auto">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-6">
-            <form method="post">
+            <form id="loginForm" method="post" action="/Account/Login">
                 <div class="mb-3">
                     <label class="form-label">Korisničko ime</label>
                     <input type="text" id="username" class="form-control" asp-for="Username" required />
@@ -24,3 +23,38 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    document.getElementById('loginForm').addEventListener('submit', async function (event) {
+        event.preventDefault();
+
+        const formData = new URLSearchParams(new FormData(event.target));
+
+        try {
+            const response = await fetch('/Account/Login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                body: formData
+            });
+
+            const data = await response.json();
+
+            if (data.success) {
+                const token = data.token;
+                console.log('JWT Token:', token);
+                localStorage.setItem('token', token);
+
+                // Redirect to the home page
+                window.location.href = '/Home/Index';
+            } else {
+                console.error('Login failed:', data.message);
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+    });
+</script>
+
