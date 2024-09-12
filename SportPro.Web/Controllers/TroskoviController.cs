@@ -24,7 +24,23 @@ public class TroskoviController : Controller
         this.applicationDbContext = applicationDbContext;
     }
 
+    /// <summary>
+    /// Prikaz svih troškova
+    /// </summary>
+    /// <param name="naziv"></param>
+    /// <param name="kategorijaTroska"></param>
+    /// <param name="minValue"></param>
+    /// <param name="maxValue"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Troskovi>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Index(string? naziv, string? kategorijaTroska, int? minValue, int? maxValue, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _troskoviRepository.CountAsync();
@@ -68,9 +84,18 @@ public class TroskoviController : Controller
 
         ViewData["KategorijeTroskova"] = kategorijeTroskova;
 
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(troskovi);
+        }
+
         return View(troskovi);
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje troška
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
@@ -81,7 +106,16 @@ public class TroskoviController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Dodavanje troška
+    /// </summary>
+    /// <param name="addTrosakRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Troskovi>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(AddTrosakRequest addTrosakRequest)
     {
         ValidateTrosakForAdd(addTrosakRequest);
@@ -103,9 +137,20 @@ public class TroskoviController : Controller
         };
 
         await _troskoviRepository.AddAsync(trosak);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(trosak);
+        }
+
         return RedirectToAction("Index", new { id = trosak.IDTrosak });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje troška
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -137,7 +182,16 @@ public class TroskoviController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Uređivanje troška
+    /// </summary>
+    /// <param name="editTrosakRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Troskovi>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Edit(EditTrosakRequest editTrosakRequest)
     {
         var trosak = new Troskovi
@@ -160,9 +214,20 @@ public class TroskoviController : Controller
         }
 
         await _troskoviRepository.UpdateAsync(trosak);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(trosak);
+        }
+
         return RedirectToAction("Index", new { id = trosak.IDTrosak });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje troška
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -184,7 +249,11 @@ public class TroskoviController : Controller
         return View(trosak);
     }
 
-
+    /// <summary>
+    /// Brisanje troška
+    /// </summary>
+    /// <param name="editTrosakRequest"></param>
+    /// <returns></returns>
     [HttpPost]
     public async Task<IActionResult> Delete(EditTrosakRequest editTrosakRequest)
     {
@@ -193,6 +262,11 @@ public class TroskoviController : Controller
         if (trosak == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Trošak je uspješno uklonjen!");
         }
 
         return RedirectToAction("Index", new { id = editTrosakRequest.IDTrosak });

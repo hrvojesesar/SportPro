@@ -9,6 +9,7 @@ namespace SportPro.Web.Controllers;
 
 [Route("[controller]/[action]")]
 [Authorize(Roles = "Menadzer")]
+[ApiController]
 public class KandidatiController : Controller
 {
     private readonly IKandidatiRepository _kandidatiRepository;
@@ -20,7 +21,23 @@ public class KandidatiController : Controller
         _natjecajiRepository = natjecajiRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih kandidata
+    /// </summary>
+    /// <param name="ime"></param>
+    /// <param name="prezime"></param>
+    /// <param name="grad"></param>
+    /// <param name="natjecaj"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Boje>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Index(string? ime, string? prezime, string? grad, string? natjecaj, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1)
     {
         var totalRecords = await _kandidatiRepository.CountAsync();
@@ -50,9 +67,19 @@ public class KandidatiController : Controller
         ViewBag.PageNumber = pageNumber;
 
         var kandidati = await _kandidatiRepository.GetAllAsync(ime, prezime, grad, natjecaj, sortBy, sortDirection, pageNumber, pageSize);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(kandidati);
+        }
+
         return View(kandidati);
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje kandidata
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
@@ -69,7 +96,17 @@ public class KandidatiController : Controller
         return View(model);
     }
 
+
+    /// <summary>
+    /// Dodavanje kandidata
+    /// </summary>
+    /// <param name="addKandidatRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Kandidati), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Add(AddKandidatRequest addKandidatRequest)
     {
         if (!ModelState.IsValid)
@@ -116,9 +153,20 @@ public class KandidatiController : Controller
         kandidat.Natjecaji = selectedNatjecaji;
 
         await _kandidatiRepository.AddAsync(kandidat);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(kandidat);
+        }
+
         return RedirectToAction("Index", new { id = kandidat.IDKandidat });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje kandidata
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -159,7 +207,16 @@ public class KandidatiController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Uređivanje kandidata
+    /// </summary>
+    /// <param name="editKandidatRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Kandidati), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Edit(EditKandidatRequest editKandidatRequest)
     {
         var kandidat = new Kandidati
@@ -201,9 +258,20 @@ public class KandidatiController : Controller
         kandidat.Natjecaji = selectedNatjecaji;
 
         await _kandidatiRepository.UpdateAsync(kandidat);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(kandidat);
+        }
+
         return RedirectToAction("Index", new { id = kandidat.IDKandidat });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje kandidata
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -222,7 +290,16 @@ public class KandidatiController : Controller
         return View(kandidat);
     }
 
+    /// <summary>
+    /// Brisanje kandidata
+    /// </summary>
+    /// <param name="editKandidatRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Kandidati), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Delete(EditKandidatRequest editKandidatRequest)
     {
         var kandidat = await _kandidatiRepository.DeleteAsync(editKandidatRequest.IDKandidat);
@@ -232,10 +309,24 @@ public class KandidatiController : Controller
             return NotFound();
         }
 
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Kandidat je uspješno uklonjen!");
+        }
+
         return RedirectToAction("Index", new { id = editKandidatRequest.IDKandidat });
     }
 
+    /// <summary>
+    /// Dohvaćanje kandidata po natječaju
+    /// </summary>
+    /// <param name="idNatjecaj"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<string>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetKandidatByNatjecaj(int idNatjecaj)
     {
         var imePrezimeList = await _kandidatiRepository.GetByNatjecajAsync(idNatjecaj);

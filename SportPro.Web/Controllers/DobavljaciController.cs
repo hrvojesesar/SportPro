@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 namespace SportPro.Web.Controllers;
 
 [Route("[controller]/[action]")]
+[ApiController]
 [Authorize(Roles = "Uposlenik")]
 public class DobavljaciController : Controller
 {
@@ -19,7 +20,22 @@ public class DobavljaciController : Controller
         this.dobavljaciRepository = dobavljaciRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih dobavljača
+    /// </summary>
+    /// <param name="naziv"></param>
+    /// <param name="grad"></param>
+    /// <param name="aktivnaSuradnja"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Dobavljaci>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Index(string? naziv, string? grad, string? aktivnaSuradnja, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await dobavljaciRepository.CountAsync();
@@ -52,16 +68,35 @@ public class DobavljaciController : Controller
         ViewBag.SortDirection = sortDirection;
 
         var dobavljaci = await dobavljaciRepository.GetAllAsync(naziv, grad, aktivnaSuradnja, sortBy, sortDirection, pageNumber, pageSize);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(dobavljaci);
+        }
+
         return View(dobavljaci);
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje dobavljača
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
         return View();
     }
 
+    /// <summary>
+    /// Dodavanje dobavljača
+    /// </summary>
+    /// <param name="addDobavljacRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Dobavljaci>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Add(AddDobavljacRequest addDobavljacRequest)
     {
         //ValidateDobavljacForAdd(addDobavljacRequest);
@@ -85,9 +120,20 @@ public class DobavljaciController : Controller
         };
 
         await dobavljaciRepository.AddAsync(dobavljac);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(dobavljac);
+        }
+
         return RedirectToAction("Index", new { id = addDobavljacRequest.IDDobavljac });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje dobavljača
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -120,7 +166,16 @@ public class DobavljaciController : Controller
         return View(editDobavljacRequest);
     }
 
+    /// <summary>
+    /// Uređivanje dobavljača
+    /// </summary>
+    /// <param name="editDobavljacRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Dobavljaci>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Edit(EditDobavljacRequest editDobavljacRequest)
     {
         var dobavljac = new Dobavljaci
@@ -145,9 +200,20 @@ public class DobavljaciController : Controller
         }
 
         await dobavljaciRepository.UpdateAsync(dobavljac);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(dobavljac);
+        }
+
         return RedirectToAction("Index", new { id = editDobavljacRequest.IDDobavljac });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje dobavljača
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -166,7 +232,16 @@ public class DobavljaciController : Controller
         return View(dobavljac);
     }
 
+    /// <summary>
+    /// Brisanje dobavljača
+    /// </summary>
+    /// <param name="editDobavljacRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Dobavljaci>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete(EditDobavljacRequest editDobavljacRequest)
     {
         var dobavljac = await dobavljaciRepository.DeleteAsync(editDobavljacRequest.IDDobavljac);
@@ -179,7 +254,16 @@ public class DobavljaciController : Controller
         return RedirectToAction("Index", new { id = editDobavljacRequest.IDDobavljac });
     }
 
+
+    /// <summary>
+    /// Dohvaćanje aktivnih dobavljača
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Dobavljaci>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> GetActiveDobavljaci()
     {
         var dobavljaci = await dobavljaciRepository.GetActiveDobavljaci();

@@ -27,7 +27,22 @@ public class PromocijeController : Controller
         this.imagesRepository = imagesRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih promocija
+    /// </summary>
+    /// <param name="naziv"></param>
+    /// <param name="tipPromocije"></param>
+    /// <param name="aktivan"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Promocije>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Index(string? naziv, string? tipPromocije, string? aktivan, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1)
     {
         var totalRecords = await promocijeRepository.CountAsync();
@@ -68,7 +83,7 @@ public class PromocijeController : Controller
 
         var tipPromocijeList = new List<SelectListItem>
     {
-        new SelectListItem { Value = "", Text = "Svi" } 
+        new SelectListItem { Value = "", Text = "Svi" }
     };
 
         tipPromocijeList.AddRange(tipoviPromocija.Select(tp => new SelectListItem
@@ -83,11 +98,19 @@ public class PromocijeController : Controller
 
         ViewData["TipoviPromocija"] = tipoviPromocija;
 
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(promocije);
+        }
+
         return View(promocije);
     }
 
 
-
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje promocije
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
@@ -98,7 +121,17 @@ public class PromocijeController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Dodavanje nove promocije
+    /// </summary>
+    /// <param name="addPromocijaRequest"></param>
+    /// <param name="slike"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Promocije>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(AddPromocijaRequest addPromocijaRequest, IEnumerable<IFormFile> slike)
     {
         ValidatePromocijaForAdd(addPromocijaRequest);
@@ -122,9 +155,20 @@ public class PromocijeController : Controller
         };
 
         await promocijeRepository.AddAsync(promocija);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(promocija);
+        }
+
         return RedirectToAction("Index", new { id = promocija.IDPromocije });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje promocije
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -157,7 +201,16 @@ public class PromocijeController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Uređivanje promocije
+    /// </summary>
+    /// <param name="editPromocijaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Promocije>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Edit(EditPromocijaRequest editPromocijaRequest)
     {
         var promocija = new Promocije
@@ -181,9 +234,20 @@ public class PromocijeController : Controller
         }
 
         await promocijeRepository.UpdateAsync(promocija);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(promocija);
+        }
+
         return RedirectToAction("Index", new { id = promocija.IDPromocije });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje promocije
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -205,7 +269,16 @@ public class PromocijeController : Controller
         return View(promocija);
     }
 
+    /// <summary>
+    /// Brisanje promocije
+    /// </summary>
+    /// <param name="editPromocijaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Promocije>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(EditPromocijaRequest editPromocijaRequest)
     {
         var promocija = await promocijeRepository.DeleteAsync(editPromocijaRequest.IDPromocije);
@@ -213,6 +286,11 @@ public class PromocijeController : Controller
         if (promocija == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Promocija je uspješno uklonjena!");
         }
 
         return RedirectToAction("Index", new { id = editPromocijaRequest.IDPromocije });

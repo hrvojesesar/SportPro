@@ -18,7 +18,23 @@ public class PravilniciController : Controller
         _pravilniciRepository = pravilniciRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih pravilnika
+    /// </summary>
+    /// <param name="searchQuery"></param>
+    /// <param name="searchQuery2"></param>
+    /// <param name="startDate"></param>
+    /// <param name="endDate"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Pravilnici>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Index(string? searchQuery, string? searchQuery2, DateTime? startDate, DateTime? endDate, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _pravilniciRepository.CountAsync();
@@ -57,16 +73,35 @@ public class PravilniciController : Controller
         ViewBag.PageNumber = pageNumber;
 
         var pravilnici = await _pravilniciRepository.GetAllAsync(searchQuery, searchQuery2, startDate, endDate, sortBy, sortDirection, pageNumber, pageSize);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(pravilnici);
+        }
+
         return View(pravilnici);
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje pravilnika
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
         return View();
     }
 
+    /// <summary>
+    /// Dodavanje pravilnika
+    /// </summary>
+    /// <param name="addPravilnikRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Pravilnici>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(AddPravilnikRequest addPravilnikRequest)
     {
         ValidatePravilnikForAdd(addPravilnikRequest);
@@ -85,9 +120,20 @@ public class PravilniciController : Controller
         };
 
         await _pravilniciRepository.AddAsync(pravilnik);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(pravilnik);
+        }
+
         return RedirectToAction("Index", new { id = pravilnik.IDPravilnik });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje pravilnika
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -114,7 +160,16 @@ public class PravilniciController : Controller
         return View(editPravilnikRequest);
     }
 
+    /// <summary>
+    /// Uređivanje pravilnika
+    /// </summary>
+    /// <param name="editPravilnikRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Pravilnici>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Edit(EditPravilnikRequest editPravilnikRequest)
     {
 
@@ -135,11 +190,20 @@ public class PravilniciController : Controller
         }
 
         await _pravilniciRepository.UpdateAsync(pravilnik);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(pravilnik);
+        }
+
         return RedirectToAction("Index", new { id = pravilnik.IDPravilnik });
     }
 
-
-
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje pravilnika
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -157,13 +221,27 @@ public class PravilniciController : Controller
         return View(pravilnik);
     }
 
+    /// <summary>
+    /// Brisanje pravilnika
+    /// </summary>
+    /// <param name="editPravilnikRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Pravilnici>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(EditPravilnikRequest editPravilnikRequest)
     {
         var pravilnik = await _pravilniciRepository.DeleteAsync(editPravilnikRequest.IDPravilnik);
         if (pravilnik == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Pravilnik je uspješno uklonjen!");
         }
 
         return RedirectToAction("Index", new { id = editPravilnikRequest.IDPravilnik });

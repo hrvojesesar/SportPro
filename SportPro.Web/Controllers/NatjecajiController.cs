@@ -20,7 +20,25 @@ public class NatjecajiController : Controller
         this.kandidatiRepository = kandidatiRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih natječaja
+    /// </summary>
+    /// <param name="searchQuery"></param>
+    /// <param name="searchQuery2"></param>
+    /// <param name="minValue"></param>
+    /// <param name="maxValue"></param>
+    /// <param name="startDate"></param>
+    /// <param name="endDate"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Natjecaji>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Index(string? searchQuery, string? searchQuery2, int? minValue, int? maxValue, DateTime? startDate, DateTime? endDate, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await natjecajiRepository.CountAsync();
@@ -60,18 +78,36 @@ public class NatjecajiController : Controller
         ViewBag.AktivanList = selectList;
 
         var natjecaji = await natjecajiRepository.GetAllAsync(searchQuery, searchQuery2, minValue, maxValue, startDate, endDate, sortBy, sortDirection, pageNumber, pageSize);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(natjecaji);
+        }
+
+
         return View(natjecaji);
     }
 
-
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje novog natječaja
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
         return View();
     }
 
-
+    /// <summary>
+    /// Dodavanje novog natječaja
+    /// </summary>
+    /// <param name="addNatjecajRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Natjecaji>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(AddNatjecajRequest addNatjecajRequest)
     {
         ValidateNatjecajForAdd(addNatjecajRequest);
@@ -94,9 +130,20 @@ public class NatjecajiController : Controller
 
 
         await natjecajiRepository.AddAsync(natjecaj);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(natjecaj);
+        }
+
         return RedirectToAction("Index", new { natjecaj.IDNatjecaj });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje natječaja
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -140,8 +187,16 @@ public class NatjecajiController : Controller
 
 
 
-
+    /// <summary>
+    /// Uređivanje natječaja
+    /// </summary>
+    /// <param name="editNatjecajRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Natjecaji>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Edit(EditNatjecajRequest editNatjecajRequest)
     {
         var natjecaj = new Natjecaji
@@ -165,10 +220,20 @@ public class NatjecajiController : Controller
         }
 
         await natjecajiRepository.UpdateAsync(natjecaj);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(natjecaj);
+        }
+
         return RedirectToAction("Index", new { id = editNatjecajRequest.IDNatjecaj });
     }
 
-
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje natječaja
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -187,7 +252,16 @@ public class NatjecajiController : Controller
         return View(natjecaj);
     }
 
+    /// <summary>
+    /// Brisanje natječaja
+    /// </summary>
+    /// <param name="editNatjecajRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Natjecaji>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(EditNatjecajRequest editNatjecajRequest)
     {
         var natjecaj = await natjecajiRepository.DeleteAsync(editNatjecajRequest.IDNatjecaj);
@@ -195,6 +269,11 @@ public class NatjecajiController : Controller
         if (natjecaj == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Natječaj je uspješno uklonjen!");
         }
 
         return RedirectToAction("Index", new { id = editNatjecajRequest.IDNatjecaj });

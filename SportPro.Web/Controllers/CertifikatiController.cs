@@ -8,6 +8,7 @@ namespace SportPro.Web.Controllers;
 
 
 [Route("[controller]/[action]")]
+[ApiController]
 [Authorize(Roles = "Uposlenik")]
 public class CertifikatiController : Controller
 {
@@ -18,7 +19,20 @@ public class CertifikatiController : Controller
         this.certifikatiRepository = certifikatiRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih certifikata
+    /// </summary>
+    /// <param name="searchQuery"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Certifikati>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Index(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await certifikatiRepository.CountAsync();
@@ -45,16 +59,36 @@ public class CertifikatiController : Controller
         ViewBag.SortDirection = sortDirection;
 
         var certifikati = await certifikatiRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(certifikati);
+        }
+
         return View(certifikati);
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje certifikata
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
         return View();
     }
 
+    /// <summary>
+    /// Dodavanje certifikata
+    /// </summary>
+    /// <param name="addCertifikatRequest"></param>
+    /// <param name="slike"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Certifikati>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Add(AddCertifikatRequest addCertifikatRequest, IEnumerable<IFormFile> slike)
     {
         if (!ModelState.IsValid)
@@ -72,10 +106,21 @@ public class CertifikatiController : Controller
         };
 
         await certifikatiRepository.AddAsync(certifikat);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(certifikat);
+        }
+
         return RedirectToAction("Index", new { id = certifikat.IDCertifikat });
 
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje certifikata
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -104,7 +149,16 @@ public class CertifikatiController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Uređivanje certifikata
+    /// </summary>
+    /// <param name="editCertifikatRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Certifikati>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Edit(EditCertifikatRequest editCertifikatRequest)
     {
         var certifikat = new Certifikati
@@ -123,6 +177,12 @@ public class CertifikatiController : Controller
         }
 
         await certifikatiRepository.UpdateAsync(certifikat);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(certifikat);
+        }
+
         return RedirectToAction("Index", new { id = certifikat.IDCertifikat });
     }
 }

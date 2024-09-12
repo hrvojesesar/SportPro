@@ -23,7 +23,23 @@ public class PrihodiController : Controller
         this.applicationDbContext = applicationDbContext;
     }
 
+    /// <summary>
+    /// Prikaz svih prihoda
+    /// </summary>
+    /// <param name="naziv"></param>
+    /// <param name="kategorijaPrihoda"></param>
+    /// <param name="minValue"></param>
+    /// <param name="maxValue"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Prihodi>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Index(string? naziv, string? kategorijaPrihoda, int? minValue, int? maxValue, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _prihodiRepository.CountAsync();
@@ -70,9 +86,18 @@ public class PrihodiController : Controller
 
         ViewData["KategorijePrihoda"] = kategorijePrihoda;
 
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(prihodi);
+        }
+
         return View(prihodi);
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje prihoda
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
@@ -83,7 +108,16 @@ public class PrihodiController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Dodavanje prihoda
+    /// </summary>
+    /// <param name="addPrihodRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Prihodi>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Add(AddPrihodRequest addPrihodRequest)
     {
         ValidatePrihodForAdd(addPrihodRequest);
@@ -105,10 +139,21 @@ public class PrihodiController : Controller
         };
 
         await _prihodiRepository.AddAsync(prihod);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(prihod);
+        }
+
         return RedirectToAction("Index", new { id = prihod.IDPrihod });
 
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje prihoda
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -140,7 +185,16 @@ public class PrihodiController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Uređivanje prihoda
+    /// </summary>
+    /// <param name="editPrihodRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Prihodi>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Edit(EditPrihodRequest editPrihodRequest)
     {
         var prihod = new Prihodi
@@ -169,9 +223,19 @@ public class PrihodiController : Controller
             return NotFound();
         }
 
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(updatedPrihod);
+        }
+
         return RedirectToAction("Index", new { id = updatedPrihod.IDPrihod });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje prihoda
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -193,13 +257,27 @@ public class PrihodiController : Controller
         return View(prihod);
     }
 
+    /// <summary>
+    /// Brisanje prihoda
+    /// </summary>
+    /// <param name="editPrihodRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Prihodi>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete(EditPrihodRequest editPrihodRequest)
     {
         var prihod = await _prihodiRepository.DeleteAsync(editPrihodRequest.IDPrihod);
         if (prihod == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Prihod je uspješno uklonjen!");
         }
 
         return RedirectToAction("Index", new { id = editPrihodRequest.IDPrihod });

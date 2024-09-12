@@ -19,7 +19,22 @@ public class PoslovniceController : Controller
         _poslovniceRepository = poslovniceRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih poslovnica
+    /// </summary>
+    /// <param name="naziv"></param>
+    /// <param name="grad"></param>
+    /// <param name="status"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Poslovnice>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Index(string? naziv, string? grad, string? status, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _poslovniceRepository.CountAsync();
@@ -57,16 +72,35 @@ public class PoslovniceController : Controller
 
 
         var poslovnice = await _poslovniceRepository.GetAllAsync(naziv, grad, status, sortBy, sortDirection, pageNumber, pageSize);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(poslovnice);
+        }
+
         return View(poslovnice);
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje nove poslovnice
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
         return View();
     }
 
+    /// <summary>
+    /// Dodavanje nove poslovnice
+    /// </summary>
+    /// <param name="addPoslovnicaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Poslovnice), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Add(AddPoslovnicaRequest addPoslovnicaRequest)
     {
         ValidatePoslovnicaForAdd(addPoslovnicaRequest);
@@ -91,9 +125,20 @@ public class PoslovniceController : Controller
         };
 
         await _poslovniceRepository.AddAsync(poslovnica);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(poslovnica);
+        }
+
         return RedirectToAction("Index", new { id = poslovnica.IDPoslovnica });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje poslovnice
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -126,7 +171,16 @@ public class PoslovniceController : Controller
         return View(editPoslovnicaRequest);
     }
 
+    /// <summary>
+    /// Uređivanje poslovnice
+    /// </summary>
+    /// <param name="editPoslovnicaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Poslovnice), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     public async Task<IActionResult> Edit(EditPoslovnicaRequest editPoslovnicaRequest)
     {
 
@@ -153,9 +207,20 @@ public class PoslovniceController : Controller
         }
 
         await _poslovniceRepository.UpdateAsync(poslovnica);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(poslovnica);
+        }
+
         return RedirectToAction("Index", new { id = poslovnica.IDPoslovnica });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje poslovnice
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -173,7 +238,16 @@ public class PoslovniceController : Controller
         return View(poslovnica);
     }
 
+    /// <summary>
+    /// Brisanje poslovnice
+    /// </summary>
+    /// <param name="editPoslovnicaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Poslovnice), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete(EditPoslovnicaRequest editPoslovnicaRequest)
     {
         var poslovnica = await _poslovniceRepository.DeleteAsync(editPoslovnicaRequest.IDPoslovnica);
@@ -181,6 +255,11 @@ public class PoslovniceController : Controller
         if (poslovnica == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Poslovnica je uspješno uklonjena!");
         }
 
         return RedirectToAction("Index", new { id = editPoslovnicaRequest.IDPoslovnica });

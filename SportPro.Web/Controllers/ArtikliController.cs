@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using SportPro.Web.Data;
 using SportPro.Web.Interfaces;
@@ -8,7 +9,7 @@ using SportPro.Web.Models.ViewModels;
 namespace SportPro.Web.Controllers;
 
 [Route("[controller]/[action]")]
-
+[Authorize]
 public class ArtikliController : Controller
 {
     private readonly IArtikliRepository artikliRepository;
@@ -32,7 +33,25 @@ public class ArtikliController : Controller
         this.applicationDbContext = applicationDbContext;
     }
 
+    /// <summary>
+    /// Dohvat svih artikala
+    /// </summary>
+    /// <param name="naziv"></param>
+    /// <param name="minValue"></param>
+    /// <param name="maxValue"></param>
+    /// <param name="snizen"></param>
+    /// <param name="naStanju"></param>
+    /// <param name="kategorija"></param>
+    /// <param name="poslovnica"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Artikli>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Index(string? naziv, int? minValue, int? maxValue, string? snizen, string? naStanju, string? kategorija, string? poslovnica, string? sortBy, string? sortDirection, int pageSize = 3, int pageNumber = 1)
     {
         var totalRecords = await artikliRepository.CountAsync();
@@ -95,9 +114,19 @@ public class ArtikliController : Controller
         ViewData["Dobavljaci"] = dobavljaci;
 
         var artikli = await artikliRepository.GetAllAsync(naziv, minValue, maxValue, snizen, naStanju, kategorija, poslovnica, sortBy, sortDirection, pageNumber, pageSize);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(artikli);
+        }
+
         return View(artikli);
     }
 
+    /// <summary>
+    /// Dohvat view-a za dodavanje artikla
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
@@ -137,7 +166,15 @@ public class ArtikliController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Dodavanje artikla
+    /// </summary>
+    /// <param name="addArtiklRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Artikli), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(AddArtiklRequest addArtiklRequest)
     {
         var artikl = new Artikli
@@ -220,9 +257,21 @@ public class ArtikliController : Controller
         artikl.Poslovnice = selectedPoslovnice;
 
         await artikliRepository.AddAsync(artikl);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(artikl);
+        }
+
+
         return RedirectToAction("Index", new { id = artikl.IDArtikal });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje artikla
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int id)
     {
@@ -293,7 +342,15 @@ public class ArtikliController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Uređivanje artikla
+    /// </summary>
+    /// <param name="editArtiklRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Artikli), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Edit(EditArtiklRequest editArtiklRequest)
     {
         var artikl = new Artikli
@@ -376,9 +433,20 @@ public class ArtikliController : Controller
         artikl.Poslovnice = selectedPoslovnice;
 
         await artikliRepository.UpdateAsync(artikl);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(artikl);
+        }
+
         return RedirectToAction("Index", new { id = artikl.IDArtikal });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje artikla
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int id)
     {
@@ -404,7 +472,15 @@ public class ArtikliController : Controller
         return View(artikl);
     }
 
+    /// <summary>
+    /// Brisanje artikla
+    /// </summary>
+    /// <param name="editArtiklRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(Artikli), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(EditArtiklRequest editArtiklRequest)
     {
         var artikl = await artikliRepository.DeleteAsync(editArtiklRequest.IDArtikal);
@@ -412,6 +488,11 @@ public class ArtikliController : Controller
         if (artikl == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Artikl je uspješno uklonjen!");
         }
 
         return RedirectToAction("Index", new { id = editArtiklRequest.IDArtikal });

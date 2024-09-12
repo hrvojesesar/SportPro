@@ -29,7 +29,24 @@ public class ZaposleniciController : Controller
         this.pozicijeRepository = pozicijeRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih zaposlenika
+    /// </summary>
+    /// <param name="ime"></param>
+    /// <param name="prezime"></param>
+    /// <param name="grad"></param>
+    /// <param name="status"></param>
+    /// <param name="poslovnica"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Zaposlenici>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Index(string? ime, string? prezime, string? grad, string? status, string? poslovnica, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await zaposleniciRepository.CountAsync();
@@ -79,10 +96,18 @@ public class ZaposleniciController : Controller
 
         var zaposlenici = await zaposleniciRepository.GetAllAsync(ime, prezime, grad, status, poslovnica, sortBy, sortDirection, pageNumber, pageSize);
 
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(zaposlenici);
+        }
+
         return View(zaposlenici);
     }
 
-
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje zaposlenika
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
@@ -99,7 +124,16 @@ public class ZaposleniciController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Dodavanje zaposlenika
+    /// </summary>
+    /// <param name="addZaposlenikRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Zaposlenici>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(AddZaposlenikRequest addZaposlenikRequest)
     {
         //ValidateZaposlenikForAdd(addZaposlenikRequest);
@@ -153,9 +187,20 @@ public class ZaposleniciController : Controller
 
 
         await zaposleniciRepository.AddAsync(zaposlenik);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(zaposlenik);
+        }
+
         return RedirectToAction("Index");
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje zaposlenika
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -208,7 +253,16 @@ public class ZaposleniciController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Uređivanje zaposlenika
+    /// </summary>
+    /// <param name="editZaposlenikRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Zaposlenici>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Edit(EditZaposlenikRequest editZaposlenikRequest)
     {
 
@@ -261,9 +315,20 @@ public class ZaposleniciController : Controller
         }
 
         await zaposleniciRepository.UpdateAsync(zaposlenik);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(zaposlenik);
+        }
+
         return RedirectToAction("Index", new { id = zaposlenik.IDZaposlenik });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje zaposlenika
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -285,7 +350,16 @@ public class ZaposleniciController : Controller
         return View(zaposlenik);
     }
 
+    /// <summary>
+    /// Brisanje zaposlenika
+    /// </summary>
+    /// <param name="editZaposlenikRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Zaposlenici>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(EditZaposlenikRequest editZaposlenikRequest)
     {
         var zaposlenik = await zaposleniciRepository.DeleteAsync(editZaposlenikRequest.IDZaposlenik);
@@ -293,6 +367,11 @@ public class ZaposleniciController : Controller
         if (zaposlenik == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Zaposlenik je uspješno uklonjen!");
         }
 
         return RedirectToAction("Index", new { id = editZaposlenikRequest.IDZaposlenik });

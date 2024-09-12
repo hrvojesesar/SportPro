@@ -16,7 +16,7 @@ public class BojeController : Controller
     {
         this.bojeRepository = bojeRepository;
     }
-   
+
     /// <summary>
     /// Prikaz svih boja
     /// </summary>
@@ -29,6 +29,7 @@ public class BojeController : Controller
     [HttpGet]
     [ProducesResponseType(typeof(IEnumerable<Boje>), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Index(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
@@ -83,6 +84,7 @@ public class BojeController : Controller
     [HttpPost]
     [ProducesResponseType(typeof(Boje), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(AddBojaRequest addBojaRequest)
     {
@@ -146,6 +148,7 @@ public class BojeController : Controller
     [HttpPost]
     [ProducesResponseType(typeof(Boje), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Edit(EditBojaRequest editBojaRequest)
     {
@@ -203,6 +206,7 @@ public class BojeController : Controller
     [HttpPost]
     [ProducesResponseType(typeof(Boje), StatusCodes.Status200OK)]
     [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(EditBojaRequest editBojaRequest)
     {

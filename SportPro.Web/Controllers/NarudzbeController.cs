@@ -21,7 +21,23 @@ public class NarudzbeController : Controller
         _dobavljaciRepository = dobavljaciRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih narudzbi
+    /// </summary>
+    /// <param name="naziv"></param>
+    /// <param name="startDate"></param>
+    /// <param name="endDate"></param>
+    /// <param name="status"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Narudzbe>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Index(string? naziv, DateTime? startDate, DateTime? endDate, string? status, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _narudzbeRepository.CountAsync();
@@ -66,9 +82,18 @@ public class NarudzbeController : Controller
 
         ViewData["Dobavljaci"] = dobavljaci;
 
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(narudzbe);
+        }
+
         return View(narudzbe);
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje narudzbe
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
@@ -80,7 +105,16 @@ public class NarudzbeController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Dodavanje narudzbe
+    /// </summary>
+    /// <param name="addNarudzbaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Narudzbe>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Add(AddNarudzbaRequest addNarudzbaRequest)
     {
         ValidateNarudzbaForAdd(addNarudzbaRequest);
@@ -109,9 +143,20 @@ public class NarudzbeController : Controller
         };
 
         await _narudzbeRepository.AddAsync(narudzba);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(narudzba);
+        }
+
         return RedirectToAction("Index", new { id = narudzba.IDNarudzba });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje narudzbe
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -148,7 +193,16 @@ public class NarudzbeController : Controller
         return View(model);
     }
 
+    /// <summary>
+    /// Uređivanje narudzbe
+    /// </summary>
+    /// <param name="editNarudzbaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Narudzbe>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Edit(EditNarudzbaRequest editNarudzbaRequest)
     {
 
@@ -180,9 +234,20 @@ public class NarudzbeController : Controller
 
 
         await _narudzbeRepository.UpdateAsync(narudzba);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(narudzba);
+        }
+
         return RedirectToAction("Index", new { id = narudzba.IDNarudzba });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje narudzbe
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -204,7 +269,16 @@ public class NarudzbeController : Controller
         return View(narudzba);
     }
 
+    /// <summary>
+    /// Brisanje narudzbe
+    /// </summary>
+    /// <param name="editNarudzbaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Narudzbe>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> Delete(EditNarudzbaRequest editNarudzbaRequest)
     {
         var narudzba = await _narudzbeRepository.DeleteAsync(editNarudzbaRequest.IDNarudzba);
@@ -214,12 +288,14 @@ public class NarudzbeController : Controller
             return NotFound();
         }
 
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Narudžba je uspješno uklonjena!");
+        }
+
         return RedirectToAction("Index", new { id = editNarudzbaRequest.IDNarudzba });
 
     }
-
-
-
 
     private void ValidateNarudzbaForAdd(AddNarudzbaRequest addNarudzbaRequest)
     {

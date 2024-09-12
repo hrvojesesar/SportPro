@@ -17,7 +17,20 @@ public class TipoviPromocijaController : Controller
         _tipoviPromocijaRepository = tipoviPromocijaRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih tipova promocija
+    /// </summary>
+    /// <param name="searchQuery"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<TipoviPromocija>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Index(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _tipoviPromocijaRepository.CountAsync();
@@ -44,16 +57,35 @@ public class TipoviPromocijaController : Controller
         ViewBag.PageNumber = pageNumber;
 
         var tipoviPromocija = await _tipoviPromocijaRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(tipoviPromocija);
+        }
+
         return View(tipoviPromocija);
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje tipa promocije
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
         return View();
     }
 
+    /// <summary>
+    /// Dodavanje tipa promocije
+    /// </summary>
+    /// <param name="addTipPromocijeRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<TipoviPromocija>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(AddTipPromocijeRequest addTipPromocijeRequest)
     {
         if (!ModelState.IsValid)
@@ -68,9 +100,20 @@ public class TipoviPromocijaController : Controller
         };
 
         await _tipoviPromocijaRepository.AddAsync(tipPromocije);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(tipPromocije);
+        }
+
         return RedirectToAction("Index", new { id = tipPromocije.IDTipPromocije });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje tipa promocije
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -95,7 +138,16 @@ public class TipoviPromocijaController : Controller
         return View(editTipPromocijeRequest);
     }
 
+    /// <summary>
+    /// Uređivanje tipa promocije
+    /// </summary>
+    /// <param name="editTipPromocijeRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<TipoviPromocija>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Edit(EditTipPromocijeRequest editTipPromocijeRequest)
     {
         var tipPromocije = new TipoviPromocija
@@ -111,9 +163,20 @@ public class TipoviPromocijaController : Controller
         }
 
         await _tipoviPromocijaRepository.UpdateAsync(tipPromocije);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(tipPromocije);
+        }
+
         return RedirectToAction("Index", new { id = tipPromocije.IDTipPromocije });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje tipa promocije
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -131,7 +194,16 @@ public class TipoviPromocijaController : Controller
         return View(tipPromocije);
     }
 
+    /// <summary>
+    /// Brisanje tipa promocije
+    /// </summary>
+    /// <param name="editTipPromocijeRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<TipoviPromocija>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(EditTipPromocijeRequest editTipPromocijeRequest)
     {
         var tipPromocije = await _tipoviPromocijaRepository.DeleteAsync(editTipPromocijeRequest.IDTipPromocije);
@@ -139,6 +211,11 @@ public class TipoviPromocijaController : Controller
         if (tipPromocije == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Tip promocije je uspješno uklonjen!");
         }
 
         return RedirectToAction("Index", new { id = editTipPromocijeRequest.IDTipPromocije });

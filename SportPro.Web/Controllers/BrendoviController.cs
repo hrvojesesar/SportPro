@@ -9,6 +9,7 @@ namespace SportPro.Web.Controllers;
 
 [Route("[controller]/[action]")]
 [Authorize(Roles = "Uposlenik")]
+[ApiController]
 public class BrendoviController : Controller
 {
     private readonly IBrendoviRepository brendoviRepository;
@@ -18,7 +19,22 @@ public class BrendoviController : Controller
         this.brendoviRepository = brendoviRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih brendova
+    /// </summary>
+    /// <param name="nazivBrenda"></param>
+    /// <param name="vrsta"></param>
+    /// <param name="status"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Brendovi>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Index(string? nazivBrenda, string? vrsta, string? status, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await brendoviRepository.CountAsync();
@@ -64,16 +80,35 @@ public class BrendoviController : Controller
         ViewBag.SortDirection = sortDirection;
 
         var brendovi = await brendoviRepository.GetAllAsync(nazivBrenda, vrsta, status, sortBy, sortDirection, pageNumber, pageSize);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(brendovi);
+        }
+
         return View(brendovi);
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje brenda
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
         return View();
     }
 
+    /// <summary>
+    /// Dodavanje brenda
+    /// </summary>
+    /// <param name="addBrendRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Brendovi>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(AddBrendRequest addBrendRequest)
     {
         ValidateBrendForAdd(addBrendRequest);
@@ -95,9 +130,20 @@ public class BrendoviController : Controller
         };
 
         await brendoviRepository.AddAsync(brend);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(brend);
+        }
+
         return RedirectToAction("Index", new { id = brend.IDBrend });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje brenda
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -127,7 +173,16 @@ public class BrendoviController : Controller
         return View(editBrendRequest);
     }
 
+    /// <summary>
+    /// Uređivanje brenda
+    /// </summary>
+    /// <param name="editBrendRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Brendovi>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Edit(EditBrendRequest editBrendRequest)
     {
         var brend = new Brendovi
@@ -150,10 +205,21 @@ public class BrendoviController : Controller
         }
 
         await brendoviRepository.UpdateAsync(brend);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(brend);
+        }
+
         return RedirectToAction("Index", new { id = brend.IDBrend });
     }
 
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje brenda
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -171,7 +237,16 @@ public class BrendoviController : Controller
         return View(brend);
     }
 
+    /// <summary>
+    /// Brisanje brenda
+    /// </summary>
+    /// <param name="editBrendRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Brendovi>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(EditBrendRequest editBrendRequest)
     {
         var brend = await brendoviRepository.DeleteAsync(editBrendRequest.IDBrend);
@@ -179,6 +254,11 @@ public class BrendoviController : Controller
         if (brend == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Brend je uspješno uklonjen!");
         }
 
         return RedirectToAction("Index", new { id = editBrendRequest.IDBrend });

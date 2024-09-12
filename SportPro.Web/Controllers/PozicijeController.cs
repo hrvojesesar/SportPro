@@ -17,7 +17,20 @@ public class PozicijeController : Controller
         _pozicijeRepository = pozicijeRepository;
     }
 
+    /// <summary>
+    /// Prikaz svih pozicija
+    /// </summary>
+    /// <param name="searchQuery"></param>
+    /// <param name="sortBy"></param>
+    /// <param name="sortDirection"></param>
+    /// <param name="pageSize"></param>
+    /// <param name="pageNumber"></param>
+    /// <returns></returns>
     [HttpGet]
+    [ProducesResponseType(typeof(IEnumerable<Pozicije>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Index(string? searchQuery, string? sortBy, string? sortDirection, int pageSize = 5, int pageNumber = 1)
     {
         var totalRecords = await _pozicijeRepository.CountAsync();
@@ -44,16 +57,36 @@ public class PozicijeController : Controller
         ViewBag.PageNumber = pageNumber;
 
         var pozicije = await _pozicijeRepository.GetAllAsync(searchQuery, sortBy, sortDirection, pageNumber, pageSize);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(pozicije);
+        }
+
+
         return View(pozicije);
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za dodavanje pozicije
+    /// </summary>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Add()
     {
         return View();
     }
 
+    /// <summary>
+    /// Dodavanje pozicije
+    /// </summary>
+    /// <param name="addPozicijaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Pozicije>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Add(AddPozicijaRequest addPozicijaRequest)
     {
         ValidatePozicijaForAdd(addPozicijaRequest);
@@ -70,9 +103,20 @@ public class PozicijeController : Controller
         };
 
         await _pozicijeRepository.AddAsync(pozicija);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(pozicija);
+        }
+
         return RedirectToAction("Index", new { id = pozicija.IDPozicija });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za uređivanje pozicije
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Edit(int? id)
     {
@@ -97,7 +141,16 @@ public class PozicijeController : Controller
         return View(editPozicijaRequest);
     }
 
+    /// <summary>
+    /// Uređivanje pozicije
+    /// </summary>
+    /// <param name="editPozicijaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Pozicije>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Edit(EditPozicijaRequest editPozicijaRequest)
     {
         var pozicija = new Pozicije
@@ -115,9 +168,20 @@ public class PozicijeController : Controller
         }
 
         await _pozicijeRepository.UpdateAsync(pozicija);
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok(pozicija);
+        }
+
         return RedirectToAction("Index", new { id = pozicija.IDPozicija });
     }
 
+    /// <summary>
+    /// Dohvaćanje view-a za brisanje pozicije
+    /// </summary>
+    /// <param name="id"></param>
+    /// <returns></returns>
     [HttpGet]
     public async Task<IActionResult> Delete(int? id)
     {
@@ -135,7 +199,16 @@ public class PozicijeController : Controller
         return View(pozicija);
     }
 
+    /// <summary>
+    /// Brisanje pozicije
+    /// </summary>
+    /// <param name="editPozicijaRequest"></param>
+    /// <returns></returns>
     [HttpPost]
+    [ProducesResponseType(typeof(IEnumerable<Pozicije>), StatusCodes.Status200OK)]
+    [ProducesResponseType(StatusCodes.Status404NotFound)]
+    [ProducesResponseType(StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<IActionResult> Delete(EditPozicijaRequest editPozicijaRequest)
     {
         var pozicija = await _pozicijeRepository.DeleteAsync(editPozicijaRequest.IDPozicija);
@@ -143,6 +216,11 @@ public class PozicijeController : Controller
         if (pozicija == null)
         {
             return NotFound();
+        }
+
+        if (Request.Headers["Accept"] == "application/json")
+        {
+            return Ok("Pozicija je uspješno uklonjena!");
         }
 
         return RedirectToAction("Index", new { id = editPozicijaRequest.IDPozicija });
