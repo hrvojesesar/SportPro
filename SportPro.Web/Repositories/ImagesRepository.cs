@@ -27,25 +27,21 @@ public class ImagesRepository : IImagesRepository
     public async Task<IEnumerable<string>> UploadAsync(IEnumerable<IFormFile> files)
     {
         List<string> uploadedImageUrls = new List<string>();
-
         foreach (var file in files)
         {
             string fileName = file.FileName;
             using (var stream = file.OpenReadStream())
             {
                 var blobClient = _containerClient.GetBlobClient(fileName);
-
                 var blobHttpHeaders = new BlobHttpHeaders
                 {
                     ContentType = file.ContentType,
                     ContentDisposition = $"inline; filename=\"{fileName}\""
                 };
-
                 await blobClient.UploadAsync(stream, blobHttpHeaders);
                 uploadedImageUrls.Add(blobClient.Uri.AbsoluteUri);
             }
         }
-
         return uploadedImageUrls;
     }
 }
